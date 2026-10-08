@@ -1,0 +1,94 @@
+@startuml datos
+title ReparaCampus · Modelo de datos
+hide circle
+skinparam linetype ortho
+
+entity usuarios {
+  * id : INTEGER <<PK>>
+  --
+  * usuario : TEXT <<único>>
+  * nombre : TEXT
+  * rol : SOLICITANTE | COORDINADOR | TECNICO
+  * password_hash : TEXT
+  * activo : 0 | 1
+}
+
+entity incidencias {
+  * id : INTEGER <<PK>>
+  --
+  * codigo : TEXT <<único>>
+  * solicitante_id : INTEGER <<FK>>
+  * ubicacion : TEXT
+  * categoria : TEXT
+  * descripcion : TEXT (20..500)
+  * impacto : BAJO | ALTO
+  * riesgo_personas : 0 | 1
+  * prioridad : CRITICA | ALTA | NORMAL
+  * estado : TEXT
+  tecnico_id : INTEGER <<FK>>
+  * creada_en : TEXT (UTC)
+}
+
+entity asignaciones {
+  * id : INTEGER <<PK>>
+  --
+  * incidencia_id : INTEGER <<FK, único>>
+  * tecnico_id : INTEGER <<FK>>
+  * coordinador_id : INTEGER <<FK>>
+  * asignada_en : TEXT (UTC)
+}
+
+entity soluciones {
+  * id : INTEGER <<PK>>
+  --
+  * incidencia_id : INTEGER <<FK>>
+  * tecnico_id : INTEGER <<FK>>
+  * texto : TEXT (20..800)
+  * registrada_en : TEXT (UTC)
+}
+
+entity cierres {
+  * id : INTEGER <<PK>>
+  --
+  * incidencia_id : INTEGER <<FK>>
+  * solucion_id : INTEGER <<FK>>
+  * confirmado_por : INTEGER <<FK>>
+  * cerrada_en : TEXT (UTC)
+}
+
+entity eventos {
+  * id : INTEGER <<PK>>
+  --
+  * incidencia_id : INTEGER <<FK>>
+  * actor_id : INTEGER <<FK>>
+  * accion : TEXT
+  estado_anterior : TEXT
+  * estado_nuevo : TEXT
+  motivo : TEXT (10..300)
+  solucion_id : INTEGER <<FK>>
+  cierre_id : INTEGER <<FK>>
+  * ocurrido_en : TEXT (UTC)
+}
+
+usuarios ||--o{ incidencias : registra
+usuarios |o--o{ incidencias : atiende
+incidencias ||--o| asignaciones
+usuarios ||--o{ asignaciones : técnico / coordinador
+incidencias ||--o{ soluciones
+usuarios ||--o{ soluciones : propone
+incidencias ||--o{ cierres
+soluciones ||--o| cierres : confirmada en
+usuarios ||--o{ cierres : confirma
+incidencias ||--|{ eventos
+usuarios ||--o{ eventos : actor
+soluciones |o--o{ eventos
+cierres |o--o{ eventos
+
+note right of eventos
+  Solo inserción.
+  Disparadores impiden
+  UPDATE y DELETE en
+  eventos, soluciones
+  y cierres.
+end note
+@enduml
