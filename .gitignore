@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Base de datos local y secretos de la instancia
+instance/
+*.sqlite
+*.sqlite3
+*.db
+.env
+
+.vscode/
+.idea/
