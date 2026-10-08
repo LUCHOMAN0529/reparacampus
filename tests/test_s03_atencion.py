@@ -74,7 +74,7 @@ def test_p_s03_04_solucion_antes_de_iniciar(entrar, db, flujo):
     assert acciones(db, codigo) == ["CREAR", "ASIGNAR"]
 
 
-@pytest.mark.parametrize("estado", ["EN_ATENCION", "PENDIENTE_VALIDACION"])
+@pytest.mark.parametrize("estado", ["EN_ATENCION", "PENDIENTE_VALIDACION", "CERRADA"])
 def test_iniciar_en_estado_incompatible(entrar, db, flujo, estado):
     """AC-S03-04"""
     codigo = flujo(estado)
@@ -87,9 +87,10 @@ def test_iniciar_en_estado_incompatible(entrar, db, flujo, estado):
     assert acciones(db, codigo) == antes
 
 
-def test_segunda_solucion_sin_rechazo_se_rechaza(entrar, db, flujo):
+@pytest.mark.parametrize("estado", ["PENDIENTE_VALIDACION", "CERRADA"])
+def test_segunda_solucion_sin_rechazo_se_rechaza(entrar, db, flujo, estado):
     """AC-S03-04"""
-    codigo = flujo("PENDIENTE_VALIDACION")
+    codigo = flujo(estado)
 
     respuesta = entrar("tecnico1").post(
         f"/incidencias/{codigo}/solucion", data={"solucion": "Otra solución distinta de la anterior"}

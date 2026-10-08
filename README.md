@@ -13,6 +13,10 @@ El repositorio sigue el hilo **Requisito → Historia → SPEC → Código → P
 | SPECS S01–S05 (especificación, plan y tareas) | [`specs/`](specs/) |
 | Diseño: componentes, datos, UML y decisión | [`docs/diseno/`](docs/diseno/arquitectura.md) |
 | Revisiones | [`docs/revision/`](docs/revision/) |
+| Validación: trazabilidad, SPEC frente a código, hallazgos | [`docs/validacion/validacion.md`](docs/validacion/validacion.md) |
+| Riesgos y controles | [`docs/riesgos.md`](docs/riesgos.md) |
+| Decisiones confirmadas y pendientes | [`docs/decisiones.md`](docs/decisiones.md) |
+| Bitácora de IA | [`docs/bitacora-ia.md`](docs/bitacora-ia.md) |
 | Aplicación | [`app/`](app/) |
 | Pruebas automatizadas | [`tests/`](tests/) |
 
@@ -85,13 +89,15 @@ Cada prueba crea su propio archivo SQLite temporal, independiente de la base de 
 | Archivo | SPEC | Pruebas |
 |---|---|---|
 | `tests/test_auth.py` | Autenticación | 7 |
-| `tests/test_s01_registro.py` | S01 | 20 |
-| `tests/test_s02_prioridad_asignacion.py` | S02 | 18 |
-| `tests/test_s03_atencion.py` | S03 | 17 |
-| `tests/test_s04_validacion.py` | S04 | 37 |
+| `tests/test_s01_registro.py` | S01 | 26 |
+| `tests/test_s02_prioridad_asignacion.py` | S02 | 21 |
+| `tests/test_s03_atencion.py` | S03 | 19 |
+| `tests/test_s04_validacion.py` | S04 | 43 |
 | `tests/test_integracion.py` | S04 (integración: cierre, rechazo y reapertura) | 3 |
 | `tests/test_s05_consulta_tablero.py` | S05 | 46 |
-| **Total** | | **148** |
+| `tests/test_atomicidad.py` | S02, S03, S04 (sin efectos parciales) | 6 |
+| `tests/test_concurrencia.py` | S01 (registros simultáneos) | 5 |
+| **Total** | | **176** |
 
 Solo las de integración: `python -m pytest -m integracion`. Detalle por prueba: `python -m pytest -v`.
 
@@ -124,6 +130,7 @@ docs/             Diseño y revisiones
 - El servidor de desarrollo de Flask no es apto para producción; el caso no pide hosting.
 - No hay gestión de usuarios: las cuentas se crean solo con el seed.
 - Sin paginación ni búsqueda por texto en el listado.
+- La concurrencia se probó con ocho registros simultáneos en un mismo proceso; no hay prueba de carga. Un escritor espera el bloqueo de SQLite hasta 5 segundos.
 - Las fechas se muestran en UTC.
 
 ## Equipo
