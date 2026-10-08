@@ -80,3 +80,22 @@ def iniciar(codigo):
 @requiere_sesion
 def solucion(codigo):
     return _operar(codigo, servicios.registrar_solucion, request.form.get("solucion"))
+
+
+@bp.route("/<codigo>/confirmar", methods=("POST",))
+@requiere_sesion
+def confirmar(codigo):
+    return _operar(codigo, servicios.confirmar)
+
+
+@bp.route("/<codigo>/rechazar", methods=("POST",))
+@requiere_sesion
+def rechazar(codigo):
+    return _operar(codigo, servicios.rechazar, request.form.get("motivo"))
+
+
+@bp.route("/<codigo>/reabrir", methods=("POST",))
+@requiere_sesion
+def reabrir(codigo):
+    # La hora efectiva es la del servidor; cualquier fecha del formulario se ignora (AC-S04-10).
+    return _operar(codigo, servicios.reabrir, request.form.get("motivo"))
