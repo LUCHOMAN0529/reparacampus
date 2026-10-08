@@ -1,4 +1,5 @@
 """Lecturas. La visibilidad por rol se define aquí una sola vez."""
+from . import dominio
 from .dominio import COORDINADOR, SOLICITANTE, NoEncontrada
 
 _SELECT_INCIDENCIA = """
@@ -27,6 +28,43 @@ def obtener(db, usuario, codigo):
     if fila is None:
         raise NoEncontrada("La incidencia no existe.")
     return fila
+
+
+def listar(db, usuario, estado=None, prioridad=None):
+    """S05. Primero la visibilidad por rol y después los filtros, unidos con «y»."""
+    estado, prioridad = dominio.validar_filtros(estado, prioridad)
+    condicion, parametros = _visibilidad(usuario)
+    condiciones, parametros = [condicion], list(parametros)
+    if estado:
+        condiciones.append("i.estado = ?")
+        parametros.append(estado)
+    if prioridad:
+        condiciones.append("i.prioridad = ?")
+        parametros.append(prioridad)
+    return db.execute(
+        f"{_SELECT_INCIDENCIA} WHERE {' AND '.join(condiciones)} ORDER BY i.id DESC", parametros
+    ).fetchall()
+
+
+def tablero(db):
+    """S05. Resumen del coordinador calculado sobre el estado actual de las incidencias."""
+    por_estado = dict.fromkeys(dominio.ESTADOS, 0)
+    por_estado.update(db.execute("SELECT estado, COUNT(*) FROM incidencias GROUP BY estado").fetchall())
+    por_prioridad = dict.fromkeys(dominio.PRIORIDADES, 0)
+    por_prioridad.update(
+        db.execute("SELECT prioridad, COUNT(*) FROM incidencias GROUP BY prioridad").fetchall()
+    )
+    total = sum(por_estado.values())
+    criticas = db.execute(
+        f"{_SELECT_INCIDENCIA} WHERE i.prioridad = 'CRITICA' AND i.estado <> 'CERRADA' ORDER BY i.id"
+    ).fetchall()
+    return {
+        "por_estado": por_estado,
+        "por_prioridad": por_prioridad,
+        "total": total,
+        "criticas_no_cerradas": criticas,
+        "porcentaje_cierre": dominio.porcentaje_cierre(por_estado["CERRADA"], total),
+    }
 
 
 def tecnicos_activos(db):

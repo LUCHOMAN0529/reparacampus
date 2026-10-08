@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block titulo %}Incidencias · ReparaCampus{% endblock %}
+{% block contenido %}
+<section class="tarjeta">
+  <h1>
+    {% if g.usuario['rol'] == 'SOLICITANTE' %}Mis incidencias
+    {% elif g.usuario['rol'] == 'TECNICO' %}Mis asignaciones
+    {% else %}Todas las incidencias{% endif %}
+  </h1>
+  <form method="get" class="filtros">
+    <div>
+      <label for="estado">Estado</label>
+      <select id="estado" name="estado">
+        <option value="">Todos</option>
+        {% for opcion in dominio.ESTADOS %}
+        <option value="{{ opcion }}" {% if estado == opcion %}selected{% endif %}>{{ opcion }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label for="prioridad">Prioridad</label>
+      <select id="prioridad" name="prioridad">
+        <option value="">Todas</option>
+        {% for opcion in dominio.PRIORIDADES %}
+        <option value="{{ opcion }}" {% if prioridad == opcion %}selected{% endif %}>{{ opcion }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit">Filtrar</button>
+  </form>
+</section>
+
+<section class="tarjeta">
+  {% if incidencias %}
+  <p class="nota">{{ incidencias | length }} incidencia{{ '' if incidencias | length == 1 else 's' }}</p>
+  <div class="tabla-desplazable">
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th><th>Estado</th><th>Prioridad</th><th>Ubicación</th><th>Categoría</th>
+          <th>Solicitante</th><th>Técnico</th><th>Registrada</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for incidencia in incidencias %}
+        <tr>
+          <td><a href="{{ url_for('incidencias.detalle', codigo=incidencia['codigo']) }}">{{ incidencia['codigo'] }}</a></td>
+          <td><span class="etiqueta estado">{{ incidencia['estado'] }}</span></td>
+          <td><span class="etiqueta prioridad-{{ incidencia['prioridad'] }}">{{ incidencia['prioridad'] }}</span></td>
+          <td>{{ incidencia['ubicacion'] }}</td>
+          <td>{{ incidencia['categoria'] }}</td>
+          <td>{{ incidencia['solicitante_nombre'] }}</td>
+          <td>{{ incidencia['tecnico_nombre'] or 'Sin asignar' }}</td>
+          <td>{{ incidencia['creada_en'] | fecha }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>No hay incidencias que coincidan.</p>
+  {% endif %}
+</section>
+{% endblock %}

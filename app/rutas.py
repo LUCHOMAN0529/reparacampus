@@ -6,6 +6,7 @@ from .auth import requiere_rol, requiere_sesion
 from .db import get_db
 
 bp = Blueprint("incidencias", __name__, url_prefix="/incidencias")
+bp_tablero = Blueprint("tablero", __name__)
 
 # Únicos campos que el registro acepta del cliente (AC-S01-08).
 CAMPOS_REGISTRO = ("ubicacion", "categoria", "descripcion", "impacto", "riesgo_personas")
@@ -41,6 +42,22 @@ def _operar(codigo, operacion, *argumentos):
     except (dominio.ErrorValidacion, dominio.ErrorEstado) as error:
         return _pagina_detalle(codigo, error=error)
     return redirect(url_for(".detalle", codigo=codigo))
+
+
+@bp.route("/")
+@requiere_sesion
+def listado():
+    estado, prioridad = request.args.get("estado", ""), request.args.get("prioridad", "")
+    incidencias = consultas.listar(get_db(), g.usuario, estado, prioridad)
+    return render_template(
+        "incidencias_lista.html", incidencias=incidencias, estado=estado, prioridad=prioridad, dominio=dominio
+    )
+
+
+@bp_tablero.route("/tablero")
+@requiere_rol(dominio.COORDINADOR)
+def ver():
+    return render_template("tablero.html", tablero=consultas.tablero(get_db()))
 
 
 @bp.route("/nueva", methods=("GET", "POST"))
