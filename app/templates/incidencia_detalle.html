@@ -66,6 +66,33 @@
   </form>
 </section>
 {% endif %}
+{% if es_duenio and incidencia['estado'] == 'PENDIENTE_VALIDACION' %}
+<section class="tarjeta">
+  <h2>Validar la solución</h2>
+  <p>Revise la solución propuesta en el historial y confirme si el daño quedó resuelto.</p>
+  <form method="post" action="{{ url_for('incidencias.confirmar', codigo=incidencia['codigo']) }}">
+    <button type="submit">Confirmar y cerrar</button>
+  </form>
+  <form method="post" action="{{ url_for('incidencias.rechazar', codigo=incidencia['codigo']) }}">
+    <label for="motivo-rechazo">Motivo del rechazo</label>
+    <textarea id="motivo-rechazo" name="motivo" required
+              data-min="{{ dominio.MOTIVO_MIN }}" data-max="{{ dominio.MOTIVO_MAX }}"></textarea>
+    <button type="submit" class="peligro">Rechazar solución</button>
+  </form>
+</section>
+{% endif %}
+{% if es_duenio and incidencia['estado'] == 'CERRADA' %}
+<section class="tarjeta">
+  <h2>Reabrir</h2>
+  <p class="nota">Puede reabrir la incidencia hasta 48 horas después del último cierre. El servidor comprueba el plazo.</p>
+  <form method="post" action="{{ url_for('incidencias.reabrir', codigo=incidencia['codigo']) }}">
+    <label for="motivo-reapertura">Motivo de la reapertura</label>
+    <textarea id="motivo-reapertura" name="motivo" required
+              data-min="{{ dominio.MOTIVO_MIN }}" data-max="{{ dominio.MOTIVO_MAX }}"></textarea>
+    <button type="submit" class="peligro">Reabrir incidencia</button>
+  </form>
+</section>
+{% endif %}
 
 <section class="tarjeta">
   <h2>Historial</h2>

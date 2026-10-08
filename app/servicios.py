@@ -5,7 +5,7 @@ estado, datos y, solo al final, una transacción que guarda estado e historial j
 """
 from . import consultas, dominio
 from .db import transaccion
-from .reloj import a_texto
+from .reloj import a_texto, de_texto
 
 
 def _registrar_evento(db, incidencia_id, actor_id, accion, momento, motivo=None, solucion_id=None, cierre_id=None):
@@ -116,4 +116,84 @@ def registrar_solucion(db, usuario, codigo, texto, ahora):
         ).lastrowid
         _registrar_evento(
             db, incidencia["id"], usuario["id"], "REGISTRAR_SOLUCION", momento, solucion_id=solucion_id
+        )
+
+
+def _solucion_vigente(db, incidencia_id):
+    return db.execute(
+        "SELECT id FROM soluciones WHERE incidencia_id = ? ORDER BY id DESC LIMIT 1", (incidencia_id,)
+    ).fetchone()["id"]
+
+
+def confirmar(db, usuario, codigo, ahora):
+    """S04. Solo el solicitante dueño cierra; cada confirmación deja un cierre."""
+    dominio.exigir_rol(usuario["rol"], "CONFIRMAR_SOLUCION")
+    incidencia = consultas.obtener(db, usuario, codigo)
+    dominio.exigir_estado(incidencia["estado"], "CONFIRMAR_SOLUCION")
+    solucion_id = _solucion_vigente(db, incidencia["id"])
+    momento = a_texto(ahora)
+
+    with transaccion(db):
+        _cambiar_estado(db, incidencia["id"], "CONFIRMAR_SOLUCION")
+        cierre_id = db.execute(
+            "INSERT INTO cierres (incidencia_id, solucion_id, confirmado_por, cerrada_en) VALUES (?, ?, ?, ?)",
+            (incidencia["id"], solucion_id, usuario["id"], momento),
+        ).lastrowid
+        _registrar_evento(
+            db,
+            incidencia["id"],
+            usuario["id"],
+            "CONFIRMAR_SOLUCION",
+            momento,
+            solucion_id=solucion_id,
+            cierre_id=cierre_id,
+        )
+
+
+def rechazar(db, usuario, codigo, motivo, ahora):
+    """S04. Vuelve a EN_ATENCION con el mismo técnico; la solución rechazada se conserva."""
+    dominio.exigir_rol(usuario["rol"], "RECHAZAR_SOLUCION")
+    incidencia = consultas.obtener(db, usuario, codigo)
+    dominio.exigir_estado(incidencia["estado"], "RECHAZAR_SOLUCION")
+    motivo = dominio.validar_texto(motivo, dominio.MOTIVO_MIN, dominio.MOTIVO_MAX, "motivo")
+    solucion_id = _solucion_vigente(db, incidencia["id"])
+    momento = a_texto(ahora)
+
+    with transaccion(db):
+        _cambiar_estado(db, incidencia["id"], "RECHAZAR_SOLUCION")
+        _registrar_evento(
+            db,
+            incidencia["id"],
+            usuario["id"],
+            "RECHAZAR_SOLUCION",
+            momento,
+            motivo=motivo,
+            solucion_id=solucion_id,
+        )
+
+
+def reabrir(db, usuario, codigo, motivo, ahora):
+    """S04. Hasta 48 horas después del último cierre, según el reloj del servidor en UTC."""
+    dominio.exigir_rol(usuario["rol"], "REABRIR")
+    incidencia = consultas.obtener(db, usuario, codigo)
+    dominio.exigir_estado(incidencia["estado"], "REABRIR")
+    ultimo_cierre = db.execute(
+        "SELECT id, cerrada_en FROM cierres WHERE incidencia_id = ? ORDER BY id DESC LIMIT 1",
+        (incidencia["id"],),
+    ).fetchone()
+    if not dominio.dentro_de_plazo_reapertura(de_texto(ultimo_cierre["cerrada_en"]), ahora):
+        raise dominio.ErrorEstado("Pasaron más de 48 horas desde el último cierre; ya no se puede reabrir.")
+    motivo = dominio.validar_texto(motivo, dominio.MOTIVO_MIN, dominio.MOTIVO_MAX, "motivo")
+    momento = a_texto(ahora)
+
+    with transaccion(db):
+        _cambiar_estado(db, incidencia["id"], "REABRIR")
+        _registrar_evento(
+            db,
+            incidencia["id"],
+            usuario["id"],
+            "REABRIR",
+            momento,
+            motivo=motivo,
+            cierre_id=ultimo_cierre["id"],
         )
