@@ -50,7 +50,10 @@ Luis autorizó trabajar por etapas: primero las correcciones documentales (este 
 
 **Resumen:** 11 cubiertas, 6 con prueba existente pero mal reflejada en la SPEC y 7 vacíos reales. En el diagnóstico inicial el asistente escribió “27 observaciones, 17 cubiertas y 10 vacíos”; el recuento correcto es este.
 
-## Pendiente tras esta revisión
+## Seguimiento
 
-- Automatizar las pruebas marcadas «Por automatizar»: P-S01-11, P-S01-12, P-S02-10, P-S03-12, P-S04-15 y P-S04-16.
+- Las seis pruebas que quedaron «Por automatizar» (P-S01-11, P-S01-12, P-S02-10, P-S03-12, P-S04-15 y P-S04-16) se implementaron en el commit `6b99fec` de la rama `docs/evidencias`. La batería completa dio 176 pruebas aprobadas y no reveló ningún defecto; el código de producción no se modificó. Las SPECS v0.4 las registran con su nombre real.
+
+## Pendiente
+
 - Revisión de cada SPEC por el integrante asignado.

@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.3 (borrador en revisión) |
+| Versión | 0.4 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
 | Revisor | Asignado: Jean Marco Oyola De Martino. Revisión pendiente |
 | Fecha | 2026-10-08 |
@@ -11,6 +11,8 @@
 **Cambios de la versión 0.2 (2026-10-08):** sin cambios de contenido; las sugerencias recibidas ya estaban cubiertas. Origen: [revisión asistida por IA](../../docs/revision/revision-asistida-ia-2026-10-08.md), que no reemplaza la revisión del integrante asignado.
 
 **Cambios de la versión 0.3 (2026-10-08):** se aclara que el rol se comprueba antes que la existencia de la incidencia; nuevo AC-S02-10 (sin efectos parciales); la tabla de pruebas refleja las pruebas reales e identifica la que falta. Origen: [segunda revisión asistida por IA](../../docs/revision/revision-asistida-ia-02-chatgpt.md), que tampoco reemplaza la revisión del integrante asignado.
+
+**Cambios de la versión 0.4 (2026-10-08):** la prueba P-S02-10 ya está automatizada y se registra con su nombre real. No cambia ningún requisito ni criterio.
 
 ## Historia (H02)
 
@@ -117,7 +119,7 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 
 ## Pruebas y resultados esperados
 
-El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. «Por automatizar» significa que la prueba todavía no existe.
+El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. Todas las pruebas de esta tabla existen en el repositorio y se ejecutaron el 2026-10-08 dentro de la batería completa (`python -m pytest`: 176 aprobadas sobre `6b99fec`); el detalle está en `docs/validacion/validacion.md` de la rama `docs/evidencias`.
 
 | ID | AC | Precondición y entrada | Esperado | Prueba automatizada |
 |---|---|---|---|---|
@@ -130,10 +132,10 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 | P-S02-07 | AC-S02-08 | El coordinador asigna `INC-999999` | 404; 0 asignaciones | `test_incidencia_inexistente` |
 | P-S02-08 | AC-S02-09 | Asignación que además envía `prioridad=CRITICA` sobre una incidencia `NORMAL`. En el registro, ver P-S01-06 | La prioridad sigue `NORMAL` | `test_la_prioridad_no_se_cambia_al_asignar` |
 | P-S02-09 | AC-S02-06 | Con `INC-000001` asignada, `INSERT` de una segunda asignación y `UPDATE` del técnico directamente en la base | La base rechaza ambos; el técnico sigue siendo `tecnico1` | `test_la_base_impide_una_segunda_asignacion` |
-| P-S02-10 | AC-S02-10 | Asignación válida mientras se fuerza un fallo al guardar el evento | La operación falla; `REGISTRADA` sin técnico; 0 asignaciones; 1 evento | Por automatizar (T-S02-06) |
+| P-S02-10 | AC-S02-10 | Asignación válida mientras se fuerza un fallo al guardar el evento | La operación falla; las tablas `incidencias`, `asignaciones`, `soluciones`, `cierres` y `eventos` quedan idénticas fila a fila (`REGISTRADA` sin técnico, 0 asignaciones, 1 evento); sin el fallo, la misma operación se completa | `test_un_fallo_al_guardar_el_evento_revierte_toda_la_operacion`, caso `P-S02-10-asignar`, en `tests/test_atomicidad.py` (commit `6b99fec`, rama `docs/evidencias`) |
 
 ## Decisión de revisión / versión aprobada
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.3 | Jean Marco Oyola De Martino (asignado) | Pendiente | |
+| Pendiente | 0.4 | Jean Marco Oyola De Martino (asignado) | Pendiente | |

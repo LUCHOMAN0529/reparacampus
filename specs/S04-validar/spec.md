@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.3 (borrador en revisión) |
+| Versión | 0.4 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
 | Revisor | Asignado: Cristian David Diaz España. Revisión pendiente |
 | Fecha | 2026-10-08 |
@@ -11,6 +11,8 @@
 **Cambios de la versión 0.2 (2026-10-08):** se agregan los límites 300 y 301 a la prueba P-S04-04. Origen: [revisión asistida por IA](../../docs/revision/revision-asistida-ia-2026-10-08.md), que no reemplaza la revisión del integrante asignado.
 
 **Cambios de la versión 0.3 (2026-10-08):** se define «solución vigente»; se precisa que un motivo formado solo por espacios se rechaza; nuevo AC-S04-11 (sin efectos parciales); la tabla de pruebas refleja las pruebas reales e identifica las que faltan. Origen: [segunda revisión asistida por IA](../../docs/revision/revision-asistida-ia-02-chatgpt.md), que tampoco reemplaza la revisión del integrante asignado.
+
+**Cambios de la versión 0.4 (2026-10-08):** las pruebas P-S04-15 y P-S04-16 ya están automatizadas y se registran con su nombre real. No cambia ningún requisito ni criterio.
 
 ## Historia (H04)
 
@@ -119,7 +121,7 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 
 ## Pruebas y resultados esperados
 
-El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. «Por automatizar» significa que la prueba todavía no existe.
+El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. Todas las pruebas de esta tabla existen en el repositorio y se ejecutaron el 2026-10-08 dentro de la batería completa (`python -m pytest`: 176 aprobadas sobre `6b99fec`); el detalle está en `docs/validacion/validacion.md` de la rama `docs/evidencias`.
 
 | ID | AC | Precondición y entrada | Esperado | Prueba automatizada |
 |---|---|---|---|---|
@@ -137,8 +139,8 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 | P-S04-12 | AC-S04-07 | Mismo cierre; reapertura con el reloj en `2026-10-03T10:00:00.000001Z` | 409; `CERRADA`; los mismos 5 eventos | `test_reabrir_un_instante_despues_de_48_horas` |
 | P-S04-13 | AC-S04-08 | `CERRADA` dentro del plazo; reapertura con motivo de 9, de 301 y vacío | 400; `CERRADA`; 5 eventos | `test_motivo_de_reapertura_invalido` |
 | P-S04-14 | AC-S04-10 | `CERRADA` hace 72 h; la reapertura envía campos `fecha` y `ahora` dentro del plazo | 409; `CERRADA` | `test_la_hora_la_decide_el_servidor` |
-| P-S04-15 | AC-S04-03, 08 | Rechazo y reapertura con un motivo formado solo por espacios | 400; mismo estado; mismo historial | Por automatizar (T-S04-07) |
-| P-S04-16 | AC-S04-11 | Confirmar, rechazar y reabrir mientras se fuerza un fallo al guardar el evento | La operación falla; mismo estado; 0 cierres nuevos; mismo historial | Por automatizar (T-S04-07) |
+| P-S04-15 | AC-S04-03, 08 | Rechazo (`PENDIENTE_VALIDACION`, 4 eventos) y reapertura (`CERRADA` dentro del plazo, 5 eventos) con un motivo de 15 espacios, de 300 espacios, y de tabulaciones y saltos de línea | 400; mismo estado y mismo técnico; eventos idénticos fila a fila; sin soluciones ni cierres nuevos | `test_p_s04_15_rechazo_con_motivo_solo_de_espacios`, `test_p_s04_15_reapertura_con_motivo_solo_de_espacios` (commit `6b99fec`, rama `docs/evidencias`) |
+| P-S04-16 | AC-S04-11 | Confirmar, rechazar y reabrir mientras se fuerza un fallo al guardar el evento | La operación falla; las cinco tablas quedan idénticas fila a fila (mismo estado, 0 cierres nuevos, mismo historial); sin el fallo, la misma operación se completa | `test_un_fallo_al_guardar_el_evento_revierte_toda_la_operacion`, casos `P-S04-16-confirmar`, `P-S04-16-rechazar` y `P-S04-16-reabrir`, en `tests/test_atomicidad.py` (commit `6b99fec`, rama `docs/evidencias`) |
 
 Las pruebas del plazo usan un reloj controlado inyectado en la aplicación. No se espera tiempo real ni se cambia el reloj del sistema.
 
@@ -146,4 +148,4 @@ Las pruebas del plazo usan un reloj controlado inyectado en la aplicación. No s
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.3 | Cristian David Diaz España (asignado) | Pendiente | |
+| Pendiente | 0.4 | Cristian David Diaz España (asignado) | Pendiente | |

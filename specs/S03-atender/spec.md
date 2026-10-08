@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.3 (borrador en revisión) |
+| Versión | 0.4 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
 | Revisor | Asignado: José Leonardo Hernández Pedrosa. Revisión pendiente |
 | Fecha | 2026-10-08 |
@@ -11,6 +11,8 @@
 **Cambios de la versión 0.2 (2026-10-08):** sin cambios de contenido; se descartó una sugerencia errónea (ver registro). Origen: [revisión asistida por IA](../../docs/revision/revision-asistida-ia-2026-10-08.md), que no reemplaza la revisión del integrante asignado.
 
 **Cambios de la versión 0.3 (2026-10-08):** nuevo AC-S03-09 (sin efectos parciales); la tabla de pruebas indica el estado de partida de cada conteo de eventos, refleja las pruebas reales e identifica la que falta. Origen: [segunda revisión asistida por IA](../../docs/revision/revision-asistida-ia-02-chatgpt.md), que tampoco reemplaza la revisión del integrante asignado.
+
+**Cambios de la versión 0.4 (2026-10-08):** la prueba P-S03-12 ya está automatizada y se registra con su nombre real. No cambia ningún requisito ni criterio.
 
 ## Historia (H03)
 
@@ -107,7 +109,7 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 
 ## Pruebas y resultados esperados
 
-El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. «Por automatizar» significa que la prueba todavía no existe.
+El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. Todas las pruebas de esta tabla existen en el repositorio y se ejecutaron el 2026-10-08 dentro de la batería completa (`python -m pytest`: 176 aprobadas sobre `6b99fec`); el detalle está en `docs/validacion/validacion.md` de la rama `docs/evidencias`.
 
 | ID | AC | Precondición y entrada | Esperado | Prueba automatizada |
 |---|---|---|---|---|
@@ -122,10 +124,10 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 | P-S03-09 | AC-S03-08 | Solución `<img src=x onerror=alert(1)> se cambió la pieza` | El detalle la muestra escapada | `test_la_solucion_no_se_ejecuta_como_html` |
 | P-S03-10 | AC-S03-06 | Nueva solución tras un rechazo y tras una reapertura | Ver P-S04-02 y P-S04-03: 2 soluciones, la primera intacta | `test_p_s04_02_rechazo_y_nueva_solucion`, `test_p_s04_03_reapertura_y_nuevo_cierre` |
 | P-S03-11 | AC-S03-07 | `tecnico1` y `tecnico2` intentan confirmar una `PENDIENTE_VALIDACION` | Ver P-S04-05: 403; 0 cierres | `test_p_s04_05_solo_el_duenio_valida` |
-| P-S03-12 | AC-S03-09 | Iniciar y registrar solución mientras se fuerza un fallo al guardar el evento | La operación falla; mismo estado; 0 soluciones nuevas; mismo historial | Por automatizar (T-S03-06) |
+| P-S03-12 | AC-S03-09 | Iniciar y registrar solución mientras se fuerza un fallo al guardar el evento | La operación falla; las cinco tablas quedan idénticas fila a fila (mismo estado, 0 soluciones nuevas, mismo historial); sin el fallo, la misma operación se completa | `test_un_fallo_al_guardar_el_evento_revierte_toda_la_operacion`, casos `P-S03-12-iniciar` y `P-S03-12-solucion`, en `tests/test_atomicidad.py` (commit `6b99fec`, rama `docs/evidencias`) |
 
 ## Decisión de revisión / versión aprobada
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.3 | José Leonardo Hernández Pedrosa (asignado) | Pendiente | |
+| Pendiente | 0.4 | José Leonardo Hernández Pedrosa (asignado) | Pendiente | |

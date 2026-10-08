@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.3 (borrador en revisión) |
+| Versión | 0.4 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
 | Revisor | Asignado: Rafael Eduardo May Recuero. Revisión pendiente |
 | Fecha | 2026-10-08 |
@@ -87,10 +87,10 @@ Estas preguntas están **sin responder**. El 2026-10-08 el equipo informó que n
 | SUP-11 | Las contraseñas de las cinco cuentas ficticias se publican en el README, porque son datos de prueba. | Autenticación |
 | SUP-12 | La «solución vigente» de una incidencia es la última registrada; es la que se confirma o se rechaza. | S04 |
 | SUP-13 | El historial se muestra en el orden en que se registraron los eventos; ante dos eventos con la misma marca de tiempo, el desempate es su identificador consecutivo. | S05 |
-| SUP-14 | Registros enviados a la vez se atienden uno tras otro; todos se crean, con códigos consecutivos distintos. | S01 |
+| SUP-14 | Registros enviados a la vez se atienden uno tras otro; todos se crean, con códigos consecutivos distintos. **Alcance de la evidencia:** se comprobó con ocho registros simultáneos, desde ocho hilos de un mismo proceso, contra un archivo SQLite (P-S01-11). No es una prueba de carga ni una garantía general de concurrencia: con más carga, un registro podría agotar la espera del bloqueo de SQLite (5 segundos por defecto) y fallar con error, sin dejar datos parciales; ese caso no está probado. | S01 |
 
 ## 8. Registro de revisión
 
 | Fecha | Versión | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.3 | Rafael Eduardo May Recuero (asignado) | Pendiente | |
+| Pendiente | 0.4 | Rafael Eduardo May Recuero (asignado) | Pendiente | |
