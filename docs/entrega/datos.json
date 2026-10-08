@@ -3,7 +3,7 @@
   "EQUIPO": "",
   "GRUPO": "",
   "DOCENTE": "",
-  "FECHA": "",
+  "FECHA": "2026-10-08",
   "INTEGRANTES": [
     "Rafael Eduardo May Recuero",
     "Jean Marco Oyola De Martino",
@@ -12,9 +12,7 @@
     "Jorge Luis González Arroyo",
     "Luis Carlo Daza Ospino"
   ],
-  "TAG": "",
-  "SHA": "",
-  "PRUEBAS": "",
-  "PENDIENTES_EQUIPO": "",
-  "ACEPTACION": ""
+  "TAG": "release-examen",
+  "SHA": "b59faa1128708c5cc405d0b315c0226c610c5489",
+  "PRUEBAS": "176 pruebas aprobadas y 0 fallidas (python -m pytest, 2026-10-08, commit b59faa1)"
 }

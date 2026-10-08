@@ -16,7 +16,8 @@ El repositorio sigue el hilo **Requisito → Historia → SPEC → Código → P
 | Diseño: componentes, datos, UML y decisión | [`docs/diseno/`](docs/diseno/arquitectura.md) |
 | Revisiones | [`docs/revision/`](docs/revision/) |
 | Validación: trazabilidad, SPEC frente a código, hallazgos | [`docs/validacion/validacion.md`](docs/validacion/validacion.md) |
-| Ejecución final de las pruebas sobre el tag (se agrega a `main` después de crear el tag) | `docs/validacion/ejecucion-final.md` |
+| Ejecución final de las pruebas sobre el tag | [`docs/validacion/ejecucion-final.md`](docs/validacion/ejecucion-final.md) |
+| Documento de entrega (PDF y DOCX) | [`docs/entrega/`](docs/entrega/) |
 | Riesgos y controles | [`docs/riesgos.md`](docs/riesgos.md) |
 | Decisiones confirmadas y pendientes | [`docs/decisiones.md`](docs/decisiones.md) |
 | Bitácora de IA | [`docs/bitacora-ia.md`](docs/bitacora-ia.md) |

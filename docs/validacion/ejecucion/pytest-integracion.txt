@@ -1,0 +1,12 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\luisd\AppData\Local\Temp\claude\C--Users-luisd-OneDrive-trabajos-y-talleres-CLAUDE\60f9fbd9-12a1-44b5-9787-ce82d7b441ed\scratchpad\venv-app\Scripts\python.exe
+rootdir: C:\Users\luisd\OneDrive\trabajos y talleres CLAUDE\reparacampus
+configfile: pytest.ini
+testpaths: tests
+collecting ... collected 176 items / 173 deselected / 3 selected
+
+tests/test_integracion.py::test_p_s04_01_flujo_de_cierre PASSED          [ 33%]
+tests/test_integracion.py::test_p_s04_02_rechazo_y_nueva_solucion PASSED [ 66%]
+tests/test_integracion.py::test_p_s04_03_reapertura_y_nuevo_cierre PASSED [100%]
+
+====================== 3 passed, 173 deselected in 0.60s ======================
