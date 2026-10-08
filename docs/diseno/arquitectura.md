@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.1 (borrador en revisión, previo a la implementación) |
+| Versión | 0.3 (ajustada a la implementación; revisión pendiente) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
 | Revisor | Asignado: Rafael Eduardo May Recuero. Revisión pendiente |
 | Fecha | 2026-10-08 |
 
-Este documento se ajustará a la versión final del código. Los diagramas están en PlantUML junto a este archivo.
+La versión 0.1 se escribió antes de programar. Esta versión se ajustó a lo implementado (aplicación en el commit `786cf42`, pruebas en `de49d68`) tras la [segunda revisión asistida por IA](../revision/revision-asistida-ia-02-chatgpt.md). Los diagramas están en PlantUML junto a este archivo.
 
 ## 1. Componentes
 
@@ -16,13 +16,14 @@ Monolito modular en tres capas. Diagrama: [componentes.puml](componentes.puml).
 | Capa | Módulo | Responsabilidad | No hace |
 |---|---|---|---|
 | Interfaz | `app/templates/`, `app/static/` | Formularios, listados, detalle, tablero. Muestra u oculta acciones según rol y estado. | No decide permisos ni reglas. |
-| Entrada HTTP | `app/rutas.py` | Lee la petición, llama a servicios o consultas, traduce errores a códigos HTTP. | No contiene reglas de negocio ni SQL. |
+| Entrada HTTP | `app/rutas.py` | Lee la petición, llama a servicios o consultas y muestra el resultado. Dos grupos de rutas: incidencias y tablero. | No contiene reglas de negocio ni SQL. |
+| Entrada HTTP | `app/__init__.py` | Fábrica de la aplicación, configuración (base, reloj, método de hash) y traducción de los errores de dominio a códigos HTTP. | |
 | Entrada HTTP | `app/auth.py` | Inicio y cierre de sesión, carga del usuario de la sesión, decoradores de sesión y rol. | |
 | Lógica de negocio | `app/dominio.py` | Catálogos, validaciones, prioridad, tabla de transiciones, plazo de reapertura, porcentaje. Funciones puras. | No conoce Flask ni la base. |
 | Lógica de negocio | `app/servicios.py` | Casos de uso que cambian datos. Cada uno es una transacción: estado + registros + evento. | |
 | Lógica de negocio | `app/consultas.py` | Lecturas con la visibilidad por rol. | No modifica datos. |
 | Lógica de negocio | `app/reloj.py` | Única fuente de la hora UTC; reemplazable en pruebas. | |
-| Persistencia | `app/db.py`, `app/schema.sql` | Conexión SQLite por petición, esquema, seed ficticio. | |
+| Persistencia | `app/db.py`, `app/schema.sql` | Conexión SQLite por petición, transacción todo o nada (`db.transaccion`), esquema y seed ficticio. | |
 
 **Dónde se ejecutan las reglas:** siempre en el servidor, en `dominio` y `servicios`. La interfaz solo evita mostrar acciones que el servidor rechazaría.
 
@@ -67,7 +68,7 @@ No existe ninguna otra transición. Esta tabla se implementa una sola vez en `do
 |---|---|---|
 | `GET`, `POST /login`; `POST /logout` | Cualquiera | Autenticación |
 | `GET /` | Con sesión | Redirige al listado o al tablero |
-| `GET /incidencias?estado=&prioridad=` | Con sesión | S05 |
+| `GET /incidencias/?estado=&prioridad=` | Con sesión | S05 |
 | `GET`, `POST /incidencias/nueva` | Solicitante | S01 |
 | `GET /incidencias/<codigo>` | Con visibilidad | S05 |
 | `POST /incidencias/<codigo>/asignar` | Coordinador | S02 |
@@ -78,7 +79,7 @@ No existe ninguna otra transición. Esta tabla se implementa una sola vez en `do
 | `POST /incidencias/<codigo>/reabrir` | Solicitante dueño | S04 |
 | `GET /tablero` | Coordinador | S05 |
 
-Una operación exitosa responde 302 hacia el detalle. Un error muestra la página con el mensaje y el código correspondiente.
+Una operación exitosa responde 302 hacia el detalle. Un error de datos (400) o de estado (409) se muestra en el mismo detalle de la incidencia, con su código; un error de permiso (403) o de visibilidad (404) se muestra en una página de error. En el registro, los errores de datos se muestran en el formulario, campo por campo.
 
 ### 4.2 Errores
 
@@ -105,13 +106,18 @@ Si falla cualquier paso del 1 al 5 no se abre ninguna escritura. Si falla el pas
 
 Cada servicio abre una transacción con `BEGIN IMMEDIATE`, actualiza el estado con una condición sobre el estado de origen (`UPDATE … WHERE id = ? AND estado = ?`), comprueba que afectó una fila, inserta los registros asociados y el evento, y confirma. Ante cualquier excepción se ejecuta `ROLLBACK`. Así estado e historial quedan siempre juntos.
 
+El código de una incidencia nueva se calcula dentro de esa transacción, cuando el bloqueo de escritura ya está tomado, de modo que dos registros simultáneos no obtienen el mismo consecutivo; la columna `codigo` es además única.
+
+El historial se lee ordenado por el identificador del evento, que es el orden de inserción y sirve de desempate cuando dos eventos tienen la misma marca de tiempo. La «solución vigente» de una incidencia es su última solución registrada, y el «último cierre», su cierre más reciente.
+
 ### 4.5 Seguridad
 
-- Contraseñas con `werkzeug.security.generate_password_hash`; nunca en texto plano.
+- Contraseñas con `werkzeug.security.generate_password_hash` (método `scrypt`); nunca en texto plano.
 - Sesión de Flask (cookie firmada, `HttpOnly`, `SameSite=Lax`). La sesión guarda solo el identificador del usuario; el rol se lee de la base en cada petición.
 - No hay selector de rol: el rol es un atributo de la cuenta.
 - Jinja con autoescape; no se usa `safe` con texto del usuario. Las consultas SQL usan parámetros.
 - Las operaciones que cambian datos solo aceptan `POST`.
+- No hay token CSRF en los formularios; se declara como limitación conocida.
 
 ## 5. Flujo de validación de una operación
 
@@ -125,4 +131,4 @@ Secuencia del rechazo de una solución, con permisos y evento: [secuencia-rechaz
 
 | Fecha | Versión | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.1 | Pendiente | Pendiente | |
+| Pendiente | 0.3 | Rafael Eduardo May Recuero (asignado) | Pendiente | |
