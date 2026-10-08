@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block titulo %}{{ incidencia['codigo'] }} · ReparaCampus{% endblock %}
+{% block contenido %}
+{% set es_duenio = g.usuario['id'] == incidencia['solicitante_id'] %}
+{% set es_tecnico_asignado = g.usuario['id'] == incidencia['tecnico_id'] %}
+<section class="tarjeta">
+  <h1>{{ incidencia['codigo'] }}</h1>
+  {% if error %}<p class="error" role="alert">{{ error.mensaje }} No se modificó la incidencia.</p>{% endif %}
+  <dl class="datos">
+    <dt>Estado</dt>
+    <dd><span class="etiqueta estado">{{ incidencia['estado'] }}</span></dd>
+    <dt>Prioridad</dt>
+    <dd><span class="etiqueta prioridad-{{ incidencia['prioridad'] }}">{{ incidencia['prioridad'] }}</span></dd>
+    <dt>Ubicación</dt>
+    <dd>{{ incidencia['ubicacion'] }}</dd>
+    <dt>Categoría</dt>
+    <dd>{{ incidencia['categoria'] }}</dd>
+    <dt>Impacto</dt>
+    <dd>{{ incidencia['impacto'] }}</dd>
+    <dt>Riesgo para personas</dt>
+    <dd>{{ 'Sí' if incidencia['riesgo_personas'] else 'No' }}</dd>
+    <dt>Registrada por</dt>
+    <dd>{{ incidencia['solicitante_nombre'] }}</dd>
+    <dt>Fecha de registro</dt>
+    <dd>{{ incidencia['creada_en'] | fecha }}</dd>
+    <dt>Técnico</dt>
+    <dd>{{ incidencia['tecnico_nombre'] or 'Sin asignar' }}</dd>
+    <dt>Descripción</dt>
+    <dd class="texto-usuario">{{ incidencia['descripcion'] }}</dd>
+  </dl>
+</section>
+
+{# Las acciones se muestran según rol y estado; el servidor vuelve a comprobarlo todo. #}
+
+<section class="tarjeta">
+  <h2>Historial</h2>
+  <ol class="historial">
+    {% for evento in historial %}
+    <li>
+      <div class="cabecera">
+        <strong>{{ evento['accion'] }}</strong>
+        <span>{{ evento['estado_anterior'] or '—' }} → {{ evento['estado_nuevo'] }}</span>
+        <span class="nota">{{ evento['actor_nombre'] }} ({{ evento['actor_rol'] }}) · {{ evento['ocurrido_en'] | fecha }}</span>
+      </div>
+      {% if evento['accion'] == 'ASIGNAR' %}
+      <p class="nota">Técnico asignado: {{ incidencia['tecnico_nombre'] }}</p>
+      {% endif %}
+      {% if evento['motivo'] %}
+      <blockquote class="texto-usuario"><strong>Motivo:</strong> {{ evento['motivo'] }}</blockquote>
+      {% endif %}
+      {% if evento['solucion_texto'] %}
+      <blockquote class="texto-usuario"><strong>{{ 'Solución confirmada' if evento['accion'] == 'CONFIRMAR_SOLUCION' else 'Solución rechazada' if evento['accion'] == 'RECHAZAR_SOLUCION' else 'Solución' }}:</strong> {{ evento['solucion_texto'] }}</blockquote>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endblock %}
