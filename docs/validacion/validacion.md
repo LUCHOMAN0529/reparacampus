@@ -3,7 +3,7 @@
 | Campo | Valor |
 |---|---|
 | Versión del código | commit `6b99fec` (rama `docs/evidencias`); `app/` no cambia desde `786cf42` |
-| SPECS | S01 a S05, versión 0.3 (rama `specs/s01-s05`, commit `83861a7`) |
+| SPECS | S01 a S04 versión 0.4 y S05 versión 0.3 (rama `specs/s01-s05`, commit `1335535`); la 0.4 solo registra los nombres de las pruebas, sin cambiar criterios |
 | Fecha de ejecución | 2026-10-08 |
 | Comando | `python -m pytest` |
 | Resultado | **176 pruebas aprobadas, 0 fallidas**, en 20,0 s |
@@ -46,7 +46,7 @@ Las tres de integración se ejecutan solas con `python -m pytest -m integracion`
 
 ## 3. Matriz SPEC frente a código
 
-Estado de cada criterio de aceptación de las SPECS v0.3 sobre `6b99fec`. “Observado” resume el resultado de la prueba y los efectos en la base.
+Estado de cada criterio de aceptación de las SPECS vigentes sobre `6b99fec`. “Observado” resume el resultado de la prueba y los efectos en la base.
 
 ### S01 · Registrar (RF01, H01) — `app/dominio.py`, `app/servicios.py`, `app/rutas.py`
 

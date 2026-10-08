@@ -16,16 +16,18 @@
 
 ## Cómo se usó la IA
 
-Se entregó al asistente el enunciado, y después cada SPEC con su plan, el modelo de estados y los contratos compartidos. La implementación se pidió en cambios acotados: una rama y un commit por SPEC, con las pruebas de esa SPEC ejecutadas antes de pasar a la siguiente. No se generó la aplicación con un único prompt.
+Se usaron dos asistentes: Claude Code para especificar, implementar, probar y contrastar, y ChatGPT para una segunda revisión documental de las SPECS. Se entregó al asistente el enunciado, y después cada SPEC con su plan, el modelo de estados y los contratos compartidos. La implementación se pidió en cambios acotados: una rama y un commit por SPEC, con las pruebas de esa SPEC ejecutadas antes de pasar a la siguiente. No se generó la aplicación con un único prompt.
 
 ## Evidencia de las cinco funcionalidades
 
 | Funcionalidad | SPEC | Rama | Commit | Pruebas | Cómo verla en el prototipo |
 |---|---|---|---|---|---|
-| Registrar | S01 | `feat/s01-registrar` | `7bc08f2` | 20 aprobadas | `solicitante1` → Nueva incidencia |
-| Priorizar y asignar | S02 | `feat/s02-priorizar-asignar` | `8479352` | 21 aprobadas | `coordinador1` → Incidencias → abrir una REGISTRADA → Asignar |
-| Atender | S03 | `feat/s03-atender` | `20ebd53` | 19 aprobadas | `tecnico1` → Incidencias → Iniciar atención → Registrar solución |
-| Validar y reabrir | S04 | `feat/s04-validar` | `70468c0` | 37 + 3 de integración | `solicitante1` → abrir la incidencia → Confirmar, Rechazar o Reabrir |
+| Registrar | S01 | `feat/s01-registrar` | `7bc08f2` | 26 + 5 de concurrencia | `solicitante1` → Nueva incidencia |
+| Priorizar y asignar | S02 | `feat/s02-priorizar-asignar` | `8479352` | 21 + 1 de atomicidad | `coordinador1` → Incidencias → abrir una REGISTRADA → Asignar |
+| Atender | S03 | `feat/s03-atender` | `20ebd53` | 19 + 2 de atomicidad | `tecnico1` → Incidencias → Iniciar atención → Registrar solución |
+| Validar y reabrir | S04 | `feat/s04-validar` | `70468c0` | 43 + 3 de integración + 3 de atomicidad | `solicitante1` → abrir la incidencia → Confirmar, Rechazar o Reabrir |
 | Consultar, historial y tablero | S05 | `feat/s05-consultar-historizar` | `786cf42` | 46 aprobadas | Cualquier usuario → Incidencias; `coordinador1` → Tablero |
 
 La autenticación con las cinco cuentas ficticias está en `feat/base` (commit `c5e7ef7`, 7 pruebas).
+
+La columna de pruebas cuenta las que existen en la rama `docs/evidencias` (commit `6b99fec`), donde la batería completa dio 176 aprobadas. Las ramas `feat/*` contienen las pruebas de su momento; las agregadas después (commits `de49d68` y `6b99fec`) están solo en `docs/evidencias`.

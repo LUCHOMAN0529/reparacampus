@@ -15,6 +15,7 @@ El repositorio sigue el hilo **Requisito → Historia → SPEC → Código → P
 | Revisiones | [`docs/revision/`](docs/revision/) |
 | Validación: trazabilidad, SPEC frente a código, hallazgos | [`docs/validacion/validacion.md`](docs/validacion/validacion.md) |
 | Riesgos y controles | [`docs/riesgos.md`](docs/riesgos.md) |
+| Decisiones confirmadas y pendientes | [`docs/decisiones.md`](docs/decisiones.md) |
 | Bitácora de IA | [`docs/bitacora-ia.md`](docs/bitacora-ia.md) |
 | Aplicación | [`app/`](app/) |
 | Pruebas automatizadas | [`tests/`](tests/) |
@@ -129,6 +130,7 @@ docs/             Diseño y revisiones
 - El servidor de desarrollo de Flask no es apto para producción; el caso no pide hosting.
 - No hay gestión de usuarios: las cuentas se crean solo con el seed.
 - Sin paginación ni búsqueda por texto en el listado.
+- La concurrencia se probó con ocho registros simultáneos en un mismo proceso; no hay prueba de carga. Un escritor espera el bloqueo de SQLite hasta 5 segundos.
 - Las fechas se muestran en UTC.
 
 ## Equipo

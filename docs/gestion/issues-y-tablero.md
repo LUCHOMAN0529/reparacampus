@@ -70,7 +70,7 @@ Qué hay que comprobar
 - [ ] Impacto y riesgo inválidos se rechazan
 - [ ] Coordinador y técnico no pueden registrar
 - [ ] El texto con HTML se muestra escapado
-- [ ] python -m pytest tests/test_s01_registro.py pasa (20 pruebas)
+- [ ] python -m pytest tests/test_s01_registro.py tests/test_concurrencia.py pasa (26 + 5 pruebas)
 ```
 
 ### Issue 4 · RF02 · S02 Priorizar y asignar
@@ -112,7 +112,7 @@ Qué hay que comprobar
 - [ ] El rechazo conserva técnico y solución, y guarda el motivo
 - [ ] Reapertura a las 48 h exactas se acepta; un instante después se rechaza
 - [ ] El coordinador y el técnico reciben 403
-- [ ] python -m pytest tests/test_s04_validacion.py tests/test_integracion.py pasa (37 + 3)
+- [ ] python -m pytest tests/test_s04_validacion.py tests/test_integracion.py tests/test_atomicidad.py pasa (43 + 3 + 6)
 ```
 
 ### Issue 7 · RF05 · S05 Consultar, historizar y tablero
@@ -136,6 +136,7 @@ Qué hay que comprobar
 Partes 2, 3 y 4 del examen y entrega
 
 Qué hay que hacer
+- [ ] Resolver docs/decisiones.md: categoría A (autor), B (equipo) y C (docente)
 - [ ] Confirmar las decisiones humanas de docs/bitacora-ia.md
 - [ ] Confirmar los responsables de docs/riesgos.md
 - [ ] Recorrido manual completo en navegador con los cinco usuarios
