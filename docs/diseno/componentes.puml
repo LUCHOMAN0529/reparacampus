@@ -1,0 +1,50 @@
+@startuml componentes
+title ReparaCampus · Componentes (monolito modular)
+skinparam componentStyle rectangle
+left to right direction
+
+actor "Solicitante" as sol
+actor "Coordinador" as coo
+actor "Técnico" as tec
+
+package "Interfaz" {
+  [Plantillas Jinja\nHTML + CSS + JS] as ui
+}
+
+package "Entrada HTTP (Flask)" {
+  [rutas.py] as rutas
+  [auth.py\nsesión y rol] as auth
+}
+
+package "Lógica de negocio" {
+  [servicios.py\ncasos de uso transaccionales] as serv
+  [consultas.py\nlecturas con visibilidad] as cons
+  [dominio.py\nreglas puras] as dom
+  [reloj.py\nhora UTC] as reloj
+}
+
+package "Persistencia" {
+  [db.py\nconexión, esquema, seed] as db
+  database "SQLite\nreparacampus.sqlite" as sqlite
+}
+
+sol --> ui
+coo --> ui
+tec --> ui
+ui --> rutas : HTTP
+rutas --> auth : usuario de la sesión
+rutas --> serv : operaciones
+rutas --> cons : listados, detalle, tablero
+serv --> dom : validar, transición, plazo
+cons --> dom : filtros, porcentaje
+serv --> reloj
+serv --> db : transacción
+cons --> db
+auth --> db
+db --> sqlite
+
+note bottom of dom
+  Sin dependencia de Flask
+  ni de la base de datos.
+end note
+@enduml

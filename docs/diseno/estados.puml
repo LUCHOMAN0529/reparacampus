@@ -1,0 +1,34 @@
+@startuml estados
+title ReparaCampus · Estados de una incidencia
+hide empty description
+
+[*] --> REGISTRADA : CREAR\n[solicitante; datos válidos]
+
+REGISTRADA --> ASIGNADA : ASIGNAR\n[coordinador; técnico activo]
+
+ASIGNADA --> EN_ATENCION : INICIAR_ATENCION\n[técnico asignado]
+
+EN_ATENCION --> PENDIENTE_VALIDACION : REGISTRAR_SOLUCION\n[técnico asignado; solución 20..800]
+
+PENDIENTE_VALIDACION --> CERRADA : CONFIRMAR_SOLUCION\n[solicitante dueño]
+
+PENDIENTE_VALIDACION --> EN_ATENCION : RECHAZAR_SOLUCION\n[solicitante dueño; motivo 10..300]\n/ conserva técnico y solución
+
+CERRADA --> EN_ATENCION : REABRIR\n[solicitante dueño; motivo 10..300;\nahora − último cierre <= 48 h (UTC, servidor)]\n/ conserva técnico, soluciones y cierres
+
+note right of CERRADA
+  No es un estado final:
+  puede reabrirse dentro del plazo.
+  No hay cierre automático.
+end note
+
+note left of ASIGNADA
+  No hay reasignación.
+end note
+
+note as N1
+  Toda transición exitosa agrega un evento
+  con actor, fecha, estado anterior y nuevo.
+  Una operación rechazada no cambia nada.
+end note
+@enduml

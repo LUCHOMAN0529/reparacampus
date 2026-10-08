@@ -1,0 +1,65 @@
+@startuml secuencia-rechazo
+title ReparaCampus · Rechazo de una solución (S04, AC-S04-02 a 05)
+autonumber
+
+actor "Solicitante" as sol
+participant "Interfaz\n(detalle)" as ui
+participant "rutas.py" as rutas
+participant "auth.py" as auth
+participant "servicios.py\nrechazar()" as serv
+participant "dominio.py" as dom
+participant "reloj.py" as reloj
+database "SQLite" as db
+
+sol -> ui : Escribe el motivo y pulsa "Rechazar"
+ui -> rutas : POST /incidencias/INC-000001/rechazar\nmotivo
+rutas -> auth : usuario de la sesión
+auth -> db : SELECT usuario activo
+auth --> rutas : usuario, rol
+
+alt sin sesión
+  rutas --> ui : 302 /login
+else con sesión
+  rutas -> serv : rechazar(usuario, codigo, motivo)
+
+  serv -> dom : ¿el rol puede RECHAZAR_SOLUCION?
+  alt rol distinto de SOLICITANTE
+    serv --> rutas : ErrorPermiso
+    rutas --> ui : 403 (sin cambios)
+  else rol permitido
+    serv -> db : SELECT incidencia por código
+    alt no existe o no es del solicitante
+      serv --> rutas : NoEncontrada
+      rutas --> ui : 404 (sin cambios)
+    else es el dueño
+      serv -> dom : ¿estado == PENDIENTE_VALIDACION?
+      alt estado incompatible
+        serv --> rutas : ErrorEstado
+        rutas --> ui : 409 (sin cambios)
+      else estado correcto
+        serv -> dom : validar_texto(motivo, 10, 300)
+        alt motivo inválido
+          serv --> rutas : ErrorValidacion
+          rutas --> ui : 400 (sin cambios)
+        else motivo válido
+          serv -> reloj : ahora_utc()
+          reloj --> serv : fecha UTC
+          group Transacción
+            serv -> db : BEGIN IMMEDIATE
+            serv -> db : UPDATE incidencias SET estado = EN_ATENCION\nWHERE id = ? AND estado = PENDIENTE_VALIDACION
+            note right
+              tecnico_id no se modifica.
+              La solución rechazada no se toca.
+            end note
+            serv -> db : INSERT eventos (RECHAZAR_SOLUCION,\nactor, PENDIENTE_VALIDACION → EN_ATENCION,\nmotivo, solucion_id, fecha)
+            serv -> db : COMMIT
+          end
+          serv --> rutas : incidencia actualizada
+          rutas --> ui : 302 al detalle
+          ui --> sol : Estado EN_ATENCION e historial con el rechazo
+        end
+      end
+    end
+  end
+end
+@enduml
