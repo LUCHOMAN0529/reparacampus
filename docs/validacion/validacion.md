@@ -2,15 +2,15 @@
 
 | Campo | Valor |
 |---|---|
-| Versión del código | commit `6b99fec` (rama `docs/evidencias`); `app/` no cambia desde `786cf42` |
-| SPECS | S01 a S04 versión 0.4 y S05 versión 0.3 (rama `specs/s01-s05`, commit `1335535`); la 0.4 solo registra los nombres de las pruebas, sin cambiar criterios |
+| Versión del código | Versión integrada en `main`. `app/` no cambia desde `786cf42` y `tests/` no cambia desde `6b99fec` |
+| SPECS | S01 a S05, versión 0.5, integradas en `main` |
 | Fecha de ejecución | 2026-10-08 |
 | Comando | `python -m pytest` |
-| Resultado | **176 pruebas aprobadas, 0 fallidas**, en 20,0 s |
+| Resultado | **176 pruebas aprobadas, 0 fallidas** sobre `6b99fec` (20,0 s) y de nuevo sobre la versión integrada `256605a`, en el repositorio de trabajo y en una copia limpia |
 | Entorno | Windows 11, Python 3.14.3, Flask 3.1.3, SQLite 3.50.4, pytest 9.1.1 |
 | Datos | Cada prueba crea un archivo SQLite temporal con las cinco cuentas del seed y un reloj controlado que inicia en `2026-10-01T08:00:00Z` |
 
-El SHA y el resultado se volverán a registrar sobre el tag `release-examen` cuando se integren los pull requests.
+La ejecución sobre el commit exacto del tag `release-examen`, con la salida de pytest, está en [ejecucion-final.md](ejecucion-final.md).
 
 ## 1. Matriz de trazabilidad
 
@@ -132,8 +132,9 @@ Estado de cada criterio de aceptación de las SPECS vigentes sobre `6b99fec`. �
 |---|---|---|
 | 2026-10-08 | Con el servidor en `localhost:5057`, `solicitante1` inició sesión y registró una incidencia con impacto `ALTO`, riesgo Sí y la descripción `Prueba de humo: <b>chispas</b> …` | Se creó `INC-000001` con prioridad `CRITICA`; la descripción se mostró como texto, sin negrita; el contador de caracteres funcionó; sin errores en la consola |
 | 2026-10-08 | Copia limpia: `git clone`, entorno virtual, `pip install -r requirements.txt`, `python -m pytest`, `flask --app app init-db` | Las pruebas pasaron y la base se creó, siguiendo solo el README |
+| 2026-10-08 | Recorrido automatizado de extremo a extremo por HTTP contra el **servidor real** de Flask (no el cliente de pruebas), en una copia limpia de la versión integrada `256605a`: [`recorrido_http.py`](recorrido_http.py). Los cinco usuarios inician sesión y recorren registro, prioridad, asignación, atención, rechazo, nueva solución, cierre, reapertura, filtros, tablero y permisos; al final el servidor se detiene y se vuelve a arrancar | **32 de 32 comprobaciones correctas**, incluidas: `50,0 %` con una cerrada de dos y `0,0 %` al reabrir; 403 y 404 según rol y pertenencia; texto con HTML escapado; historial de ocho eventos; los datos permanecen tras reiniciar el servidor |
 
-Pendiente de comprobación manual: el recorrido completo en navegador con los cinco usuarios (asignar, atender, rechazar, reabrir y tablero). Está cubierto por las pruebas automatizadas, pero nadie lo ha recorrido a mano.
+Pendiente: el recorrido completo **en navegador hecho por una persona**. El recorrido por HTTP anterior lo ejecutó un script, no un integrante; comprueba el servidor real, pero no la apariencia de las páginas ni el uso con ratón y teclado.
 
 ## 5. Hallazgos y regresión
 

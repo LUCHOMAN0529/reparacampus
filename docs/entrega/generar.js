@@ -42,7 +42,7 @@ function enlace(href, archivo) {
   if (/^https?:/.test(href)) return href;
   if (href.startsWith("#")) return null;
   const destino = path.posix.normalize(path.posix.join(path.posix.dirname(archivo), href));
-  return `${REPO}/blob/${datos.TAG || "main"}/${destino}`;
+  return `${REPO}/blob/main/${destino}`;
 }
 
 function enLinea(texto, archivo, base = {}) {

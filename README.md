@@ -16,7 +16,7 @@ El repositorio sigue el hilo **Requisito → Historia → SPEC → Código → P
 | Diseño: componentes, datos, UML y decisión | [`docs/diseno/`](docs/diseno/arquitectura.md) |
 | Revisiones | [`docs/revision/`](docs/revision/) |
 | Validación: trazabilidad, SPEC frente a código, hallazgos | [`docs/validacion/validacion.md`](docs/validacion/validacion.md) |
-| Ejecución final de las pruebas sobre el tag | [`docs/validacion/ejecucion-final.md`](docs/validacion/ejecucion-final.md) |
+| Ejecución final de las pruebas sobre el tag (se agrega a `main` después de crear el tag) | `docs/validacion/ejecucion-final.md` |
 | Riesgos y controles | [`docs/riesgos.md`](docs/riesgos.md) |
 | Decisiones confirmadas y pendientes | [`docs/decisiones.md`](docs/decisiones.md) |
 | Bitácora de IA | [`docs/bitacora-ia.md`](docs/bitacora-ia.md) |
@@ -104,6 +104,12 @@ Cada prueba crea su propio archivo SQLite temporal, independiente de la base de 
 | **Total** | | **176** |
 
 Solo las de integración: `python -m pytest -m integracion`. Detalle por prueba: `python -m pytest -v`.
+
+Recorrido de extremo a extremo contra el servidor real, sobre una copia limpia (crea datos en `instance/`):
+
+```powershell
+python docs/validacion/recorrido_http.py . .venv\Scripts\python.exe 5093
+```
 
 Los casos parametrizados se cuentan por separado. Cada prueba indica en su comentario el identificador de prueba y los criterios de aceptación que cubre.
 
