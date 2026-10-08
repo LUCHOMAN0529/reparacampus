@@ -2,11 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.1 (borrador en revisión) |
+| Versión | 0.2 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Pendiente: otro integrante del equipo |
+| Revisor | Asignado: José Leonardo Hernández Pedrosa. Revisión pendiente |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF03 |
+
+**Cambios de la versión 0.2 (2026-10-08):** sin cambios de contenido; se descartó una sugerencia errónea (ver registro). Origen: [revisión asistida por IA](../../docs/revision/revision-asistida-ia-2026-10-08.md), que no reemplaza la revisión del integrante asignado.
 
 ## Historia (H03)
 
@@ -112,4 +114,4 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.1 | Pendiente | Pendiente | |
+| Pendiente | 0.2 | José Leonardo Hernández Pedrosa (asignado) | Pendiente | |

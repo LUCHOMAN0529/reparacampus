@@ -2,11 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.1 (borrador en revisión) |
+| Versión | 0.2 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Pendiente: otro integrante del equipo |
+| Revisor | Asignado: Cristian David Diaz España. Revisión pendiente |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF04 |
+
+**Cambios de la versión 0.2 (2026-10-08):** se agregan los límites 300 y 301 a la prueba P-S04-04. Origen: [revisión asistida por IA](../../docs/revision/revision-asistida-ia-2026-10-08.md), que no reemplaza la revisión del integrante asignado.
 
 ## Historia (H04)
 
@@ -115,7 +117,7 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 | P-S04-01 | AC-S04-01 | Integración: registrar → asignar → iniciar → proponer → confirmar | `CERRADA`; 1 solución; 1 cierre; 5 eventos en orden `CREAR`, `ASIGNAR`, `INICIAR_ATENCION`, `REGISTRAR_SOLUCION`, `CONFIRMAR_SOLUCION` |
 | P-S04-02 | AC-S04-02, AC-S03-06 | Integración: … → proponer → rechazar “El daño sigue presente” → nueva solución → confirmar | Tras el rechazo: `EN_ATENCION`, `tecnico1`, 1 solución. Al final: `CERRADA`, 2 soluciones, 1 cierre, 7 eventos |
 | P-S04-03 | AC-S04-06, 07, 09 | Integración: cierre en `T` → reapertura en `T + 48 h` → nueva solución → nuevo cierre; y otra incidencia con reapertura en `T + 48 h + 1 µs` | Primera: `CERRADA`, 2 soluciones, 2 cierres, 8 eventos. Segunda: 409, `CERRADA`, 5 eventos |
-| P-S04-04 | AC-S04-03 | Rechazo con motivo de 9 y de 10 caracteres | 9: 400, `PENDIENTE_VALIDACION`. 10: 302, `EN_ATENCION` |
+| P-S04-04 | AC-S04-03 | Rechazo con motivo de 9, 301, 10 y 300 caracteres | 9 y 301: 400, `PENDIENTE_VALIDACION`. 10 y 300: 302, `EN_ATENCION` |
 | P-S04-05 | AC-S04-04 | `solicitante2` confirma la incidencia de `solicitante1`; el coordinador la confirma | 404; 403; `PENDIENTE_VALIDACION`; 4 eventos |
 
 Las pruebas del plazo usan un reloj controlado inyectado en la aplicación. No se espera tiempo real ni se cambia el reloj del sistema.
@@ -124,4 +126,4 @@ Las pruebas del plazo usan un reloj controlado inyectado en la aplicación. No s
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.1 | Pendiente | Pendiente | |
+| Pendiente | 0.2 | Cristian David Diaz España (asignado) | Pendiente | |

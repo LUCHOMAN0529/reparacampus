@@ -4,7 +4,7 @@
 |---|---|
 | Versión | 0.1 (borrador en revisión, previo a la implementación) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Pendiente: otro integrante del equipo |
+| Revisor | Asignado: Rafael Eduardo May Recuero. Revisión pendiente |
 | Fecha | 2026-10-08 |
 
 Este documento se ajustará a la versión final del código. Los diagramas están en PlantUML junto a este archivo.

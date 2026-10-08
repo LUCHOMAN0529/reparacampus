@@ -2,9 +2,9 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.1 (borrador en revisión) |
+| Versión | 0.2 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Pendiente: otro integrante del equipo |
+| Revisor | Asignado: Rafael Eduardo May Recuero. Revisión pendiente |
 | Fecha | 2026-10-08 |
 
 ## 1. Necesidad
@@ -62,13 +62,13 @@ El servidor obtiene identidad y rol de la sesión y comprueba rol y pertenencia 
 
 ## 6. Preguntas al cliente
 
-Estas preguntas están **sin responder**. El equipo debe llevarlas al docente, que hace de cliente. Mientras tanto se trabaja con el supuesto indicado. Una respuesta de la IA no es una decisión del cliente.
+Estas preguntas están **sin responder**. El 2026-10-08 el equipo informó que no puede consultar a la docente antes del cierre de la entrega: la única sesión con ella coincide con el día del parcial. Por eso el prototipo se construye con el supuesto indicado y cada pregunta se declara como pendiente. Una respuesta de la IA no es una decisión del cliente.
 
 | ID | Pregunta | Por qué importa | Supuesto de trabajo | Respuesta del cliente |
 |---|---|---|---|---|
-| Q1 | Cuando un solicitante o un técnico intenta abrir u operar una incidencia que no le pertenece, ¿el sistema debe decir que no tiene permiso o debe responder como si la incidencia no existiera? | Define si se revela la existencia de reportes ajenos y qué código de respuesta se prueba. | Se responde 404 (no encontrada), sin revelar que existe. | Pendiente |
-| Q2 | ¿El porcentaje de cierre del tablero cuenta las incidencias que están CERRADAS en este momento o las que alguna vez se cerraron? ¿Cómo se redondea el decimal? | Cambia el resultado tras una reapertura y en valores como 1/3. | Cuenta el estado actual, de modo que reabrir reduce el porcentaje. Redondeo aritmético (mitad hacia arriba): 1/3 = 33,3 %; 2/3 = 66,7 %. | Pendiente |
-| Q3 | ¿Con qué precisión se mide el plazo de 48 horas de la reapertura y qué significa “un instante después”? | Determina el caso límite que se prueba. | El servidor compara marcas UTC con precisión de microsegundos: exactamente 48 h se acepta; 48 h más un microsegundo se rechaza. | Pendiente |
+| Q1 | Cuando un solicitante o un técnico intenta abrir u operar una incidencia que no le pertenece, ¿el sistema debe decir que no tiene permiso o debe responder como si la incidencia no existiera? | Define si se revela la existencia de reportes ajenos y qué código de respuesta se prueba. | Se responde 404 (no encontrada), sin revelar que existe. | Sin respuesta; se mantiene el supuesto |
+| Q2 | ¿El porcentaje de cierre del tablero cuenta las incidencias que están CERRADAS en este momento o las que alguna vez se cerraron? ¿Cómo se redondea el decimal? | Cambia el resultado tras una reapertura y en valores como 1/3. | Cuenta el estado actual, de modo que reabrir reduce el porcentaje. Redondeo aritmético (mitad hacia arriba): 1/3 = 33,3 %; 2/3 = 66,7 %. | Sin respuesta; se mantiene el supuesto |
+| Q3 | ¿Con qué precisión se mide el plazo de 48 horas de la reapertura y qué significa “un instante después”? | Determina el caso límite que se prueba. | El servidor compara marcas UTC con precisión de microsegundos: exactamente 48 h se acepta; 48 h más un microsegundo se rechaza. | Sin respuesta; se mantiene el supuesto |
 
 ## 7. Supuestos pendientes de confirmar
 
@@ -90,4 +90,4 @@ Estas preguntas están **sin responder**. El equipo debe llevarlas al docente, q
 
 | Fecha | Versión | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.1 | Pendiente | Pendiente | |
+| Pendiente | 0.2 | Rafael Eduardo May Recuero (asignado) | Pendiente | |

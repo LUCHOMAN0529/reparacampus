@@ -2,11 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.1 (borrador en revisión) |
+| Versión | 0.2 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Pendiente: otro integrante del equipo |
+| Revisor | Asignado: Rafael Eduardo May Recuero. Revisión pendiente |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF01 |
+
+**Cambios de la versión 0.2 (2026-10-08):** se agregan los límites 500 y 501 a la prueba P-S01-02. Origen: [revisión asistida por IA](../../docs/revision/revision-asistida-ia-2026-10-08.md), que no reemplaza la revisión del integrante asignado.
 
 ## Historia (H01)
 
@@ -101,7 +103,7 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 | ID | AC | Entrada | Esperado |
 |---|---|---|---|
 | P-S01-01 | AC-S01-01 | Registro válido, `BAJO`, riesgo `false` | 302; 1 incidencia `INC-000001`, `REGISTRADA`, `NORMAL`, autor `solicitante1`; 1 evento `CREAR` |
-| P-S01-02 | AC-S01-03 | Descripción de 19 y de 20 caracteres | 19: 400 y 0 incidencias. 20: 302 y 1 incidencia |
+| P-S01-02 | AC-S01-03 | Descripción de 19, 20, 500 y 501 caracteres | 19: 400 y 0 incidencias. 20: 302. 500: 302. 501: 400. Al final, 2 incidencias |
 | P-S01-03 | AC-S01-04, 05, 06 | Impacto `MEDIO`; riesgo `quiza`; riesgo ausente; ubicación `LAB-99` | 400 en cada caso; 0 incidencias; 0 eventos |
 | P-S01-04 | AC-S01-02 | Coordinador y técnico envían un registro válido | 403; 0 incidencias |
 | P-S01-05 | AC-S01-07 | Descripción con `<script>` | Guardada literal; el detalle la muestra escapada |
@@ -111,4 +113,4 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.1 | Pendiente | Pendiente | |
+| Pendiente | 0.2 | Rafael Eduardo May Recuero (asignado) | Pendiente | |

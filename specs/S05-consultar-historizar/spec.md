@@ -2,11 +2,13 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.1 (borrador en revisión) |
+| Versión | 0.2 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Pendiente: otro integrante del equipo |
+| Revisor | Asignado: Jorge Luis González Arroyo. Revisión pendiente |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF05 |
+
+**Cambios de la versión 0.2 (2026-10-08):** se distingue filtro inválido de filtro válido sin resultados y se aclara quién ve el historial. Origen: [revisión asistida por IA](../../docs/revision/revision-asistida-ia-2026-10-08.md), que no reemplaza la revisión del integrante asignado.
 
 ## Historia (H05)
 
@@ -45,6 +47,8 @@ Abrir el detalle de una incidencia inexistente o no visible responde 404 (supues
 
 **Historial.** Cada creación y cada transición exitosa agrega un evento con autor, fecha UTC, estado anterior, estado nuevo y acción. Según la acción, el evento enlaza la solución, el cierre o el motivo. El detalle muestra los eventos en orden cronológico, con el texto de las soluciones, los motivos de rechazo y reapertura, y los cierres.
 
+Quien puede ver el detalle de una incidencia ve su historial completo: el solicitante dueño, el técnico asignado y el coordinador.
+
 **Inmutabilidad.** No existe ninguna operación para editar o borrar eventos, soluciones o cierres. La base de datos rechaza cualquier `UPDATE` o `DELETE` sobre esas tablas. Una operación rechazada no agrega eventos.
 
 **Tablero.**
@@ -79,7 +83,7 @@ No debe ocurrir: que un filtro amplíe la visibilidad; que el listado o el detal
 
 **AC-S05-02 (filtros).** Dado el coordinador y un conjunto con incidencias en distintos estados y prioridades, cuando filtra por `estado=ASIGNADA`, entonces ve solo las `ASIGNADA`; cuando filtra por `prioridad=CRITICA`, entonces ve solo las `CRITICA`; cuando aplica ambos, entonces ve solo las que cumplen los dos. Dado un solicitante, cuando filtra, entonces el resultado nunca incluye incidencias ajenas.
 
-**AC-S05-03 (filtro inválido).** Dado un usuario con sesión iniciada, cuando lista con `estado=ABIERTA` o `prioridad=URGENTE`, entonces recibe 400.
+**AC-S05-03 (filtro inválido).** Dado un usuario con sesión iniciada, cuando lista con `estado=ABIERTA` o `prioridad=URGENTE`, entonces recibe 400. Cuando lista con un valor válido que ninguna incidencia visible cumple, entonces recibe 200 con la lista vacía.
 
 **AC-S05-04 (historial completo).** Dada una incidencia que recorrió registro, asignación, inicio, solución, rechazo, nueva solución, confirmación y reapertura, cuando su dueño o el coordinador abre el detalle, entonces el historial muestra ocho eventos en orden cronológico, cada uno con autor, fecha, estado anterior, estado nuevo y acción, e incluye el texto de las dos soluciones, el motivo del rechazo, el cierre y el motivo de la reapertura.
 
@@ -119,7 +123,7 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 | ID | AC | Entrada | Esperado |
 |---|---|---|---|
 | P-S05-01 | AC-S05-01, 11 | Listado y detalle con los cinco usuarios sobre tres incidencias | Cantidades 2, 1, 1, 0 y 3; detalle ajeno: 404 |
-| P-S05-02 | AC-S05-02, 03 | Filtros `estado=ASIGNADA`, `prioridad=CRITICA`, ambos, y `estado=ABIERTA` | Solo coincidencias; 400 en el inválido |
+| P-S05-02 | AC-S05-02, 03 | Filtros `estado=ASIGNADA`, `prioridad=CRITICA`, ambos, y `estado=ABIERTA` | Solo coincidencias; 400 en el inválido; 200 y lista vacía con `estado=CERRADA` si no hay cerradas |
 | P-S05-03 | AC-S05-07, 08 | Tablero vacío; una cerrada de cuatro; tras reabrirla | `0,0 %`; `25,0 %`; `0,0 %` con 1 cierre conservado |
 | P-S05-04 | AC-S05-05 | `UPDATE` y `DELETE` directos sobre `eventos` | Error de la base; mismo contenido |
 | P-S05-05 | AC-S05-12 | Crear datos, cerrar la aplicación, crear otra sobre el mismo archivo | Mismas incidencias y eventos |
@@ -129,4 +133,4 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.1 | Pendiente | Pendiente | |
+| Pendiente | 0.2 | Jorge Luis González Arroyo (asignado) | Pendiente | |
