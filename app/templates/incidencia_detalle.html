@@ -47,6 +47,25 @@
   </form>
 </section>
 {% endif %}
+{% if es_tecnico_asignado and incidencia['estado'] == 'ASIGNADA' %}
+<section class="tarjeta">
+  <h2>Atención</h2>
+  <form method="post" action="{{ url_for('incidencias.iniciar', codigo=incidencia['codigo']) }}">
+    <button type="submit">Iniciar atención</button>
+  </form>
+</section>
+{% endif %}
+{% if es_tecnico_asignado and incidencia['estado'] == 'EN_ATENCION' %}
+<section class="tarjeta">
+  <h2>Registrar solución</h2>
+  <form method="post" action="{{ url_for('incidencias.solucion', codigo=incidencia['codigo']) }}">
+    <label for="solucion">Solución aplicada</label>
+    <textarea id="solucion" name="solucion" required
+              data-min="{{ dominio.SOLUCION_MIN }}" data-max="{{ dominio.SOLUCION_MAX }}"></textarea>
+    <button type="submit">Enviar a validación</button>
+  </form>
+</section>
+{% endif %}
 
 <section class="tarjeta">
   <h2>Historial</h2>

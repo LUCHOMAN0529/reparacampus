@@ -68,3 +68,15 @@ def detalle(codigo):
 @requiere_sesion
 def asignar(codigo):
     return _operar(codigo, servicios.asignar, request.form.get("tecnico_id"))
+
+
+@bp.route("/<codigo>/iniciar", methods=("POST",))
+@requiere_sesion
+def iniciar(codigo):
+    return _operar(codigo, servicios.iniciar_atencion)
+
+
+@bp.route("/<codigo>/solucion", methods=("POST",))
+@requiere_sesion
+def solucion(codigo):
+    return _operar(codigo, servicios.registrar_solucion, request.form.get("solucion"))
