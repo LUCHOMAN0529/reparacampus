@@ -31,6 +31,22 @@
 </section>
 
 {# Las acciones se muestran según rol y estado; el servidor vuelve a comprobarlo todo. #}
+{% if g.usuario['rol'] == 'COORDINADOR' and incidencia['estado'] == 'REGISTRADA' %}
+<section class="tarjeta">
+  <h2>Asignar técnico</h2>
+  <form method="post" action="{{ url_for('incidencias.asignar', codigo=incidencia['codigo']) }}">
+    <label for="tecnico_id">Técnico activo</label>
+    <select id="tecnico_id" name="tecnico_id" required>
+      <option value="">Seleccione…</option>
+      {% for tecnico in tecnicos %}
+      <option value="{{ tecnico['id'] }}">{{ tecnico['nombre'] }}</option>
+      {% endfor %}
+    </select>
+    <p class="nota">La asignación no se puede cambiar después.</p>
+    <button type="submit">Asignar</button>
+  </form>
+</section>
+{% endif %}
 
 <section class="tarjeta">
   <h2>Historial</h2>

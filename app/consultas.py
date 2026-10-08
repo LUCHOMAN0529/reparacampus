@@ -29,6 +29,12 @@ def obtener(db, usuario, codigo):
     return fila
 
 
+def tecnicos_activos(db):
+    return db.execute(
+        "SELECT id, nombre FROM usuarios WHERE rol = 'TECNICO' AND activo = 1 ORDER BY nombre"
+    ).fetchall()
+
+
 def historial(db, incidencia_id):
     """Eventos en orden cronológico con autor, solución, motivo y cierre."""
     return db.execute(
