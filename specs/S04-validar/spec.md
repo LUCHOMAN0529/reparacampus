@@ -2,13 +2,15 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.2 (borrador en revisión) |
+| Versión | 0.3 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
 | Revisor | Asignado: Cristian David Diaz España. Revisión pendiente |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF04 |
 
 **Cambios de la versión 0.2 (2026-10-08):** se agregan los límites 300 y 301 a la prueba P-S04-04. Origen: [revisión asistida por IA](../../docs/revision/revision-asistida-ia-2026-10-08.md), que no reemplaza la revisión del integrante asignado.
+
+**Cambios de la versión 0.3 (2026-10-08):** se define «solución vigente»; se precisa que un motivo formado solo por espacios se rechaza; nuevo AC-S04-11 (sin efectos parciales); la tabla de pruebas refleja las pruebas reales e identifica las que faltan. Origen: [segunda revisión asistida por IA](../../docs/revision/revision-asistida-ia-02-chatgpt.md), que tampoco reemplaza la revisión del integrante asignado.
 
 ## Historia (H04)
 
@@ -38,6 +40,8 @@ La hora efectiva de cada operación la fija el servidor en UTC. Cualquier fecha 
 - Reabrir exige que el tiempo transcurrido desde el último cierre sea menor o igual a 48 horas. Fuera de plazo, 409.
 
 ## Reglas y proceso
+
+**Solución vigente.** Es la última solución registrada para la incidencia, es decir, la que la llevó al estado `PENDIENTE_VALIDACION` actual. Si hubo rechazos o reaperturas, las soluciones anteriores se conservan pero ya no son la vigente.
 
 **Confirmar.** En una transacción: registrar un cierre (incidencia, solución vigente, quién confirma, fecha), cambiar a `CERRADA` e insertar el evento `CONFIRMAR_SOLUCION` enlazado al cierre.
 
@@ -82,7 +86,7 @@ No debe ocurrir: un cierre sin evento o un evento sin cierre; pérdida de una so
 
 **AC-S04-02 (rechazar).** Dado un reporte propio `PENDIENTE_VALIDACION` con técnico `tecnico1` y solución registrada, cuando el solicitante lo rechaza con “El daño sigue presente”, entonces queda `EN_ATENCION`, conserva `tecnico1` y la solución anterior, y registra quién rechazó, cuándo y por qué.
 
-**AC-S04-03 (motivo de rechazo inválido).** Dado un reporte propio `PENDIENTE_VALIDACION`, cuando el solicitante lo rechaza con un motivo de 9 caracteres, de 301, vacío o de 9 rodeados de espacios, entonces recibe 400 y el reporte sigue `PENDIENTE_VALIDACION` sin eventos nuevos. Con exactamente 10 o exactamente 300 se acepta.
+**AC-S04-03 (motivo de rechazo inválido).** Dado un reporte propio `PENDIENTE_VALIDACION`, cuando el solicitante lo rechaza con un motivo de 9 caracteres, de 301, vacío, formado solo por espacios o de 9 rodeados de espacios, entonces recibe 400 y el reporte sigue `PENDIENTE_VALIDACION` sin eventos nuevos. Con exactamente 10 o exactamente 300 se acepta.
 
 **AC-S04-04 (pertenencia y rol).** Dada la incidencia de `solicitante1` en `PENDIENTE_VALIDACION`, cuando `solicitante2` intenta confirmarla o rechazarla, entonces recibe 404 sin cambios. Cuando lo intenta el coordinador o el técnico asignado, entonces recibe 403 sin cambios. Lo mismo aplica a la reapertura de una incidencia `CERRADA`.
 
@@ -92,11 +96,13 @@ No debe ocurrir: un cierre sin evento o un evento sin cierre; pérdida de una so
 
 **AC-S04-07 (reabrir fuera de plazo).** Dada la misma incidencia `CERRADA`, cuando su dueño intenta reabrirla y el reloj del servidor marca `2026-10-03T10:00:00.000001Z` (48 horas y un microsegundo), entonces recibe 409 y la incidencia sigue `CERRADA` con el mismo historial.
 
-**AC-S04-08 (motivo de reapertura inválido).** Dada una incidencia propia `CERRADA` dentro del plazo, cuando su dueño la reabre con un motivo de 9 caracteres, de 301 o vacío, entonces recibe 400 y sigue `CERRADA` sin eventos nuevos.
+**AC-S04-08 (motivo de reapertura inválido).** Dada una incidencia propia `CERRADA` dentro del plazo, cuando su dueño la reabre con un motivo de 9 caracteres, de 301, vacío o formado solo por espacios, entonces recibe 400 y sigue `CERRADA` sin eventos nuevos.
 
 **AC-S04-09 (cierres sucesivos).** Dada una incidencia reabierta a la que el técnico registró una solución nueva, cuando su dueño la confirma, entonces queda `CERRADA` con dos cierres y dos soluciones conservados, y el plazo de una nueva reapertura se cuenta desde el segundo cierre.
 
 **AC-S04-10 (hora del servidor).** Dada una incidencia propia `CERRADA` fuera de plazo, cuando su dueño envía la reapertura con un campo de fecha dentro del plazo, entonces el campo se ignora y recibe 409.
+
+**AC-S04-11 (sin efectos parciales).** Dada una incidencia propia `PENDIENTE_VALIDACION` o `CERRADA` dentro del plazo, cuando falla el guardado del evento al confirmar, rechazar o reabrir, entonces la transacción se revierte: el estado no cambia, no queda ningún cierre nuevo y el historial no cambia.
 
 ## Diseño y tareas vinculadas a cada AC
 
@@ -109,16 +115,30 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 | AC-S04-04, 05 | T-S04-02, T-S04-03, T-S04-04 |
 | AC-S04-06, 07, 08, 10 | T-S04-04, T-S04-05 |
 | Todos | T-S04-06 |
+| AC-S04-11 y motivo solo con espacios | T-S04-07 |
 
 ## Pruebas y resultados esperados
 
-| ID | AC | Entrada | Esperado |
-|---|---|---|---|
-| P-S04-01 | AC-S04-01 | Integración: registrar → asignar → iniciar → proponer → confirmar | `CERRADA`; 1 solución; 1 cierre; 5 eventos en orden `CREAR`, `ASIGNAR`, `INICIAR_ATENCION`, `REGISTRAR_SOLUCION`, `CONFIRMAR_SOLUCION` |
-| P-S04-02 | AC-S04-02, AC-S03-06 | Integración: … → proponer → rechazar “El daño sigue presente” → nueva solución → confirmar | Tras el rechazo: `EN_ATENCION`, `tecnico1`, 1 solución. Al final: `CERRADA`, 2 soluciones, 1 cierre, 7 eventos |
-| P-S04-03 | AC-S04-06, 07, 09 | Integración: cierre en `T` → reapertura en `T + 48 h` → nueva solución → nuevo cierre; y otra incidencia con reapertura en `T + 48 h + 1 µs` | Primera: `CERRADA`, 2 soluciones, 2 cierres, 8 eventos. Segunda: 409, `CERRADA`, 5 eventos |
-| P-S04-04 | AC-S04-03 | Rechazo con motivo de 9, 301, 10 y 300 caracteres | 9 y 301: 400, `PENDIENTE_VALIDACION`. 10 y 300: 302, `EN_ATENCION` |
-| P-S04-05 | AC-S04-04 | `solicitante2` confirma la incidencia de `solicitante1`; el coordinador la confirma | 404; 403; `PENDIENTE_VALIDACION`; 4 eventos |
+El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. «Por automatizar» significa que la prueba todavía no existe.
+
+| ID | AC | Precondición y entrada | Esperado | Prueba automatizada |
+|---|---|---|---|---|
+| P-S04-01 | AC-S04-01 | Integración: registrar → asignar → iniciar → proponer → confirmar, cada paso con la sesión de su actor | `CERRADA`; técnico `tecnico1`; 1 solución; 1 cierre; 5 eventos en orden `CREAR`, `ASIGNAR`, `INICIAR_ATENCION`, `REGISTRAR_SOLUCION`, `CONFIRMAR_SOLUCION`, con actores `solicitante1`, `coordinador1`, `tecnico1`, `tecnico1`, `solicitante1` | `test_p_s04_01_flujo_de_cierre` |
+| P-S04-02 | AC-S04-02, AC-S03-06 | Integración: … → proponer → rechazar «El daño sigue presente» → nueva solución → confirmar | Tras el rechazo: `EN_ATENCION`, `tecnico1`, 1 solución. Al final: `CERRADA`, 2 soluciones en orden, 1 cierre enlazado a la segunda, 7 eventos | `test_p_s04_02_rechazo_y_nueva_solucion` |
+| P-S04-03 | AC-S04-06, 07, 09 | Integración: cierre en `2026-10-01T10:00Z` → reapertura a las 48 h exactas → nueva solución → nuevo cierre en `2026-10-03T14:00Z` → reapertura a 48 h + 1 µs del segundo cierre → reapertura a las 48 h exactas del segundo cierre | 302 y `EN_ATENCION` con `tecnico1` y 1 cierre; después `CERRADA` con 2 soluciones, 2 cierres y 8 eventos; después 409 sin cambios; después 302 | `test_p_s04_03_reapertura_y_nuevo_cierre` |
+| P-S04-04 | AC-S04-03 | `PENDIENTE_VALIDACION` con 4 eventos; rechazo con motivo de 9, 301, vacío, 9 rodeado de espacios, 10 y 300 caracteres | 9, 301, vacío y con espacios: 400, `PENDIENTE_VALIDACION`, 4 eventos. 10 y 300: 302, `EN_ATENCION` | `test_p_s04_04_limites_del_motivo_de_rechazo` |
+| P-S04-05 | AC-S04-04, AC-S03-07 | `PENDIENTE_VALIDACION` de `solicitante1`; confirman y rechazan `solicitante2`, `coordinador1`, `tecnico1` y `tecnico2` | `solicitante2`: 404. Los demás: 403. `PENDIENTE_VALIDACION`; 4 eventos; 0 cierres | `test_p_s04_05_solo_el_duenio_valida` |
+| P-S04-06 | AC-S04-01 | `PENDIENTE_VALIDACION`; a las `2026-10-01T10:00Z` el dueño confirma | 302; `CERRADA`; 1 cierre con dueño, fecha y la solución vigente; evento enlazado al cierre | `test_confirmar` |
+| P-S04-07 | AC-S04-02 | `PENDIENTE_VALIDACION`; el dueño rechaza con «El daño sigue presente» | 302; `EN_ATENCION`; `tecnico1`; 1 solución intacta; 0 cierres; evento con actor, fecha, motivo y solución rechazada | `test_rechazar_conserva_tecnico_y_solucion` |
+| P-S04-08 | AC-S04-04 | `CERRADA` de `solicitante1`; reabren `solicitante2`, `coordinador1` y `tecnico1` | 404; 403; 403. `CERRADA`; 5 eventos | `test_solo_el_duenio_reabre` |
+| P-S04-09 | AC-S04-05 | El dueño confirma y rechaza en `REGISTRADA`, `ASIGNADA`, `EN_ATENCION` y `CERRADA` | 409 en los ocho casos; mismo estado y mismo historial | `test_validar_en_estado_incompatible` |
+| P-S04-10 | AC-S04-05 | El dueño reabre en `REGISTRADA`, `ASIGNADA`, `EN_ATENCION` y `PENDIENTE_VALIDACION` | 409 en los cuatro casos; mismo estado y mismo historial | `test_reabrir_en_estado_incompatible` |
+| P-S04-11 | AC-S04-06 | Último cierre en `2026-10-01T10:00:00Z`; reapertura con el reloj en `2026-10-03T10:00:00Z` | 302; `EN_ATENCION`; `tecnico1`; 1 cierre y 1 solución conservados; evento `REABRIR` con motivo y fecha | `test_reabrir_exactamente_a_las_48_horas` |
+| P-S04-12 | AC-S04-07 | Mismo cierre; reapertura con el reloj en `2026-10-03T10:00:00.000001Z` | 409; `CERRADA`; los mismos 5 eventos | `test_reabrir_un_instante_despues_de_48_horas` |
+| P-S04-13 | AC-S04-08 | `CERRADA` dentro del plazo; reapertura con motivo de 9, de 301 y vacío | 400; `CERRADA`; 5 eventos | `test_motivo_de_reapertura_invalido` |
+| P-S04-14 | AC-S04-10 | `CERRADA` hace 72 h; la reapertura envía campos `fecha` y `ahora` dentro del plazo | 409; `CERRADA` | `test_la_hora_la_decide_el_servidor` |
+| P-S04-15 | AC-S04-03, 08 | Rechazo y reapertura con un motivo formado solo por espacios | 400; mismo estado; mismo historial | Por automatizar (T-S04-07) |
+| P-S04-16 | AC-S04-11 | Confirmar, rechazar y reabrir mientras se fuerza un fallo al guardar el evento | La operación falla; mismo estado; 0 cierres nuevos; mismo historial | Por automatizar (T-S04-07) |
 
 Las pruebas del plazo usan un reloj controlado inyectado en la aplicación. No se espera tiempo real ni se cambia el reloj del sistema.
 
@@ -126,4 +146,4 @@ Las pruebas del plazo usan un reloj controlado inyectado en la aplicación. No s
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.2 | Cristian David Diaz España (asignado) | Pendiente | |
+| Pendiente | 0.3 | Cristian David Diaz España (asignado) | Pendiente | |

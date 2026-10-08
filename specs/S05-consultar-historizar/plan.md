@@ -1,12 +1,12 @@
 # Plan de diseño · S05 Consultar, historizar y tablero
 
-Versión 0.1 · 2026-10-08 · depende de [arquitectura](../../docs/diseno/arquitectura.md) y de S01 a S04.
+Versión 0.3 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md) y de S01 a S04.
 
 ## Componentes que intervienen
 
 | Capa | Elemento | Responsabilidad |
 |---|---|---|
-| Rutas | `GET /incidencias` | Leer filtros, llamar a la consulta, mostrar la lista. |
+| Rutas | `GET /incidencias/` | Leer filtros, llamar a la consulta, mostrar la lista. |
 | Rutas | `GET /incidencias/<codigo>` | Detalle e historial. |
 | Rutas | `GET /tablero` | Resumen del coordinador. |
 | Dominio | `dominio.validar_filtros(estado, prioridad)` | Catálogo o vacío. |
@@ -19,6 +19,7 @@ Versión 0.1 · 2026-10-08 · depende de [arquitectura](../../docs/diseno/arquit
 
 ## Decisiones
 
+- El historial se ordena por el identificador del evento (`ORDER BY e.id`), que es el orden de inserción y resuelve los empates de fecha.
 - La condición de visibilidad se construye en un único lugar y se reutiliza en listado, detalle y operaciones, para que un filtro no pueda ampliarla.
 - Los filtros se pasan como parámetros de la consulta, nunca concatenados en el SQL.
 - El tablero cuenta el estado actual de `incidencias`; no usa la tabla `cierres`, que conserva los cierres históricos.

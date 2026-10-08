@@ -1,6 +1,6 @@
 # Plan de diseño · S04 Validar
 
-Versión 0.1 · 2026-10-08 · depende de [arquitectura](../../docs/diseno/arquitectura.md), S01, S02 y S03.
+Versión 0.3 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md), S01, S02 y S03.
 Secuencia del rechazo en [secuencia-rechazo.puml](../../docs/diseno/secuencia-rechazo.puml).
 
 ## Componentes que intervienen
@@ -16,7 +16,7 @@ Secuencia del rechazo en [secuencia-rechazo.puml](../../docs/diseno/secuencia-re
 
 ## Decisiones
 
-- El “último cierre” es la fila de `cierres` con la fecha más reciente para la incidencia. No se guarda una fecha de cierre en la incidencia, para que no exista un dato que haya que limpiar al reabrir.
+- El “último cierre” es la fila de `cierres` más reciente de la incidencia (la de mayor identificador). La “solución vigente” es la fila de `soluciones` más reciente (`servicios._solucion_vigente`). No se guarda una fecha de cierre en la incidencia, para que no exista un dato que haya que limpiar al reabrir.
 - La reapertura no borra ni marca el cierre: el evento `REABRIR` referencia el cierre que se reabre.
 - El plazo se evalúa con objetos de fecha con zona UTC, no comparando cadenas.
 - Fuera de plazo se responde 409 porque es una condición del estado del recurso, no un dato mal formado.

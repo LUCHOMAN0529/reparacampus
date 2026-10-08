@@ -1,6 +1,6 @@
 # Plan de diseño · S02 Priorizar y asignar
 
-Versión 0.1 · 2026-10-08 · depende de [arquitectura](../../docs/diseno/arquitectura.md) y de S01.
+Versión 0.3 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md) y de S01.
 
 ## Componentes que intervienen
 

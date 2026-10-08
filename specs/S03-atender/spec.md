@@ -2,13 +2,15 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.2 (borrador en revisión) |
+| Versión | 0.3 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
 | Revisor | Asignado: José Leonardo Hernández Pedrosa. Revisión pendiente |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF03 |
 
 **Cambios de la versión 0.2 (2026-10-08):** sin cambios de contenido; se descartó una sugerencia errónea (ver registro). Origen: [revisión asistida por IA](../../docs/revision/revision-asistida-ia-2026-10-08.md), que no reemplaza la revisión del integrante asignado.
+
+**Cambios de la versión 0.3 (2026-10-08):** nuevo AC-S03-09 (sin efectos parciales); la tabla de pruebas indica el estado de partida de cada conteo de eventos, refleja las pruebas reales e identifica la que falta. Origen: [segunda revisión asistida por IA](../../docs/revision/revision-asistida-ia-02-chatgpt.md), que tampoco reemplaza la revisión del integrante asignado.
 
 ## Historia (H03)
 
@@ -87,6 +89,8 @@ No debe ocurrir: una solución guardada sin cambio de estado o un cambio de esta
 
 **AC-S03-08 (texto no ejecutable).** Dada una solución que contiene `<img src=x onerror=alert(1)>`, cuando se muestra en el detalle, entonces aparece escapada y no como etiqueta.
 
+**AC-S03-09 (sin efectos parciales).** Dada una incidencia `ASIGNADA` o `EN_ATENCION`, cuando falla el guardado del evento al iniciar la atención o al registrar la solución, entonces la transacción se revierte: el estado no cambia, no queda ninguna solución nueva y el historial no cambia.
+
 ## Diseño y tareas vinculadas a cada AC
 
 Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
@@ -99,19 +103,29 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 | AC-S03-05 | T-S03-03 |
 | AC-S03-08 | T-S03-04 |
 | Todos | T-S03-05 |
+| AC-S03-09 | T-S03-06 |
 
 ## Pruebas y resultados esperados
 
-| ID | AC | Entrada | Esperado |
-|---|---|---|---|
-| P-S03-01 | AC-S03-01 | `tecnico1` inicia `INC-000001` en `ASIGNADA` | 302; `EN_ATENCION`; 3 eventos |
-| P-S03-02 | AC-S03-02 | `tecnico1` registra la solución del AC-S03-02 | 302; `PENDIENTE_VALIDACION`; 1 solución; 4 eventos |
-| P-S03-03 | AC-S03-03 | `tecnico2` inicia la incidencia de `tecnico1` | 404; `ASIGNADA`; 2 eventos |
-| P-S03-04 | AC-S03-04 | `tecnico1` registra solución con la incidencia en `ASIGNADA` | 409; `ASIGNADA`; 0 soluciones; 2 eventos |
-| P-S03-05 | AC-S03-05 | Solución de 19 y de 20 caracteres; de 800 y de 801 | 19: 400. 20: 302. 800: 302. 801: 400 |
+El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. «Por automatizar» significa que la prueba todavía no existe.
+
+| ID | AC | Precondición y entrada | Esperado | Prueba automatizada |
+|---|---|---|---|---|
+| P-S03-01 | AC-S03-01 | `INC-000001` `ASIGNADA` a `tecnico1`, con 2 eventos (`CREAR`, `ASIGNAR`); a las 09:00 `tecnico1` inicia | 302; `EN_ATENCION`; 3 eventos; el tercero es `INICIAR_ATENCION` de `tecnico1` con fecha `09:00` | `test_p_s03_01_iniciar_atencion` |
+| P-S03-02 | AC-S03-02 | `INC-000001` `EN_ATENCION`, con 3 eventos; `tecnico1` registra la solución del AC-S03-02 | 302; `PENDIENTE_VALIDACION`; 1 solución de `tecnico1`; 4 eventos; el cuarto enlaza la solución | `test_p_s03_02_registrar_solucion` |
+| P-S03-03 | AC-S03-03 | `tecnico2` inicia la incidencia `ASIGNADA` a `tecnico1`, y le registra una solución cuando está `EN_ATENCION` | 404; mismo estado y mismo historial; 0 soluciones | `test_p_s03_03_tecnico_no_asignado` |
+| P-S03-04 | AC-S03-04 | `INC-000001` `ASIGNADA`, con 2 eventos; `tecnico1` registra una solución sin iniciar | 409; `ASIGNADA`; 0 soluciones; 2 eventos | `test_p_s03_04_solucion_antes_de_iniciar` |
+| P-S03-05 | AC-S03-05 | `INC-000001` `EN_ATENCION`; solución de 19, 20, 800 y 801 caracteres, vacía, y de 19 rodeada de espacios | 19: 400. 20: 302. 800: 302. 801: 400. Vacía: 400. Con espacios: 400. En los rechazos: `EN_ATENCION`, 0 soluciones, 3 eventos | `test_p_s03_05_limites_de_la_solucion` |
+| P-S03-06 | AC-S03-03 | `solicitante1` y `coordinador1` intentan iniciar y registrar solución sobre una `ASIGNADA` | 403; `ASIGNADA`; 2 eventos | `test_otros_roles_no_atienden` |
+| P-S03-07 | AC-S03-04 | `tecnico1` inicia una incidencia en `EN_ATENCION`, `PENDIENTE_VALIDACION` y `CERRADA` | 409; mismo estado y mismo historial | `test_iniciar_en_estado_incompatible` (`CERRADA` desde `de49d68`) |
+| P-S03-08 | AC-S03-04 | `tecnico1` registra otra solución en `PENDIENTE_VALIDACION` y en `CERRADA` | 409; sigue habiendo 1 solución | `test_segunda_solucion_sin_rechazo_se_rechaza` (`CERRADA` desde `de49d68`) |
+| P-S03-09 | AC-S03-08 | Solución `<img src=x onerror=alert(1)> se cambió la pieza` | El detalle la muestra escapada | `test_la_solucion_no_se_ejecuta_como_html` |
+| P-S03-10 | AC-S03-06 | Nueva solución tras un rechazo y tras una reapertura | Ver P-S04-02 y P-S04-03: 2 soluciones, la primera intacta | `test_p_s04_02_rechazo_y_nueva_solucion`, `test_p_s04_03_reapertura_y_nuevo_cierre` |
+| P-S03-11 | AC-S03-07 | `tecnico1` y `tecnico2` intentan confirmar una `PENDIENTE_VALIDACION` | Ver P-S04-05: 403; 0 cierres | `test_p_s04_05_solo_el_duenio_valida` |
+| P-S03-12 | AC-S03-09 | Iniciar y registrar solución mientras se fuerza un fallo al guardar el evento | La operación falla; mismo estado; 0 soluciones nuevas; mismo historial | Por automatizar (T-S03-06) |
 
 ## Decisión de revisión / versión aprobada
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.2 | José Leonardo Hernández Pedrosa (asignado) | Pendiente | |
+| Pendiente | 0.3 | José Leonardo Hernández Pedrosa (asignado) | Pendiente | |

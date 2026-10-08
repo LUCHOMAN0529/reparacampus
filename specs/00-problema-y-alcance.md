@@ -2,7 +2,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.2 (borrador en revisión) |
+| Versión | 0.3 (borrador en revisión) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
 | Revisor | Asignado: Rafael Eduardo May Recuero. Revisión pendiente |
 | Fecha | 2026-10-08 |
@@ -85,9 +85,12 @@ Estas preguntas están **sin responder**. El 2026-10-08 el equipo informó que n
 | SUP-09 | Los filtros de estado y prioridad se combinan con “y”. Un valor de filtro fuera del catálogo se rechaza con error en lugar de devolver una lista vacía. | S05 |
 | SUP-10 | En el tablero, “CRITICA no cerradas” lista las incidencias con prioridad CRITICA cuyo estado actual no es CERRADA. | S05 |
 | SUP-11 | Las contraseñas de las cinco cuentas ficticias se publican en el README, porque son datos de prueba. | Autenticación |
+| SUP-12 | La «solución vigente» de una incidencia es la última registrada; es la que se confirma o se rechaza. | S04 |
+| SUP-13 | El historial se muestra en el orden en que se registraron los eventos; ante dos eventos con la misma marca de tiempo, el desempate es su identificador consecutivo. | S05 |
+| SUP-14 | Registros enviados a la vez se atienden uno tras otro; todos se crean, con códigos consecutivos distintos. | S01 |
 
 ## 8. Registro de revisión
 
 | Fecha | Versión | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.2 | Rafael Eduardo May Recuero (asignado) | Pendiente | |
+| Pendiente | 0.3 | Rafael Eduardo May Recuero (asignado) | Pendiente | |
