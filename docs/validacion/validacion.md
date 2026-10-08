@@ -2,11 +2,11 @@
 
 | Campo | Valor |
 |---|---|
-| Versión del código | commit `de49d68` (rama `docs/evidencias`) |
-| SPECS | S01 a S05, versión 0.2 |
+| Versión del código | commit `6b99fec` (rama `docs/evidencias`); `app/` no cambia desde `786cf42` |
+| SPECS | S01 a S05, versión 0.3 (rama `specs/s01-s05`, commit `83861a7`) |
 | Fecha de ejecución | 2026-10-08 |
 | Comando | `python -m pytest` |
-| Resultado | **153 pruebas aprobadas, 0 fallidas**, en 33,3 s |
+| Resultado | **176 pruebas aprobadas, 0 fallidas**, en 20,0 s |
 | Entorno | Windows 11, Python 3.14.3, Flask 3.1.3, SQLite 3.50.4, pytest 9.1.1 |
 | Datos | Cada prueba crea un archivo SQLite temporal con las cinco cuentas del seed y un reloj controlado que inicia en `2026-10-01T08:00:00Z` |
 
@@ -16,18 +16,18 @@ El SHA y el resultado se volverán a registrar sobre el tag `release-examen` cua
 
 | Requisito | Historia | SPEC | Criterios | Tareas | Código principal | Commit | Archivo de pruebas | Pruebas |
 |---|---|---|---|---|---|---|---|---|
-| RF01 Registrar | H01 | S01 v0.2 | AC-S01-01 a 09 | T-S01-01 a 06 | `dominio.validar_registro`, `servicios.registrar_incidencia`, `rutas.nueva` | `7bc08f2` | `tests/test_s01_registro.py` | 20 |
-| RF02 Priorizar y asignar | H02 | S02 v0.2 | AC-S02-01 a 09 | T-S02-01 a 05 | `dominio.calcular_prioridad`, `servicios.asignar` | `8479352` | `tests/test_s02_prioridad_asignacion.py` | 21 |
-| RF03 Atender | H03 | S03 v0.2 | AC-S03-01 a 08 | T-S03-01 a 05 | `servicios.iniciar_atencion`, `servicios.registrar_solucion` | `20ebd53` | `tests/test_s03_atencion.py` | 19 |
-| RF04 Validar | H04 | S04 v0.2 | AC-S04-01 a 10 | T-S04-01 a 06 | `servicios.confirmar`, `rechazar`, `reabrir`; `dominio.dentro_de_plazo_reapertura` | `70468c0` | `tests/test_s04_validacion.py`, `tests/test_integracion.py` | 37 + 3 |
+| RF01 Registrar | H01 | S01 v0.2 | AC-S01-01 a 10 | T-S01-01 a 07 | `dominio.validar_registro`, `servicios.registrar_incidencia`, `rutas.nueva` | `7bc08f2` | `tests/test_s01_registro.py`, `tests/test_concurrencia.py` | 26 + 5 |
+| RF02 Priorizar y asignar | H02 | S02 v0.2 | AC-S02-01 a 10 | T-S02-01 a 06 | `dominio.calcular_prioridad`, `servicios.asignar` | `8479352` | `tests/test_s02_prioridad_asignacion.py`, `tests/test_atomicidad.py` | 21 + 1 |
+| RF03 Atender | H03 | S03 v0.2 | AC-S03-01 a 09 | T-S03-01 a 06 | `servicios.iniciar_atencion`, `servicios.registrar_solucion` | `20ebd53` | `tests/test_s03_atencion.py`, `tests/test_atomicidad.py` | 19 + 2 |
+| RF04 Validar | H04 | S04 v0.2 | AC-S04-01 a 11 | T-S04-01 a 07 | `servicios.confirmar`, `rechazar`, `reabrir`; `dominio.dentro_de_plazo_reapertura` | `70468c0` | `tests/test_s04_validacion.py`, `tests/test_integracion.py`, `tests/test_atomicidad.py` | 43 + 3 + 3 |
 | RF05 Consultar e historizar | H05 | S05 v0.2 | AC-S05-01 a 13 | T-S05-01 a 06 | `consultas.listar`, `historial`, `tablero`; disparadores de `schema.sql` | `786cf42` | `tests/test_s05_consulta_tablero.py` | 46 |
 | Autenticación (límites del prototipo) | — | Alcance | AC-S05-13 | T-S01-01, 02 | `auth.py`, `db.py` | `c5e7ef7` | `tests/test_auth.py` | 7 |
 
-Esquema, transiciones y errores compartidos: commit `c5e7ef7`. Estados faltantes de AC-S02-06 y AC-S03-04: commit `de49d68`.
+Esquema, transiciones y errores compartidos: commit `c5e7ef7`. Estados faltantes de AC-S02-06 y AC-S03-04: commit `de49d68`. Atomicidad, registros simultáneos, riesgo estricto y motivos solo con espacios: commit `6b99fec`.
 
 ## 2. Diez escenarios automatizados de referencia
 
-Los esperados se escribieron en las SPECS antes de ejecutar y aparecen como literales en las pruebas; ninguno se calcula con la función de producción. Todos se ejecutaron con `python -m pytest` el 2026-10-08 sobre `de49d68`.
+Los esperados se escribieron en las SPECS antes de ejecutar y aparecen como literales en las pruebas; ninguno se calcula con la función de producción. Todos se ejecutaron con `python -m pytest` el 2026-10-08 sobre `6b99fec`.
 
 | ID | SPEC / AC | Tipo | Entrada | Esperado | Observado |
 |---|---|---|---|---|---|
@@ -46,7 +46,7 @@ Las tres de integración se ejecutan solas con `python -m pytest -m integracion`
 
 ## 3. Matriz SPEC frente a código
 
-Estado de cada criterio de aceptación sobre `de49d68`. “Observado” resume el resultado de la prueba y los efectos en la base.
+Estado de cada criterio de aceptación de las SPECS v0.3 sobre `6b99fec`. “Observado” resume el resultado de la prueba y los efectos en la base.
 
 ### S01 · Registrar (RF01, H01) — `app/dominio.py`, `app/servicios.py`, `app/rutas.py`
 
@@ -56,11 +56,12 @@ Estado de cada criterio de aceptación sobre `de49d68`. “Observado” resume e
 | AC-S01-02 | Otros roles 403; sin sesión, redirección; nada se crea | `test_p_s01_04_otros_roles_no_registran`, `test_sin_sesion_no_registra` | 403 y 302; 0 filas | Cumple |
 | AC-S01-03 | Descripción de 20 a 500 tras retirar espacios | `test_p_s01_02_limites_de_la_descripcion`, `test_los_espacios_externos_no_cuentan` | 19 y 501: 400; 20 y 500: 302; se guarda recortada | Cumple |
 | AC-S01-04 | Impacto inválido se rechaza | `test_p_s01_03_valores_invalidos` (`MEDIO`, `alto`, vacío) | 400; 0 filas | Cumple |
-| AC-S01-05 | Riesgo inválido o ausente se rechaza | `test_p_s01_03_valores_invalidos` (`quiza`, ausente) | 400; 0 filas | Cumple |
+| AC-S01-05 | Riesgo inválido o ausente se rechaza; solo valen `true` y `false` | `test_p_s01_03_valores_invalidos` (`quiza`, ausente), `test_p_s01_12_el_riesgo_solo_acepta_true_o_false` (`True`, `1`, `on`, `TRUE`, `si`, ` true`) | 400; 0 filas | Cumple |
 | AC-S01-06 | Ubicación o categoría fuera de catálogo se rechaza | `test_p_s01_03_valores_invalidos` | 400; 0 filas | Cumple |
 | AC-S01-07 | El texto no se ejecuta como HTML | `test_p_s01_05_el_texto_no_se_ejecuta_como_html`, `test_el_listado_no_ejecuta_html` | Guardado literal; la página lo muestra escapado | Cumple |
 | AC-S01-08 | El servidor ignora código, estado, prioridad, autor y fecha enviados | `test_p_s01_06_el_servidor_ignora_campos_generados` | `REGISTRADA`, `NORMAL`, autor de la sesión | Cumple |
 | AC-S01-09 | Si falla el evento no queda la incidencia | `test_sin_efectos_parciales_si_falla_el_evento` | 0 incidencias, 0 eventos | Cumple |
+| AC-S01-10 | Registros simultáneos: todos se crean con códigos distintos y consecutivos | `test_p_s01_11_registros_simultaneos` (5 repeticiones de 8 hilos) | 8 respuestas 302; `INC-000001` a `INC-000008` sin repetir; cada incidencia con su autor, su descripción y un evento `CREAR` | Cumple |
 
 ### S02 · Priorizar y asignar (RF02, H02) — `app/dominio.py`, `app/servicios.py`
 
@@ -73,6 +74,7 @@ Estado de cada criterio de aceptación sobre `de49d68`. “Observado” resume e
 | AC-S02-07 | Técnico ausente, inexistente, inactivo o no técnico: 400 | `test_p_s02_05_tecnico_invalido` | 400; 0 asignaciones | Cumple |
 | AC-S02-08 | Incidencia inexistente: 404 | `test_incidencia_inexistente` | 404 | Cumple |
 | AC-S02-09 | La prioridad no se manipula | `test_la_prioridad_no_se_cambia_al_asignar`, `test_p_s01_06_…` | Prioridad calculada | Cumple |
+| AC-S02-10 | Si falla el evento al asignar, no queda nada | `test_un_fallo_al_guardar_el_evento_revierte_toda_la_operacion[P-S02-10-asignar]` | Las cinco tablas idénticas fila a fila; después la operación se completa | Cumple |
 
 ### S03 · Atender (RF03, H03) — `app/servicios.py`
 
@@ -86,6 +88,7 @@ Estado de cada criterio de aceptación sobre `de49d68`. “Observado” resume e
 | AC-S03-06 | Una nueva solución conserva las anteriores | `test_p_s04_02_…`, `test_p_s04_03_…` | 2 filas en `soluciones`, la primera intacta | Cumple |
 | AC-S03-07 | El técnico no cierra | `test_p_s04_05_solo_el_duenio_valida` (`tecnico1`, `tecnico2`) | 403; 0 cierres | Cumple; probado en `PENDIENTE_VALIDACION`, que es el único estado desde el que existe el cierre |
 | AC-S03-08 | La solución no se ejecuta como HTML | `test_la_solucion_no_se_ejecuta_como_html` | Escapada en el detalle | Cumple |
+| AC-S03-09 | Si falla el evento al iniciar o al registrar la solución, no queda nada | `test_un_fallo_…[P-S03-12-iniciar]`, `[P-S03-12-solucion]` | Las cinco tablas idénticas fila a fila; 0 soluciones nuevas | Cumple |
 
 ### S04 · Validar (RF04, H04) — `app/servicios.py`, `app/dominio.py`, `app/reloj.py`
 
@@ -93,14 +96,15 @@ Estado de cada criterio de aceptación sobre `de49d68`. “Observado” resume e
 |---|---|---|---|---|
 | AC-S04-01 | El dueño confirma y queda `CERRADA` | `test_confirmar`, `test_p_s04_01_flujo_de_cierre` | 1 fila en `cierres` con solución, dueño y fecha | Cumple |
 | AC-S04-02 | Rechazo conserva técnico y solución y registra quién, cuándo y por qué | `test_rechazar_conserva_tecnico_y_solucion`, `test_p_s04_02_…` | `EN_ATENCION`, `tecnico1`, solución intacta, evento con motivo | Cumple |
-| AC-S04-03 | Motivo de rechazo de 10 a 300 | `test_p_s04_04_limites_del_motivo_de_rechazo` | 9, 301 y vacío: 400; 10 y 300: 302 | Cumple |
+| AC-S04-03 | Motivo de rechazo de 10 a 300; solo espacios se rechaza | `test_p_s04_04_limites_del_motivo_de_rechazo`, `test_p_s04_15_rechazo_con_motivo_solo_de_espacios` | 9, 301, vacío y solo espacios (15, 300 y tabulaciones): 400 sin eventos nuevos; 10 y 300: 302 | Cumple |
 | AC-S04-04 | Otro solicitante 404; coordinador y técnico 403 | `test_p_s04_05_solo_el_duenio_valida`, `test_solo_el_duenio_reabre` | Sin cambios; 0 cierres nuevos | Cumple |
 | AC-S04-05 | Estados incompatibles: 409 | `test_validar_en_estado_incompatible`, `test_reabrir_en_estado_incompatible` | 409 en los ocho y cuatro casos | Cumple |
 | AC-S04-06 | Reapertura a las 48 h exactas | `test_reabrir_exactamente_a_las_48_horas` | 302; `EN_ATENCION`; cierre y solución conservados | Cumple |
 | AC-S04-07 | Reapertura a 48 h + 1 µs se rechaza | `test_reabrir_un_instante_despues_de_48_horas` | 409; mismo historial de 5 eventos | Cumple |
-| AC-S04-08 | Motivo de reapertura inválido | `test_motivo_de_reapertura_invalido` | 400; sigue `CERRADA` | Cumple |
+| AC-S04-08 | Motivo de reapertura inválido; solo espacios se rechaza | `test_motivo_de_reapertura_invalido`, `test_p_s04_15_reapertura_con_motivo_solo_de_espacios` | 400; sigue `CERRADA`; los mismos 5 eventos | Cumple |
 | AC-S04-09 | Cierres sucesivos; el plazo cuenta desde el último | `test_p_s04_03_reapertura_y_nuevo_cierre` | 2 cierres; 409 a 48 h + 1 µs del segundo; 302 a las 48 h | Cumple |
 | AC-S04-10 | La hora la decide el servidor | `test_la_hora_la_decide_el_servidor` | 409 aunque el formulario envíe una fecha dentro del plazo | Cumple |
+| AC-S04-11 | Si falla el evento al confirmar, rechazar o reabrir, no queda nada | `test_un_fallo_…[P-S04-16-confirmar]`, `[P-S04-16-rechazar]`, `[P-S04-16-reabrir]` | Las cinco tablas idénticas fila a fila; 0 cierres nuevos | Cumple |
 
 ### S05 · Consultar, historizar y tablero (RF05, H05) — `app/consultas.py`, `app/schema.sql`
 
@@ -120,7 +124,7 @@ Estado de cada criterio de aceptación sobre `de49d68`. “Observado” resume e
 | AC-S05-12 | Los datos permanecen al reiniciar | `test_p_s05_05_los_datos_permanecen_al_reiniciar` | Segunda instancia sobre el mismo archivo muestra los mismos datos | Cumple; el reinicio se simula creando otra instancia de la aplicación |
 | AC-S05-13 | Sin sesión, redirección; credenciales incorrectas, sin acceso | `test_p_s05_06_sin_sesion_redirige_al_login`, `tests/test_auth.py` | 302 y 401 | Cumple |
 
-**Resumen:** 49 criterios, 49 en “Cumple”. Ninguno en “Parcial” o “No cumple” sobre `de49d68`.
+**Resumen:** 53 criterios (los 49 de la v0.2 más AC-S01-10, AC-S02-10, AC-S03-09 y AC-S04-11), 53 en “Cumple”. Ninguno en “Parcial” o “No cumple” sobre `6b99fec`.
 
 ## 4. Comprobación manual
 
@@ -138,6 +142,7 @@ Pendiente de comprobación manual: el recorrido completo en navegador con los ci
 | H-01 | La SPEC S03 v0.1 decía que la solución de ejemplo tenía 49 caracteres; tiene 50 | Recuento al revisar la tabla de pruebas, antes de versionar | Se quitó la cifra de P-S03-02 | Commit `50fb915`; no afectaba código |
 | H-02 | P-S01-02 y P-S04-04 no probaban los límites superiores (500/501 y 300/301) que sus criterios sí exigían | Revisión asistida por IA de las SPECS v0.1 | SPECS v0.2 y casos agregados | Commit `a06aaf2`; pruebas en `7bc08f2` y `70468c0` |
 | H-03 | AC-S02-06 exige 409 al asignar en cualquier estado distinto de `REGISTRADA`, pero solo se probaba en `ASIGNADA`; AC-S03-04 no se probaba en `CERRADA` | Al llenar esta matriz criterio por criterio | Cinco casos nuevos | Commit `de49d68`; 153 pruebas aprobadas. El código ya se comportaba bien: faltaba la prueba |
+| H-05 | La atomicidad solo se probaba en el registro; no había prueba de registros simultáneos, de riesgo `True`/`1`/`on` ni de motivos formados solo por espacios | Segunda revisión asistida por IA, contrastada con el código | Cuatro criterios nuevos en las SPECS v0.3 y 23 casos de prueba | Commit `6b99fec`; 176 pruebas aprobadas. **No se encontró ningún defecto**: el código ya cumplía y no se modificó `app/` |
 | H-04 | Un comando de edición dañó las tildes de `app/servicios.py` (codificación) durante la implementación de S02 | Lectura del archivo tras el cambio | Se restauró desde Git y se rehízo la edición | 45 pruebas aprobadas antes del commit `8479352`; el archivo dañado nunca se versionó |
 
 ## 6. ¿Las pruebas detectan errores?
@@ -157,4 +162,21 @@ Ejecución: 2026-10-08, sobre `de49d68`, 153 pruebas por mutación.
 | M7 | El rechazo no guarda el motivo | 3 | Integración, S04, S05 |
 | M8 | El técnico puede cerrar una incidencia | 31 | Integración, S02, S03, S04, S05 |
 
-**Resultado:** las ocho mutaciones fueron detectadas. Es una muestra de ocho errores, no una prueba de mutación exhaustiva.
+Las pruebas agregadas en `6b99fec` se comprobaron igual, ejecutando solo los archivos que vigilan cada propiedad:
+
+| ID | Error introducido | Pruebas ejecutadas | Fallan |
+|---|---|---|---|
+| M9 | La transacción confirma en lugar de revertir cuando hay un error | `test_atomicidad.py`, `test_s01_registro.py` | 7 de 32 (las seis transiciones y el registro) |
+| M10 | El consecutivo se calcula fuera de la transacción, con una pausa de 10 ms | `test_concurrencia.py` | 5 de 5 |
+| M11 | Los límites de texto no retiran los espacios externos | Casos `p_s04_15` | 4 de 6 |
+| M12 | El riesgo acepta mayúsculas y espacios | Casos `p_s01_12` | 3 de 6 |
+
+En M11 y M12 los casos que no fallan son los que el error introducido tampoco altera: una cadena de 9 espacios y tabulaciones sigue por debajo del mínimo, y `1`, `on` y `si` siguen sin ser `true`.
+
+**Resultado:** las doce mutaciones fueron detectadas. Es una muestra de doce errores, no una prueba de mutación exhaustiva.
+
+## 7. Límites de las pruebas nuevas
+
+- **Concurrencia.** Son ocho hilos dentro de un mismo proceso, cada uno con su sesión y su conexión, contra un archivo SQLite; no es una prueba de carga ni usa varios procesos servidores. Se ejecutó 55 veces (5 repeticiones por corrida, 11 corridas) sin ningún fallo. La mutación M10 necesitó una pausa artificial de 10 ms para abrir la ventana de carrera.
+- **Atomicidad.** El fallo se inyecta en el guardado del evento, que es el último paso de cada transacción; no se simulan cortes de energía ni fallos del disco.
+- **Espera por bloqueo.** Un escritor espera el bloqueo de la base hasta 5 segundos, que es el valor por defecto de `sqlite3`; con más carga de la probada, un registro podría fallar con error en lugar de esperar. No dejaría datos parciales, pero ese caso no está probado.
