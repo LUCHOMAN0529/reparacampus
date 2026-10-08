@@ -4,7 +4,7 @@ import secrets
 
 from flask import Flask, render_template
 
-from . import auth, db, dominio, reloj
+from . import auth, db, dominio, reloj, rutas
 
 
 def _clave_secreta(app):
@@ -37,6 +37,7 @@ def create_app(config=None):
 
     db.init_app(app)
     app.register_blueprint(auth.bp)
+    app.register_blueprint(rutas.bp)
 
     @app.template_filter("fecha")
     def fecha(texto):

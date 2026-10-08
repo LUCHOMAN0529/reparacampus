@@ -11,7 +11,9 @@
     <a class="marca" href="{{ url_for('inicio') }}">ReparaCampus</a>
     {% if g.usuario %}
     <nav>
-      {% block navegacion %}{% endblock %}
+      {% if g.usuario['rol'] == 'SOLICITANTE' %}
+      <a href="{{ url_for('incidencias.nueva') }}">Nueva incidencia</a>
+      {% endif %}
     </nav>
     <div class="sesion">
       <span>{{ g.usuario['nombre'] }} · {{ g.usuario['rol'] }}</span>

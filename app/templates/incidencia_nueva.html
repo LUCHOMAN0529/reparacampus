@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block titulo %}Nueva incidencia · ReparaCampus{% endblock %}
+{% macro error_de(campo) %}
+  {% if errores.get(campo) %}<p class="error-campo" id="error-{{ campo }}">{{ errores[campo] }}</p>{% endif %}
+{% endmacro %}
+{% block contenido %}
+<section class="tarjeta">
+  <h1>Registrar una incidencia</h1>
+  {% if errores %}<p class="error" role="alert">Revise los campos marcados. No se guardó el reporte.</p>{% endif %}
+  <form method="post" novalidate>
+    <label for="ubicacion">Ubicación</label>
+    <select id="ubicacion" name="ubicacion">
+      <option value="">Seleccione…</option>
+      {% for opcion in dominio.UBICACIONES %}
+      <option value="{{ opcion }}" {% if valores.get('ubicacion') == opcion %}selected{% endif %}>{{ opcion }}</option>
+      {% endfor %}
+    </select>
+    {{ error_de('ubicacion') }}
+
+    <label for="categoria">Categoría</label>
+    <select id="categoria" name="categoria">
+      <option value="">Seleccione…</option>
+      {% for opcion in dominio.CATEGORIAS %}
+      <option value="{{ opcion }}" {% if valores.get('categoria') == opcion %}selected{% endif %}>{{ opcion }}</option>
+      {% endfor %}
+    </select>
+    {{ error_de('categoria') }}
+
+    <label for="descripcion">Descripción</label>
+    <textarea id="descripcion" name="descripcion"
+              data-min="{{ dominio.DESCRIPCION_MIN }}" data-max="{{ dominio.DESCRIPCION_MAX }}">{{ valores.get('descripcion') or '' }}</textarea>
+    {{ error_de('descripcion') }}
+
+    <fieldset>
+      <legend>Impacto</legend>
+      {% for opcion in dominio.IMPACTOS %}
+      <label><input type="radio" name="impacto" value="{{ opcion }}" {% if valores.get('impacto') == opcion %}checked{% endif %}> {{ opcion }}</label>
+      {% endfor %}
+    </fieldset>
+    {{ error_de('impacto') }}
+
+    <fieldset>
+      <legend>¿Hay riesgo para personas?</legend>
+      <label><input type="radio" name="riesgo_personas" value="true" {% if valores.get('riesgo_personas') == 'true' %}checked{% endif %}> Sí</label>
+      <label><input type="radio" name="riesgo_personas" value="false" {% if valores.get('riesgo_personas') == 'false' %}checked{% endif %}> No</label>
+    </fieldset>
+    {{ error_de('riesgo_personas') }}
+
+    <button type="submit">Registrar incidencia</button>
+  </form>
+</section>
+{% endblock %}
