@@ -1,0 +1,130 @@
+:root {
+  --fondo: #f4f6f9;
+  --panel: #ffffff;
+  --texto: #1c2733;
+  --suave: #5b6878;
+  --borde: #d5dbe3;
+  --primario: #1f4e8c;
+  --error: #a4262c;
+  --critica: #a4262c;
+  --alta: #b25e00;
+  --normal: #2b6a3c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, "Segoe UI", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--texto);
+  background: var(--fondo);
+}
+
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  padding: 12px 24px;
+  background: var(--primario);
+  color: #fff;
+}
+.barra a { color: #fff; text-decoration: none; }
+.barra nav { display: flex; gap: 16px; flex: 1; }
+.barra nav a:hover, .barra nav a:focus { text-decoration: underline; }
+.marca { font-weight: 700; font-size: 1.15rem; }
+.sesion { display: flex; align-items: center; gap: 12px; font-size: .9rem; }
+.sesion form { margin: 0; }
+
+main { max-width: 1040px; margin: 24px auto; padding: 0 16px; }
+
+.tarjeta {
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+.estrecha { max-width: 460px; margin-left: auto; margin-right: auto; }
+
+h1 { font-size: 1.5rem; margin: 0 0 16px; }
+h2 { font-size: 1.15rem; margin: 0 0 12px; }
+
+label, legend { display: block; font-weight: 600; margin: 14px 0 4px; }
+fieldset { border: 0; padding: 0; margin: 0; }
+fieldset label { display: inline-block; font-weight: 400; margin: 0 16px 0 0; }
+
+input:not([type=radio]), select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  font: inherit;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background: #fff;
+}
+textarea { min-height: 110px; resize: vertical; }
+input:focus, select:focus, textarea:focus, button:focus, a:focus {
+  outline: 3px solid #7fb0ea;
+  outline-offset: 1px;
+}
+
+button {
+  margin-top: 16px;
+  padding: 9px 18px;
+  font: inherit;
+  font-weight: 600;
+  color: #fff;
+  background: var(--primario);
+  border: 1px solid var(--primario);
+  border-radius: 6px;
+  cursor: pointer;
+}
+button.secundario { margin: 0; background: transparent; border-color: #fff; padding: 5px 12px; }
+button.peligro { background: var(--error); border-color: var(--error); }
+
+.error { color: var(--error); font-weight: 600; }
+.error-campo { color: var(--error); font-size: .9rem; margin: 4px 0 0; }
+.nota, .contador { color: var(--suave); font-size: .9rem; }
+.contador { text-align: right; margin: 2px 0 0; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+th { font-size: .85rem; text-transform: uppercase; letter-spacing: .03em; color: var(--suave); }
+.tabla-desplazable { overflow-x: auto; }
+
+.filtros { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
+.filtros > div { flex: 1 1 180px; }
+.filtros label { margin-top: 0; }
+.filtros button { margin-top: 0; }
+
+.etiqueta {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 700;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.prioridad-CRITICA { color: var(--critica); }
+.prioridad-ALTA { color: var(--alta); }
+.prioridad-NORMAL { color: var(--normal); }
+.estado { color: var(--primario); }
+
+dl.datos { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 0; }
+dl.datos dt { font-weight: 600; color: var(--suave); }
+dl.datos dd { margin: 0; }
+.texto-usuario { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.historial { list-style: none; margin: 0; padding: 0; }
+.historial li { padding: 12px 0; border-bottom: 1px solid var(--borde); }
+.historial li:last-child { border-bottom: 0; }
+.historial .cabecera { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.historial blockquote { margin: 8px 0 0; padding: 8px 12px; background: var(--fondo); border-left: 3px solid var(--borde); }
+
+.resumen { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.resumen .tarjeta { margin: 0; }
+.cifra { font-size: 2.2rem; font-weight: 700; margin: 0; }
+td.numero, th.numero { text-align: right; }
