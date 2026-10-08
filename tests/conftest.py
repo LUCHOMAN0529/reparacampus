@@ -101,6 +101,34 @@ def registro_valido(**cambios):
     return datos
 
 
+@pytest.fixture
+def flujo(entrar, db):
+    """Lleva INC-000001 (de solicitante1, técnico tecnico1) hasta el estado pedido por HTTP."""
+
+    def _hasta(estado, **registro):
+        codigo = "INC-000001"
+        entrar("solicitante1").post("/incidencias/nueva", data=registro_valido(**registro))
+        if estado == "REGISTRADA":
+            return codigo
+        entrar("coordinador1").post(
+            f"/incidencias/{codigo}/asignar", data={"tecnico_id": id_usuario(db, "tecnico1")}
+        )
+        if estado == "ASIGNADA":
+            return codigo
+        tecnico = entrar("tecnico1")
+        tecnico.post(f"/incidencias/{codigo}/iniciar")
+        if estado == "EN_ATENCION":
+            return codigo
+        tecnico.post(f"/incidencias/{codigo}/solucion", data={"solucion": SOLUCION})
+        if estado == "PENDIENTE_VALIDACION":
+            return codigo
+        entrar("solicitante1").post(f"/incidencias/{codigo}/confirmar")
+        assert estado == "CERRADA"
+        return codigo
+
+    return _hasta
+
+
 def contar(db, tabla):
     return db.execute(f"SELECT COUNT(*) FROM {tabla}").fetchone()[0]
 

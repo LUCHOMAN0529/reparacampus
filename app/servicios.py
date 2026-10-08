@@ -86,3 +86,34 @@ def asignar(db, usuario, codigo, tecnico_id, ahora):
             (incidencia["id"], tecnico["id"], usuario["id"], momento),
         )
         _registrar_evento(db, incidencia["id"], usuario["id"], "ASIGNAR", momento)
+
+
+def iniciar_atencion(db, usuario, codigo, ahora):
+    """S03. Solo el técnico asignado pasa ASIGNADA a EN_ATENCION."""
+    dominio.exigir_rol(usuario["rol"], "INICIAR_ATENCION")
+    incidencia = consultas.obtener(db, usuario, codigo)
+    dominio.exigir_estado(incidencia["estado"], "INICIAR_ATENCION")
+    momento = a_texto(ahora)
+
+    with transaccion(db):
+        _cambiar_estado(db, incidencia["id"], "INICIAR_ATENCION")
+        _registrar_evento(db, incidencia["id"], usuario["id"], "INICIAR_ATENCION", momento)
+
+
+def registrar_solucion(db, usuario, codigo, texto, ahora):
+    """S03. Cada solución es un registro nuevo; las anteriores no se tocan."""
+    dominio.exigir_rol(usuario["rol"], "REGISTRAR_SOLUCION")
+    incidencia = consultas.obtener(db, usuario, codigo)
+    dominio.exigir_estado(incidencia["estado"], "REGISTRAR_SOLUCION")
+    texto = dominio.validar_texto(texto, dominio.SOLUCION_MIN, dominio.SOLUCION_MAX, "solucion")
+    momento = a_texto(ahora)
+
+    with transaccion(db):
+        _cambiar_estado(db, incidencia["id"], "REGISTRAR_SOLUCION")
+        solucion_id = db.execute(
+            "INSERT INTO soluciones (incidencia_id, tecnico_id, texto, registrada_en) VALUES (?, ?, ?, ?)",
+            (incidencia["id"], usuario["id"], texto, momento),
+        ).lastrowid
+        _registrar_evento(
+            db, incidencia["id"], usuario["id"], "REGISTRAR_SOLUCION", momento, solucion_id=solucion_id
+        )
