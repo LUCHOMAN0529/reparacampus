@@ -1,6 +1,6 @@
 # Plan de diseño · S05 Consultar, historizar y tablero
 
-Versión 0.3 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md) y de S01 a S04.
+Versión 0.5 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md) y de S01 a S04.
 
 ## Componentes que intervienen
 

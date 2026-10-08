@@ -14,12 +14,14 @@ El documento recibido se declara a sí mismo como “propuesta simulada” y adv
 Por eso:
 
 - **No cuenta como la revisión previa que exige el examen.** La revisión de cada integrante sigue pendiente y así consta en cada SPEC.
-- Los nombres que aparecen en el documento se toman solo como la **asignación** de revisor por SPEC.
+- Los nombres que aparecen en el documento se toman solo como una **propuesta** de revisor por SPEC.
 - Sus sugerencias se evaluaron una por una contra las SPECS reales, como cualquier otra salida de IA. El resultado está abajo.
 
-## Asignación de revisores
+## Propuesta de revisores
 
-| SPEC | Revisor asignado | Estado |
+Los nombres salen del borrador simulado. Ningún integrante ha confirmado esta asignación (ver `docs/decisiones.md`, B-2).
+
+| SPEC | Revisor propuesto | Estado |
 |---|---|---|
 | S01 | Rafael Eduardo May Recuero | Pendiente |
 | S02 | Jean Marco Oyola De Martino | Pendiente |
@@ -50,4 +52,4 @@ Evaluación preparada con el asistente (Claude) y pendiente de confirmación por
 
 ## Resultado
 
-Las SPECS pasan a la versión 0.2 con los cambios 2, 9, 10 y 11. El campo “Decisión de revisión” de cada SPEC sigue en **Pendiente** hasta que el integrante asignado la lea y registre su decisión.
+Las SPECS pasan a la versión 0.2 con los cambios 2, 9, 10 y 11. El campo “Decisión de revisión” de cada SPEC sigue en **Pendiente** hasta que el integrante propuesto la lea y registre su decisión.

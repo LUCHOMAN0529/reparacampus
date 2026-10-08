@@ -73,7 +73,7 @@ Estado de cada criterio de aceptación de las SPECS vigentes sobre `6b99fec`. �
 | AC-S02-06 | Asignación repetida o en otro estado: 409 sin cambios | `test_p_s02_03_asignacion_repetida`, `test_no_se_asigna_fuera_de_registrada`, `test_la_base_impide_una_segunda_asignacion` | 409 en los cuatro estados; conserva `tecnico1`; la base rechaza un segundo registro | Cumple (tras el hallazgo H-03) |
 | AC-S02-07 | Técnico ausente, inexistente, inactivo o no técnico: 400 | `test_p_s02_05_tecnico_invalido` | 400; 0 asignaciones | Cumple |
 | AC-S02-08 | Incidencia inexistente: 404 | `test_incidencia_inexistente` | 404 | Cumple |
-| AC-S02-09 | La prioridad no se manipula | `test_la_prioridad_no_se_cambia_al_asignar`, `test_p_s01_06_…` | Prioridad calculada | Cumple |
+| AC-S02-09 | La prioridad no se manipula | `test_la_prioridad_no_se_cambia_al_asignar`, `test_p_s01_06_el_servidor_ignora_campos_generados` | Prioridad calculada | Cumple |
 | AC-S02-10 | Si falla el evento al asignar, no queda nada | `test_un_fallo_al_guardar_el_evento_revierte_toda_la_operacion[P-S02-10-asignar]` | Las cinco tablas idénticas fila a fila; después la operación se completa | Cumple |
 
 ### S03 · Atender (RF03, H03) — `app/servicios.py`
@@ -85,17 +85,17 @@ Estado de cada criterio de aceptación de las SPECS vigentes sobre `6b99fec`. �
 | AC-S03-03 | Técnico no asignado 404; otros roles 403 | `test_p_s03_03_tecnico_no_asignado`, `test_otros_roles_no_atienden` | Sin cambios de estado ni eventos | Cumple |
 | AC-S03-04 | Estados incompatibles: 409 | `test_p_s03_04_solucion_antes_de_iniciar`, `test_iniciar_en_estado_incompatible`, `test_segunda_solucion_sin_rechazo_se_rechaza` | 409; sin soluciones nuevas | Cumple (tras el hallazgo H-03) |
 | AC-S03-05 | Solución de 20 a 800 | `test_p_s03_05_limites_de_la_solucion` | 19, 801 y vacía: 400; 20 y 800: 302 | Cumple |
-| AC-S03-06 | Una nueva solución conserva las anteriores | `test_p_s04_02_…`, `test_p_s04_03_…` | 2 filas en `soluciones`, la primera intacta | Cumple |
+| AC-S03-06 | Una nueva solución conserva las anteriores | `test_p_s04_02_rechazo_y_nueva_solucion`, `test_p_s04_03_reapertura_y_nuevo_cierre` | 2 filas en `soluciones`, la primera intacta | Cumple |
 | AC-S03-07 | El técnico no cierra | `test_p_s04_05_solo_el_duenio_valida` (`tecnico1`, `tecnico2`) | 403; 0 cierres | Cumple; probado en `PENDIENTE_VALIDACION`, que es el único estado desde el que existe el cierre |
 | AC-S03-08 | La solución no se ejecuta como HTML | `test_la_solucion_no_se_ejecuta_como_html` | Escapada en el detalle | Cumple |
-| AC-S03-09 | Si falla el evento al iniciar o al registrar la solución, no queda nada | `test_un_fallo_…[P-S03-12-iniciar]`, `[P-S03-12-solucion]` | Las cinco tablas idénticas fila a fila; 0 soluciones nuevas | Cumple |
+| AC-S03-09 | Si falla el evento al iniciar o al registrar la solución, no queda nada | `test_un_fallo_al_guardar_el_evento_revierte_toda_la_operacion[P-S03-12-iniciar]`, `[P-S03-12-solucion]` | Las cinco tablas idénticas fila a fila; 0 soluciones nuevas | Cumple |
 
 ### S04 · Validar (RF04, H04) — `app/servicios.py`, `app/dominio.py`, `app/reloj.py`
 
 | Criterio | Comportamiento esperado | Prueba | Observado y efectos en la base | Estado |
 |---|---|---|---|---|
 | AC-S04-01 | El dueño confirma y queda `CERRADA` | `test_confirmar`, `test_p_s04_01_flujo_de_cierre` | 1 fila en `cierres` con solución, dueño y fecha | Cumple |
-| AC-S04-02 | Rechazo conserva técnico y solución y registra quién, cuándo y por qué | `test_rechazar_conserva_tecnico_y_solucion`, `test_p_s04_02_…` | `EN_ATENCION`, `tecnico1`, solución intacta, evento con motivo | Cumple |
+| AC-S04-02 | Rechazo conserva técnico y solución y registra quién, cuándo y por qué | `test_rechazar_conserva_tecnico_y_solucion`, `test_p_s04_02_rechazo_y_nueva_solucion` | `EN_ATENCION`, `tecnico1`, solución intacta, evento con motivo | Cumple |
 | AC-S04-03 | Motivo de rechazo de 10 a 300; solo espacios se rechaza | `test_p_s04_04_limites_del_motivo_de_rechazo`, `test_p_s04_15_rechazo_con_motivo_solo_de_espacios` | 9, 301, vacío y solo espacios (15, 300 y tabulaciones): 400 sin eventos nuevos; 10 y 300: 302 | Cumple |
 | AC-S04-04 | Otro solicitante 404; coordinador y técnico 403 | `test_p_s04_05_solo_el_duenio_valida`, `test_solo_el_duenio_reabre` | Sin cambios; 0 cierres nuevos | Cumple |
 | AC-S04-05 | Estados incompatibles: 409 | `test_validar_en_estado_incompatible`, `test_reabrir_en_estado_incompatible` | 409 en los ocho y cuatro casos | Cumple |
@@ -104,7 +104,7 @@ Estado de cada criterio de aceptación de las SPECS vigentes sobre `6b99fec`. �
 | AC-S04-08 | Motivo de reapertura inválido; solo espacios se rechaza | `test_motivo_de_reapertura_invalido`, `test_p_s04_15_reapertura_con_motivo_solo_de_espacios` | 400; sigue `CERRADA`; los mismos 5 eventos | Cumple |
 | AC-S04-09 | Cierres sucesivos; el plazo cuenta desde el último | `test_p_s04_03_reapertura_y_nuevo_cierre` | 2 cierres; 409 a 48 h + 1 µs del segundo; 302 a las 48 h | Cumple |
 | AC-S04-10 | La hora la decide el servidor | `test_la_hora_la_decide_el_servidor` | 409 aunque el formulario envíe una fecha dentro del plazo | Cumple |
-| AC-S04-11 | Si falla el evento al confirmar, rechazar o reabrir, no queda nada | `test_un_fallo_…[P-S04-16-confirmar]`, `[P-S04-16-rechazar]`, `[P-S04-16-reabrir]` | Las cinco tablas idénticas fila a fila; 0 cierres nuevos | Cumple |
+| AC-S04-11 | Si falla el evento al confirmar, rechazar o reabrir, no queda nada | `test_un_fallo_al_guardar_el_evento_revierte_toda_la_operacion[P-S04-16-confirmar]`, `[P-S04-16-rechazar]`, `[P-S04-16-reabrir]` | Las cinco tablas idénticas fila a fila; 0 cierres nuevos | Cumple |
 
 ### S05 · Consultar, historizar y tablero (RF05, H05) — `app/consultas.py`, `app/schema.sql`
 
@@ -177,6 +177,6 @@ En M11 y M12 los casos que no fallan son los que el error introducido tampoco al
 
 ## 7. Límites de las pruebas nuevas
 
-- **Concurrencia.** Son ocho hilos dentro de un mismo proceso, cada uno con su sesión y su conexión, contra un archivo SQLite; no es una prueba de carga ni usa varios procesos servidores. Se ejecutó 55 veces (5 repeticiones por corrida, 11 corridas) sin ningún fallo. La mutación M10 necesitó una pausa artificial de 10 ms para abrir la ventana de carrera.
+- **Concurrencia.** Son ocho hilos dentro de un mismo proceso, cada uno con su sesión y su conexión, contra un archivo SQLite; no es una prueba de carga ni usa varios procesos servidores. Sobre `6b99fec` el archivo se ejecutó en 13 corridas (una sola, diez repetidas, una con los archivos en otro orden y la batería completa), es decir, 65 veces el escenario de ocho hilos, sin ningún fallo. Una versión anterior de este documento decía 55; el recuento correcto es este. La mutación M10 necesitó una pausa artificial de 10 ms para abrir la ventana de carrera.
 - **Atomicidad.** El fallo se inyecta en el guardado del evento, que es el último paso de cada transacción; no se simulan cortes de energía ni fallos del disco.
 - **Espera por bloqueo.** Un escritor espera el bloqueo de la base hasta 5 segundos, que es el valor por defecto de `sqlite3`; con más carga de la probada, un registro podría fallar con error en lugar de esperar. No dejaría datos parciales, pero ese caso no está probado.

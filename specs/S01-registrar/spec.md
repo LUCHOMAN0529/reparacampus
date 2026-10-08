@@ -2,9 +2,9 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.4 (borrador en revisión) |
+| Versión | 0.5 (integrada en `main`; revisión de otro integrante pendiente) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Asignado: Rafael Eduardo May Recuero. Revisión pendiente |
+| Revisor | Propuesto: Rafael Eduardo May Recuero. El equipo no ha confirmado la asignación; revisión pendiente |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF01 |
 
@@ -13,6 +13,8 @@
 **Cambios de la versión 0.3 (2026-10-08):** se precisa cómo se interpreta el riesgo enviado por el formulario; nuevo AC-S01-10 (registros simultáneos); la tabla de pruebas refleja las pruebas reales e identifica las que faltan. Origen: [segunda revisión asistida por IA](../../docs/revision/revision-asistida-ia-02-chatgpt.md), que tampoco reemplaza la revisión del integrante asignado.
 
 **Cambios de la versión 0.4 (2026-10-08):** las pruebas P-S01-11 y P-S01-12 ya están automatizadas y se registran con su nombre real; se anota el alcance comprobado de AC-S01-10. No cambia ningún requisito ni criterio.
+
+**Cambios de la versión 0.5 (2026-10-08):** sin cambios de requisitos ni de criterios. La SPEC queda integrada en `main` junto con el código y las pruebas; las referencias a pruebas ya no dependen de una rama; el revisor figura como propuesto, porque el equipo no ha confirmado la asignación.
 
 ## Historia (H01)
 
@@ -105,7 +107,7 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 
 ## Pruebas y resultados esperados
 
-El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. Todas las pruebas de esta tabla existen en el repositorio y se ejecutaron el 2026-10-08 dentro de la batería completa (`python -m pytest`: 176 aprobadas sobre `6b99fec`); el detalle está en `docs/validacion/validacion.md` de la rama `docs/evidencias`.
+El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. Todas las pruebas de esta tabla existen en `tests/` y se ejecutaron dentro de la batería completa. Los resultados están en `docs/validacion/validacion.md` y la ejecución sobre el tag de entrega, en `docs/validacion/ejecucion-final.md`.
 
 | ID | AC | Precondición y entrada | Esperado | Prueba automatizada |
 |---|---|---|---|---|
@@ -119,11 +121,11 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 | P-S01-08 | AC-S01-03 | Descripción de 19 caracteres rodeada de espacios; de 20 rodeada de espacios y salto de línea | 400; 302 y se guarda sin los espacios externos | `test_los_espacios_externos_no_cuentan` |
 | P-S01-09 | AC-S01-09 | Registro válido mientras se fuerza un fallo al guardar el evento | La operación falla; 0 incidencias; 0 eventos | `test_sin_efectos_parciales_si_falla_el_evento` |
 | P-S01-10 | AC-S01-01 | Dos registros seguidos, de `solicitante1` y de `solicitante2` | `INC-000001` y `INC-000002`, cada uno con su autor | `test_los_codigos_son_consecutivos` |
-| P-S01-11 | AC-S01-10 | Ocho registros válidos enviados a la vez desde ocho hilos de un mismo proceso, cada uno con su sesión; cinco repeticiones | 8 respuestas 302; códigos `INC-000001` a `INC-000008` sin repetir; cada incidencia con su autor, su descripción y un evento `CREAR` | `test_p_s01_11_registros_simultaneos` en `tests/test_concurrencia.py` (commit `6b99fec`, rama `docs/evidencias`) |
-| P-S01-12 | AC-S01-05 | Riesgo `True`, `1`, `on`, `TRUE`, `si` y ` true` (con espacio inicial) | 400 en cada caso; 0 incidencias; 0 eventos | `test_p_s01_12_el_riesgo_solo_acepta_true_o_false` (commit `6b99fec`, rama `docs/evidencias`) |
+| P-S01-11 | AC-S01-10 | Ocho registros válidos enviados a la vez desde ocho hilos de un mismo proceso, cada uno con su sesión; cinco repeticiones | 8 respuestas 302; códigos `INC-000001` a `INC-000008` sin repetir; cada incidencia con su autor, su descripción y un evento `CREAR` | `test_p_s01_11_registros_simultaneos` en `tests/test_concurrencia.py` (commit `6b99fec`) |
+| P-S01-12 | AC-S01-05 | Riesgo `True`, `1`, `on`, `TRUE`, `si` y ` true` (con espacio inicial) | 400 en cada caso; 0 incidencias; 0 eventos | `test_p_s01_12_el_riesgo_solo_acepta_true_o_false` (commit `6b99fec`) |
 
 ## Decisión de revisión / versión aprobada
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.4 | Rafael Eduardo May Recuero (asignado) | Pendiente | |
+| Pendiente | 0.5 | Rafael Eduardo May Recuero (propuesto) | Pendiente | |

@@ -1,6 +1,6 @@
 # Plan de diseño · S04 Validar
 
-Versión 0.3 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md), S01, S02 y S03.
+Versión 0.5 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md), S01, S02 y S03.
 Secuencia del rechazo en [secuencia-rechazo.puml](../../docs/diseno/secuencia-rechazo.puml).
 
 ## Componentes que intervienen

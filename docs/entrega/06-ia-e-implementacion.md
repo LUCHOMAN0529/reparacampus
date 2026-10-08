@@ -4,7 +4,8 @@
 
 | Actividad | Herramienta | Versión |
 |---|---|---|
-| Asistente de IA | Claude Code (aplicación de escritorio), modelo Claude Opus 5.5 | — |
+| Asistente de IA (especificación, código, pruebas, contraste e integración) | Claude Code (aplicación de escritorio), modelo Claude Opus 5.5 | — |
+| Asistente de IA (segunda revisión documental de las SPECS) | ChatGPT | Modelo no indicado |
 | Servidor | Python + Flask | Python 3.14.3 · Flask 3.1.3 (Werkzeug 3.1.9, Jinja2 3.1.6) |
 | Persistencia | SQLite, módulo `sqlite3` de la biblioteca estándar | 3.50.4 |
 | Interfaz | HTML, CSS y JavaScript con plantillas Jinja | — |
@@ -30,4 +31,4 @@ Se usaron dos asistentes: Claude Code para especificar, implementar, probar y co
 
 La autenticación con las cinco cuentas ficticias está en `feat/base` (commit `c5e7ef7`, 7 pruebas).
 
-La columna de pruebas cuenta las que existen en la rama `docs/evidencias` (commit `6b99fec`), donde la batería completa dio 176 aprobadas. Las ramas `feat/*` contienen las pruebas de su momento; las agregadas después (commits `de49d68` y `6b99fec`) están solo en `docs/evidencias`.
+La columna de pruebas cuenta las que existen en la versión integrada. Las ramas `feat/*` se conservan con las pruebas de su momento; las agregadas después (commits `de49d68` y `6b99fec`) llegaron a `main` con la rama `docs/evidencias`.

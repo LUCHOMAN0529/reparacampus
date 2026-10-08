@@ -1,6 +1,8 @@
 # Issues y tablero de GitHub
 
-Textos listos para crear el tablero y los issues en GitHub. Cada issue relaciona requisito, SPEC, criterios y tareas, y se cierra con su pull request.
+Textos listos para crear el tablero y los issues en GitHub. Cada issue relaciona requisito, SPEC, criterios y tareas.
+
+> Estado al 2026-10-08: solo existe el issue #1. El tablero y los issues 2 a 8 no se han creado: el asistente no tiene acceso de escritura a GitHub. Las ramas ya están integradas en `main`, así que estos issues sirven ahora para registrar la revisión de cada parte, no para integrar.
 
 ## Tablero (GitHub Projects)
 

@@ -2,9 +2,9 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.4 (borrador en revisión) |
+| Versión | 0.5 (integrada en `main`; revisión de otro integrante pendiente) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Asignado: Rafael Eduardo May Recuero. Revisión pendiente |
+| Revisor | Propuesto: Rafael Eduardo May Recuero. El equipo no ha confirmado la asignación; revisión pendiente |
 | Fecha | 2026-10-08 |
 
 ## 1. Necesidad
@@ -93,4 +93,4 @@ Estas preguntas están **sin responder**. El 2026-10-08 el equipo informó que n
 
 | Fecha | Versión | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.4 | Rafael Eduardo May Recuero (asignado) | Pendiente | |
+| Pendiente | 0.5 | Rafael Eduardo May Recuero (propuesto) | Pendiente | |

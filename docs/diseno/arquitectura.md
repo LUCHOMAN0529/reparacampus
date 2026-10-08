@@ -2,12 +2,12 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.3 (ajustada a la implementación; revisión pendiente) |
+| Versión | 0.4 (ajustada a la implementación integrada en `main`; revisión pendiente) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Asignado: Rafael Eduardo May Recuero. Revisión pendiente |
+| Revisor | Propuesto: Rafael Eduardo May Recuero. El equipo no ha confirmado la asignación; revisión pendiente |
 | Fecha | 2026-10-08 |
 
-La versión 0.1 se escribió antes de programar. Esta versión se ajustó a lo implementado (aplicación en el commit `786cf42`, pruebas en `de49d68`) tras la [segunda revisión asistida por IA](../revision/revision-asistida-ia-02-chatgpt.md). Los diagramas están en PlantUML junto a este archivo.
+La versión 0.1 se escribió antes de programar. Esta versión se ajustó a lo implementado (aplicación en el commit `786cf42`, pruebas hasta el commit `6b99fec`) tras la [segunda revisión asistida por IA](../revision/revision-asistida-ia-02-chatgpt.md). Los diagramas están en PlantUML junto a este archivo.
 
 ## 1. Componentes
 
@@ -131,4 +131,4 @@ Secuencia del rechazo de una solución, con permisos y evento: [secuencia-rechaz
 
 | Fecha | Versión | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.3 | Rafael Eduardo May Recuero (asignado) | Pendiente | |
+| Pendiente | 0.4 | Rafael Eduardo May Recuero (propuesto) | Pendiente | |

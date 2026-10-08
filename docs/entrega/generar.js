@@ -42,7 +42,7 @@ function enlace(href, archivo) {
   if (/^https?:/.test(href)) return href;
   if (href.startsWith("#")) return null;
   const destino = path.posix.normalize(path.posix.join(path.posix.dirname(archivo), href));
-  return `${REPO}/blob/main/${destino}`;
+  return `${REPO}/blob/${datos.TAG || "main"}/${destino}`;
 }
 
 function enLinea(texto, archivo, base = {}) {
@@ -280,12 +280,25 @@ const SECCIONES = [
       { ruta: "docs/entrega/06-ia-e-implementacion.md", base: 1, sinH1: true },
       { ruta: "docs/bitacora-ia.md", base: 2 },
       { ruta: "docs/revision/revision-asistida-ia-2026-10-08.md", base: 2 },
+      { ruta: "docs/revision/revision-asistida-ia-02-chatgpt.md", base: 2 },
     ],
   },
-  { titulo: "Validación", archivos: [{ ruta: "docs/validacion/validacion.md", base: 1, sinH1: true, horizontal: true }] },
+  {
+    titulo: "Validación",
+    archivos: [
+      { ruta: "docs/validacion/ejecucion-final.md", base: 2 },
+      { ruta: "docs/validacion/validacion.md", base: 1, sinH1: true, horizontal: true },
+    ],
+  },
   { titulo: "Riesgos", archivos: [{ ruta: "docs/riesgos.md", base: 1, sinH1: true }] },
   { titulo: "Entrega reproducible", archivos: [{ ruta: "docs/entrega/09-entrega-reproducible.md", base: 1, sinH1: true }] },
-  { titulo: "Contribuciones y cierre", archivos: [{ ruta: "docs/entrega/10-contribuciones-y-cierre.md", base: 1, sinH1: true }] },
+  {
+    titulo: "Contribuciones y cierre",
+    archivos: [
+      { ruta: "docs/entrega/10-contribuciones-y-cierre.md", base: 1, sinH1: true },
+      { ruta: "docs/decisiones.md", base: 2 },
+    ],
+  },
   { titulo: "Referencias", archivos: [{ ruta: "docs/referencias.md", base: 1, sinH1: true }] },
 ];
 
@@ -301,12 +314,14 @@ const portada = [
   centrado("Caso ReparaCampus", { bold: true, size: 32 }, 900),
   centrado(`Equipo: ${dato("EQUIPO")}`, { size: 26 }, 240),
   centrado("Integrantes", { bold: true, size: 24 }),
-  ...datos.INTEGRANTES.map((nombre) => centrado(nombre, { size: 24 }, 40)),
+  ...datos.INTEGRANTES.map((nombre) => centrado(datos.CODIGOS && datos.CODIGOS[nombre] ? `${nombre} · ${datos.CODIGOS[nombre]}` : nombre, { size: 24 }, 40)),
+  ...(datos.CODIGOS ? [] : [centrado("Códigos de los integrantes: [PENDIENTE: CODIGOS]", { size: 22 }, 40)]),
   new Paragraph({ spacing: { before: 700 }, children: [] }),
   centrado(`Grupo: ${dato("GRUPO")}`, { size: 24 }, 60),
   centrado(`Docente: ${dato("DOCENTE")}`, { size: 24 }, 60),
   centrado(`Fecha: ${dato("FECHA")}`, { size: 24 }, 60),
   centrado(`Repositorio: <${REPO}>`, { size: 22 }, 60),
+  centrado(`Tag ${dato("TAG")} · SHA ${dato("SHA")}`, { size: 20 }, 60),
 ];
 
 const indice = [

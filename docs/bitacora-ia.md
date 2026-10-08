@@ -1,6 +1,6 @@
 # Bitácora de IA
 
-Cinco intervenciones relevantes: especificación, revisión, código, pruebas y una segunda revisión con sus pruebas. No se copia la conversación completa.
+Seis intervenciones relevantes: especificación, revisión, código, pruebas, una segunda revisión con sus pruebas, y la integración final. No se copia la conversación completa.
 
 > **Pendiente de Luis:** los campos “Decisión humana” recogen lo que consta en la conversación. Donde dice *por confirmar*, la decisión todavía no ha sido expresada por una persona y no debe entregarse así. La lista completa de lo confirmado y lo pendiente está en [decisiones.md](decisiones.md).
 >
@@ -67,7 +67,7 @@ Cinco intervenciones relevantes: especificación, revisión, código, pruebas y 
 | Respuesta relevante | 153 pruebas con esperados literales tomados de las SPECS; reloj controlado para el plazo de 48 horas; ocho mutaciones del código. |
 | Decisión humana y justificación | *Por confirmar por Luis.* |
 | Error o limitación | Todas las pruebas pasaron en la primera ejecución, lo que por sí solo no demuestra que puedan fallar. Al llenar la matriz se vio que AC-S02-06 y AC-S03-04 no se probaban en todos los estados. Limitación: código y pruebas vienen del mismo asistente. |
-| Corrección y verificación | Se agregaron cinco casos (de 148 a 153). Se introdujeron ocho errores, uno a la vez: todos hicieron fallar entre 2 y 31 pruebas. La instalación y las pruebas se repitieron en una copia limpia. |
+| Corrección y verificación | (Estado a ese momento; la intervención 5 lo amplía a 176 pruebas y doce mutaciones.) Se agregaron cinco casos (de 148 a 153). Se introdujeron ocho errores, uno a la vez: todos hicieron fallar entre 2 y 31 pruebas. La instalación y las pruebas se repitieron en una copia limpia. |
 | Archivo / commit / prueba | `tests/` · commit `de49d68` · `docs/validacion/validacion.md`, secciones 5 y 6 |
 
 ---
@@ -85,3 +85,19 @@ Cinco intervenciones relevantes: especificación, revisión, código, pruebas y 
 | Error o limitación | En el diagnóstico el asistente contó “27 observaciones, 17 cubiertas y 10 vacíos”; eran 24, con 11, 6 y 7. En la intervención 2 había escrito “nueve” sugerencias cubiertas donde eran ocho. Limitaciones: la prueba de concurrencia usa ocho hilos de un mismo proceso contra SQLite y no es una prueba de carga; la atomicidad se prueba con un fallo en el último paso de la transacción; con más carga, un escritor podría agotar la espera de 5 segundos del bloqueo de SQLite. |
 | Corrección y verificación | Los recuentos se corrigieron en el registro de revisión y en esta bitácora. Verificación: `python -m pytest` dio 176 aprobadas y 0 fallidas sobre `6b99fec`; las pruebas nuevas se ejecutaron primero una por una. Cuatro mutaciones (M9 a M12) confirmaron que las pruebas nuevas fallan cuando se rompe lo que vigilan. No apareció ningún defecto y `app/` no se modificó. |
 | Archivo / commit / prueba | `docs/revision/revision-asistida-ia-02-chatgpt.md` (`46e8995`) · SPECS v0.3 (`83861a7`) y v0.4 (`1335535`) · `tests/test_atomicidad.py`, `tests/test_concurrencia.py` (`6b99fec`) · `docs/validacion/validacion.md` (`925d22d`) |
+
+---
+
+## Intervención 6 · Integración y cierre
+
+| Campo | Contenido |
+|---|---|
+| Fecha / autor / herramienta / modelo | 2026-10-08 · Luis Carlo Daza Ospino · Claude Code · Claude Opus 5.5 |
+| Historia y SPEC / versión | H01 a H05 · S01 a S05 v0.5 |
+| Objetivo y contexto | Integrar las ocho ramas en una sola versión, dejar la documentación coherente, repetir la validación sobre la versión integrada y preparar la entrega. |
+| Prompt o instrucción | «Necesito que trabajes sobre el repositorio real, corrijas los defectos encontrados, integres el proyecto, ejecutes las verificaciones finales y prepares los archivos de entrega», con la prohibición de inventar revisiones, aprobaciones o datos. |
+| Respuesta relevante | Análisis previo: las ramas forman una cadena lineal desde `a06aaf2` y ningún archivo fue modificado por los dos lados. Ocho fusiones sin conflictos en la rama `integracion/release-examen`, en orden de dependencia. Después, correcciones documentales, validación, tag y documento de entrega. |
+| Decisión humana y justificación | **Confirmada por Luis:** integrar y cerrar sin esperar las revisiones de sus compañeros, declarando esa ausencia. Esta decisión reemplaza su indicación anterior de no integrar. La aceptación del resultado por el equipo sigue pendiente. |
+| Error o limitación | La auditoría previa encontró errores del asistente en la evidencia: una decisión del autor registrada sin que él la hubiera expresado (implementar antes de la revisión), un recuento inexacto de ejecuciones de la prueba de concurrencia (55 en lugar de 65) y revisores escritos como «asignados» cuando solo estaban propuestos. Limitación: los pull requests no fueron revisados por otro integrante, y el asistente no puede editar la descripción del pull request #2 ni crear issues en GitHub. |
+| Corrección y verificación | Los tres errores se corrigieron en `docs/decisiones.md`, `docs/validacion/validacion.md` y las SPECS v0.5. La validación final consta en `docs/validacion/ejecucion-final.md`, con el SHA probado y la salida de pytest. |
+| Archivo / commit / prueba | Fusiones `87f4572` a `8130550` · `docs/validacion/ejecucion-final.md` · tag `release-examen` |

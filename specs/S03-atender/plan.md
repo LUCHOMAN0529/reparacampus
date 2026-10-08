@@ -1,6 +1,6 @@
 # Plan de diseño · S03 Atender
 
-Versión 0.3 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md), S01 y S02.
+Versión 0.5 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md), S01 y S02.
 
 ## Componentes que intervienen
 

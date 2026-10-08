@@ -7,6 +7,8 @@ Segundo examen práctico de Ingeniería de Software I: *Spec-Driven Development 
 
 El repositorio sigue el hilo **Requisito → Historia → SPEC → Código → Prueba**.
 
+**Estado de la entrega.** `main` contiene la versión integrada: las cinco SPECS, la aplicación, las pruebas y las evidencias. La versión que se entrega está marcada con el tag `release-examen`. Las revisiones de los demás integrantes y la aceptación del equipo siguen pendientes; ver [`docs/decisiones.md`](docs/decisiones.md).
+
 | Qué | Dónde |
 |---|---|
 | Problema, alcance, preguntas y supuestos | [`specs/00-problema-y-alcance.md`](specs/00-problema-y-alcance.md) |
@@ -14,6 +16,7 @@ El repositorio sigue el hilo **Requisito → Historia → SPEC → Código → P
 | Diseño: componentes, datos, UML y decisión | [`docs/diseno/`](docs/diseno/arquitectura.md) |
 | Revisiones | [`docs/revision/`](docs/revision/) |
 | Validación: trazabilidad, SPEC frente a código, hallazgos | [`docs/validacion/validacion.md`](docs/validacion/validacion.md) |
+| Ejecución final de las pruebas sobre el tag | [`docs/validacion/ejecucion-final.md`](docs/validacion/ejecucion-final.md) |
 | Riesgos y controles | [`docs/riesgos.md`](docs/riesgos.md) |
 | Decisiones confirmadas y pendientes | [`docs/decisiones.md`](docs/decisiones.md) |
 | Bitácora de IA | [`docs/bitacora-ia.md`](docs/bitacora-ia.md) |
@@ -38,6 +41,7 @@ En Windows (PowerShell):
 ```powershell
 git clone https://github.com/LUCHOMAN0529/reparacampus.git
 cd reparacampus
+git checkout release-examen
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
@@ -120,7 +124,7 @@ app/
   static/         CSS y JavaScript
 tests/            Pruebas con pytest y el cliente de pruebas de Flask
 specs/            Especificaciones, planes y tareas
-docs/             Diseño y revisiones
+docs/             Diseño, revisiones, validación, riesgos, bitácora y entrega
 ```
 
 ## Limitaciones conocidas

@@ -2,15 +2,17 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.3 (borrador en revisión) |
+| Versión | 0.5 (integrada en `main`; revisión de otro integrante pendiente) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Asignado: Jorge Luis González Arroyo. Revisión pendiente |
+| Revisor | Propuesto: Jorge Luis González Arroyo. El equipo no ha confirmado la asignación; revisión pendiente |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF05 |
 
 **Cambios de la versión 0.2 (2026-10-08):** se distingue filtro inválido de filtro válido sin resultados y se aclara quién ve el historial. Origen: [revisión asistida por IA](../../docs/revision/revision-asistida-ia-2026-10-08.md), que no reemplaza la revisión del integrante asignado.
 
 **Cambios de la versión 0.3 (2026-10-08):** se define el orden y el desempate del historial; AC-S05-04 incluye al técnico asignado; la tabla de pruebas refleja las pruebas reales (inmutabilidad en las tres tablas, operaciones rechazadas, cantidades del tablero y redondeo). Origen: [segunda revisión asistida por IA](../../docs/revision/revision-asistida-ia-02-chatgpt.md), que tampoco reemplaza la revisión del integrante asignado.
+
+**Cambios de la versión 0.5 (2026-10-08):** sin cambios de requisitos ni de criterios. La SPEC queda integrada en `main` junto con el código y las pruebas; las referencias a pruebas ya no dependen de una rama; el revisor figura como propuesto, porque el equipo no ha confirmado la asignación.
 
 ## Historia (H05)
 
@@ -122,7 +124,7 @@ Diseño en [plan.md](plan.md); tareas en [tasks.md](tasks.md).
 
 ## Pruebas y resultados esperados
 
-El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. «Por automatizar» significa que la prueba todavía no existe.
+El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la función de producción. Salvo que se indique otra cosa, cada prueba parte de una base SQLite nueva y aislada que solo contiene las cinco cuentas del seed, con el reloj del servidor fijado en `2026-10-01T08:00:00Z`. Todas las pruebas de esta tabla existen en `tests/` y se ejecutaron dentro de la batería completa. Los resultados están en `docs/validacion/validacion.md` y la ejecución sobre el tag de entrega, en `docs/validacion/ejecucion-final.md`.
 
 | ID | AC | Precondición y entrada | Esperado | Prueba automatizada |
 |---|---|---|---|---|
@@ -143,4 +145,4 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.3 | Jorge Luis González Arroyo (asignado) | Pendiente | |
+| Pendiente | 0.5 | Jorge Luis González Arroyo (propuesto) | Pendiente | |

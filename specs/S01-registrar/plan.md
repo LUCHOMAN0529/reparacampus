@@ -1,6 +1,6 @@
 # Plan de diseño · S01 Registrar
 
-Versión 0.3 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md).
+Versión 0.5 · 2026-10-08 · ajustado a la implementación · depende de [arquitectura](../../docs/diseno/arquitectura.md).
 
 ## Componentes que intervienen
 
