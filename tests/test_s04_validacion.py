@@ -172,6 +172,41 @@ def test_motivo_de_reapertura_invalido(entrar, db, cerrada, reloj, motivo):
     assert len(acciones(db, cerrada)) == 5
 
 
+SOLO_ESPACIOS = [" " * 15, " " * 300, "\t\n   \r\n  "]
+
+
+@pytest.mark.parametrize("motivo", SOLO_ESPACIOS)
+def test_p_s04_15_rechazo_con_motivo_solo_de_espacios(entrar, db, flujo, motivo):
+    """P-S04-15 · AC-S04-03 · una cadena de 15 o de 300 espacios cabe en el límite, pero recortada queda vacía."""
+    codigo = flujo("PENDIENTE_VALIDACION")
+    antes = [tuple(fila) for fila in db.execute("SELECT * FROM eventos ORDER BY id")]
+
+    respuesta = entrar("solicitante1").post(f"/incidencias/{codigo}/rechazar", data={"motivo": motivo})
+
+    assert respuesta.status_code == 400
+    fila = incidencia(db, codigo)
+    assert (fila["estado"], fila["tecnico"]) == ("PENDIENTE_VALIDACION", "tecnico1")
+    assert [tuple(f) for f in db.execute("SELECT * FROM eventos ORDER BY id")] == antes
+    assert len(antes) == 4
+    assert (contar(db, "soluciones"), contar(db, "cierres")) == (1, 0)
+
+
+@pytest.mark.parametrize("motivo", SOLO_ESPACIOS)
+def test_p_s04_15_reapertura_con_motivo_solo_de_espacios(entrar, db, cerrada, reloj, motivo):
+    """P-S04-15 · AC-S04-08"""
+    reloj.fijar(CIERRE + timedelta(hours=1))
+    antes = [tuple(fila) for fila in db.execute("SELECT * FROM eventos ORDER BY id")]
+
+    respuesta = entrar("solicitante1").post(f"/incidencias/{cerrada}/reabrir", data={"motivo": motivo})
+
+    assert respuesta.status_code == 400
+    fila = incidencia(db, cerrada)
+    assert (fila["estado"], fila["tecnico"]) == ("CERRADA", "tecnico1")
+    assert [tuple(f) for f in db.execute("SELECT * FROM eventos ORDER BY id")] == antes
+    assert len(antes) == 5
+    assert (contar(db, "soluciones"), contar(db, "cierres")) == (1, 1)
+
+
 def test_la_hora_la_decide_el_servidor(entrar, db, cerrada, reloj):
     """AC-S04-10"""
     reloj.fijar(CIERRE + timedelta(hours=72))

@@ -86,6 +86,18 @@ def test_p_s01_03_valores_invalidos(entrar, db, cambio):
     assert contar(db, "eventos") == 0
 
 
+@pytest.mark.parametrize("riesgo", ["True", "1", "on", "TRUE", "si", " true"])
+def test_p_s01_12_el_riesgo_solo_acepta_true_o_false(entrar, db, riesgo):
+    """P-S01-12 · AC-S01-05 · el formulario envía exactamente `true` o `false`; no hay valor por defecto."""
+    cliente = entrar("solicitante1")
+
+    respuesta = cliente.post("/incidencias/nueva", data=registro_valido(riesgo_personas=riesgo))
+
+    assert respuesta.status_code == 400
+    assert contar(db, "incidencias") == 0
+    assert contar(db, "eventos") == 0
+
+
 @pytest.mark.parametrize("usuario", ["coordinador1", "tecnico1"])
 def test_p_s01_04_otros_roles_no_registran(entrar, db, usuario):
     """P-S01-04 · AC-S01-02"""
