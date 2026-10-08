@@ -19,7 +19,7 @@ package "Entrada HTTP (Flask)" {
 package "Lógica de negocio" {
   [servicios.py\ncasos de uso transaccionales] as serv
   [consultas.py\nlecturas con visibilidad] as cons
-  [dominio.py\nreglas puras] as dom
+  [dominio.py\nreglas puras, sin Flask\nni base de datos] as dom
   [reloj.py\nhora UTC] as reloj
 }
 
@@ -42,9 +42,4 @@ serv --> db : transacción
 cons --> db
 auth --> db
 db --> sqlite
-
-note bottom of dom
-  Sin dependencia de Flask
-  ni de la base de datos.
-end note
 @enduml

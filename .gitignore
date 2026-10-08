@@ -15,3 +15,6 @@ instance/
 
 .vscode/
 .idea/
+
+# Borradores del documento de entrega
+docs/entrega/*BORRADOR*
