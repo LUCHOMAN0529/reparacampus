@@ -11,6 +11,10 @@
     <a class="marca" href="{{ url_for('inicio') }}">ReparaCampus</a>
     {% if g.usuario %}
     <nav>
+      {% if g.usuario['rol'] == 'COORDINADOR' %}
+      <a href="{{ url_for('tablero.ver') }}">Tablero</a>
+      {% endif %}
+      <a href="{{ url_for('incidencias.listado') }}">Incidencias</a>
       {% if g.usuario['rol'] == 'SOLICITANTE' %}
       <a href="{{ url_for('incidencias.nueva') }}">Nueva incidencia</a>
       {% endif %}

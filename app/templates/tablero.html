@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block titulo %}Tablero · ReparaCampus{% endblock %}
+{% block contenido %}
+<h1>Tablero del coordinador</h1>
+<div class="resumen">
+  <section class="tarjeta">
+    <h2>Porcentaje de cierre</h2>
+    <p class="cifra" id="porcentaje-cierre">{{ tablero['porcentaje_cierre'] }}</p>
+    <p class="nota">{{ tablero['por_estado']['CERRADA'] }} cerradas de {{ tablero['total'] }} incidencias.</p>
+  </section>
+
+  <section class="tarjeta">
+    <h2>Por estado</h2>
+    <table id="por-estado">
+      <tbody>
+        {% for estado, cantidad in tablero['por_estado'].items() %}
+        <tr>
+          <td><a href="{{ url_for('incidencias.listado', estado=estado) }}">{{ estado }}</a></td>
+          <td class="numero" data-estado="{{ estado }}">{{ cantidad }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <section class="tarjeta">
+    <h2>Por prioridad</h2>
+    <table id="por-prioridad">
+      <tbody>
+        {% for prioridad, cantidad in tablero['por_prioridad'].items() %}
+        <tr>
+          <td><a href="{{ url_for('incidencias.listado', prioridad=prioridad) }}">{{ prioridad }}</a></td>
+          <td class="numero" data-prioridad="{{ prioridad }}">{{ cantidad }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+</div>
+
+<section class="tarjeta" style="margin-top: 20px">
+  <h2>Críticas no cerradas</h2>
+  {% if tablero['criticas_no_cerradas'] %}
+  <div class="tabla-desplazable">
+    <table id="criticas">
+      <thead><tr><th>Código</th><th>Estado</th><th>Ubicación</th><th>Categoría</th><th>Técnico</th></tr></thead>
+      <tbody>
+        {% for incidencia in tablero['criticas_no_cerradas'] %}
+        <tr>
+          <td><a href="{{ url_for('incidencias.detalle', codigo=incidencia['codigo']) }}">{{ incidencia['codigo'] }}</a></td>
+          <td><span class="etiqueta estado">{{ incidencia['estado'] }}</span></td>
+          <td>{{ incidencia['ubicacion'] }}</td>
+          <td>{{ incidencia['categoria'] }}</td>
+          <td>{{ incidencia['tecnico_nombre'] or 'Sin asignar' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p>No hay incidencias críticas pendientes.</p>
+  {% endif %}
+</section>
+{% endblock %}

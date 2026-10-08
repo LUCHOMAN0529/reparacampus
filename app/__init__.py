@@ -2,7 +2,7 @@
 import os
 import secrets
 
-from flask import Flask, render_template
+from flask import Flask, g, redirect, render_template, url_for
 
 from . import auth, db, dominio, reloj, rutas
 
@@ -38,6 +38,7 @@ def create_app(config=None):
     db.init_app(app)
     app.register_blueprint(auth.bp)
     app.register_blueprint(rutas.bp)
+    app.register_blueprint(rutas.bp_tablero)
 
     @app.template_filter("fecha")
     def fecha(texto):
@@ -50,6 +51,8 @@ def create_app(config=None):
     @app.route("/")
     @auth.requiere_sesion
     def inicio():
-        return render_template("inicio.html")
+        if g.usuario["rol"] == dominio.COORDINADOR:
+            return redirect(url_for("tablero.ver"))
+        return redirect(url_for("incidencias.listado"))
 
     return app
