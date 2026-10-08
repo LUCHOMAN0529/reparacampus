@@ -69,6 +69,23 @@ def test_p_s02_03_asignacion_repetida(entrar, db, registrada, segundo_tecnico):
     assert acciones(db, registrada) == ["CREAR", "ASIGNAR"]
 
 
+@pytest.mark.parametrize("estado", ["EN_ATENCION", "PENDIENTE_VALIDACION", "CERRADA"])
+def test_no_se_asigna_fuera_de_registrada(entrar, db, flujo, estado):
+    """AC-S02-06 · estados incompatibles"""
+    codigo = flujo(estado)
+    antes = acciones(db, codigo)
+
+    respuesta = entrar("coordinador1").post(
+        f"/incidencias/{codigo}/asignar", data={"tecnico_id": id_usuario(db, "tecnico2")}
+    )
+
+    assert respuesta.status_code == 409
+    assert incidencia(db, codigo)["estado"] == estado
+    assert incidencia(db, codigo)["tecnico"] == "tecnico1"
+    assert contar(db, "asignaciones") == 1
+    assert acciones(db, codigo) == antes
+
+
 @pytest.mark.parametrize("usuario", ["solicitante1", "solicitante2", "tecnico1"])
 def test_p_s02_04_otros_roles_no_asignan(entrar, db, registrada, usuario):
     """P-S02-04 · AC-S02-05"""
