@@ -4,7 +4,7 @@
 |---|---|
 | Versión | 0.5 (integrada en `main`; revisión de otro integrante pendiente) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Cristian David Diaz España: comentario recibido el 2026-10-13, sin decisión explícita de aprobación |
+| Revisor | Cristian David Diaz España: comentario y aprobación el 2026-10-13, después de la integración |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF04 |
 
@@ -151,3 +151,4 @@ Las pruebas del plazo usan un reloj controlado inyectado en la aplicación. No s
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
 | 2026-10-13 | 0.5 | Cristian David Diaz España | Comentario recibido, sin decisión de aprobar o rechazar | Cinco observaciones, todas ya definidas e implementadas en esta versión; sin cambios. Ver `docs/revision/comentarios-integrantes.md` |
+| 2026-10-13 | 0.5 | Cristian David Diaz España | **Aprobada** | Respuesta por WhatsApp transmitida por el autor |

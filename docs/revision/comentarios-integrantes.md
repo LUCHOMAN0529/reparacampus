@@ -4,6 +4,20 @@ Cada integrante leyó la parte del documento de entrega que le correspondía y r
 
 Los comentarios llegaron después de que el código estuviera escrito e integrado, así que no cuentan como revisión previa a la implementación.
 
+## Decisiones al cierre
+
+Al final del 2026-10-13, poco antes del cierre de la entrega, el autor pidió a cada integrante una decisión explícita sobre su parte. Las respuestas llegaron por WhatsApp y el autor las transmitió; no hay captura en el repositorio.
+
+| Integrante | Parte | Decisión | Nota |
+|---|---|---|---|
+| Rafael Eduardo May Recuero | S01 v0.6 | Aprobada | Indicó que aprueba por el tiempo disponible |
+| Jean Marco Oyola De Martino | S02 v0.6 | Aprobada | Respondió lo mismo que Rafael, según el autor |
+| José Leonardo Hernández Pedrosa | S03 v0.6 | Aprobada | Respondió lo mismo que Rafael, según el autor |
+| Cristian David Diaz España | S04 v0.5 | Aprobada | Respondió lo mismo que Rafael, según el autor |
+| Jorge Luis González Arroyo | S05 v0.6 | Sin decisión | No respondió como los demás; su comentario se mantiene sin decisión |
+
+Son aprobaciones dadas al cierre y bajo presión de tiempo, después de la integración. Se registran tal como llegaron, sin presentarlas como una revisión previa.
+
 | Integrante | Parte | Recibido | Estado |
 |---|---|---|---|
 | Rafael Eduardo May Recuero | S01 Registrar | 2026-10-13, entregado al autor | Recibido |

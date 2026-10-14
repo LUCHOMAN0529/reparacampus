@@ -4,7 +4,7 @@
 |---|---|
 | Versión | 0.6 (integrada en `main`; comentario de un integrante recibido) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Rafael Eduardo May Recuero: comentario recibido el 2026-10-13, sin decisión explícita de aprobación |
+| Revisor | Rafael Eduardo May Recuero: comentario y aprobación el 2026-10-13, después de la integración |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF01 |
 
@@ -133,3 +133,4 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
 | 2026-10-13 | 0.5 | Rafael Eduardo May Recuero | Comentario recibido, sin decisión de aprobar o rechazar | Dos aclaraciones incorporadas en la 0.6; una propuesta fuera del alcance del enunciado (adjuntos); un desacuerdo con su asistente de IA que coincide con lo implementado. Ver `docs/revision/comentarios-integrantes.md` |
+| 2026-10-13 | 0.6 | Rafael Eduardo May Recuero | **Aprobada** | Respuesta por WhatsApp transmitida por el autor; indicó que aprueba por el tiempo disponible |

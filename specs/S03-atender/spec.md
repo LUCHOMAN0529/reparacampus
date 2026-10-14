@@ -4,7 +4,7 @@
 |---|---|
 | Versión | 0.6 (integrada en `main`; comentario de un integrante recibido) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | José Leonardo Hernández Pedrosa: comentario recibido el 2026-10-13, sin decisión explícita de aprobación |
+| Revisor | José Leonardo Hernández Pedrosa: comentario y aprobación el 2026-10-13, después de la integración |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF03 |
 
@@ -139,3 +139,4 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
 | 2026-10-13 | 0.5 | José Leonardo Hernández Pedrosa | Comentario recibido, sin decisión de aprobar o rechazar | Dos aclaraciones incorporadas en la 0.6; una observación ya cubierta; una mejora opcional no implementada. Ver `docs/revision/comentarios-integrantes.md` |
+| 2026-10-13 | 0.6 | José Leonardo Hernández Pedrosa | **Aprobada** | Respuesta por WhatsApp transmitida por el autor |
