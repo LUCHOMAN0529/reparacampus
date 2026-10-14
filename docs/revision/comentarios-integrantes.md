@@ -14,7 +14,7 @@ Al final del 2026-10-13, poco antes del cierre de la entrega, el autor pidió a 
 | Jean Marco Oyola De Martino | S02 v0.6 | Aprobada | Respondió lo mismo que Rafael, según el autor |
 | José Leonardo Hernández Pedrosa | S03 v0.6 | Aprobada | Respondió lo mismo que Rafael, según el autor |
 | Cristian David Diaz España | S04 v0.5 | Aprobada | Respondió lo mismo que Rafael, según el autor |
-| Jorge Luis González Arroyo | S05 v0.6 | Sin decisión | No respondió como los demás; su comentario se mantiene sin decisión |
+| Jorge Luis González Arroyo | S05 v0.6 | Aprobada | Respondió después de los demás |
 
 Son aprobaciones dadas al cierre y bajo presión de tiempo, después de la integración. Se registran tal como llegaron, sin presentarlas como una revisión previa.
 
