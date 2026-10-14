@@ -34,7 +34,7 @@ Son propuestas del asistente o hechos que solo necesitan la palabra del autor. *
 | A-4 | Con qué herramienta se generó el primer borrador de revisión (el PDF «simulado»). | Ninguna: es un dato que solo conoce el autor. | Intervención 2 |
 | A-5 | Si figura como responsable de las 32 tareas, con la nota «con IA». | Sí, porque todos los commits son suyos. | `specs/*/tasks.md` |
 | A-6 | Si mantiene los supuestos SUP-12 (solución vigente), SUP-13 (desempate del historial) y SUP-14 (registros simultáneos, con su alcance). | Mantenerlos: describen lo que el código hace y las pruebas confirman en el alcance probado. | `specs/00-problema-y-alcance.md` |
-| A-7 | Si los códigos de los integrantes van en la portada. El enunciado los pide; el autor dijo que no hacían falta. | Incluirlos, por ser un requisito de la portada. | `docs/entrega/datos.json` |
+| A-7 | Si los códigos de los integrantes van en la portada. | Resuelto: el autor entregó los seis códigos el 2026-10-13 y van en la portada. | `docs/entrega/datos.json` |
 | A-8 | Reconocer que el código se escribió antes de que otro integrante revisara las SPECS. | Declararlo como desviación de la regla central del examen; ya está declarado así en la entrega. | `docs/entrega/10-contribuciones-y-cierre.md` |
 
 ## B. Decisiones que debe acordar el equipo
@@ -48,7 +48,7 @@ Ninguna está tomada. El asistente no puede decidirlas, ni el autor en nombre de
 | B-3 | Responsables funcionales de los cuatro riesgos. | Propuesta del asistente, sin confirmar. | Equipo |
 | B-4 | Revisor de cada tarea. | «Por asignar» en las 32 tareas. | Equipo |
 | B-5 | Aporte verificable de cada integrante y revisión de al menos un cambio de otra persona. | Solo hay commits de un integrante. | Cada integrante |
-| B-6 | Nombre del equipo y grupo para la portada. | Sin dato. | Equipo |
+| B-6 | Nombre del equipo para la portada. | Sin dato. El grupo (5906 - T05) lo aportó el autor el 2026-10-13. | Equipo |
 | B-7 | Aceptación final del trabajo y pendientes que se declaran. | Sin dato. | Equipo |
 | B-8 | Si se agrega el token CSRF. | No implementado; mejora opcional. | Equipo, a propuesta del autor |
 
@@ -68,4 +68,4 @@ Ninguna está tomada. El asistente no puede decidirlas, ni el autor en nombre de
 | C-4 | Si los supuestos SUP-01 a SUP-14 son aceptables para el cliente. | Se declaran uno por uno. |
 | C-5 | Si es aceptable que la revisión de las SPECS no haya ocurrido antes del código ni de la integración. | Se declara como desviación de la regla central. |
 | C-6 | Si las revisiones asistidas por IA cuentan como evidencia complementaria. | Se presentan como intervenciones de IA, no como revisión de un integrante. |
-| C-7 | Nombre de la docente y grupo para la portada. | Sin dato. |
+| C-7 | Nombre de la docente y grupo para la portada. | Resuelto: el autor aportó el 2026-10-13 los datos del curso (grupo 5906 - T05, docente Adriana María Iglesias Solano). |
