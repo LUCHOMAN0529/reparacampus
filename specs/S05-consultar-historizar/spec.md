@@ -2,9 +2,9 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.5 (integrada en `main`; revisión de otro integrante pendiente) |
+| Versión | 0.6 (integrada en `main`; comentario de un integrante recibido) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Propuesto: Jorge Luis González Arroyo. El equipo no ha confirmado la asignación; revisión pendiente |
+| Revisor | Jorge Luis González Arroyo: comentario recibido el 2026-10-13, sin decisión explícita de aprobación |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF05 |
 
@@ -14,6 +14,8 @@
 
 **Cambios de la versión 0.5 (2026-10-08):** sin cambios de requisitos ni de criterios. La SPEC queda integrada en `main` junto con el código y las pruebas; las referencias a pruebas ya no dependen de una rama; el revisor figura como propuesto, porque el equipo no ha confirmado la asignación.
 
+**Cambios de la versión 0.6 (2026-10-13):** a partir del comentario de Jorge Luis González Arroyo, se corrige una imprecisión sobre las columnas del listado y se nombran en las exclusiones los filtros por fecha y por técnico y la búsqueda por número de incidencia. No cambia ningún requisito, criterio ni el código. Ver [comentarios de los integrantes](../../docs/revision/comentarios-integrantes.md).
+
 ## Historia (H05)
 
 Como **coordinador, solicitante o técnico**, quiero **consultar las incidencias que me corresponden, con filtros y con su historial completo, y como coordinador ver un tablero de resumen**, para **saber en qué va cada caso y comprobar qué ocurrió sin depender de mensajes sueltos**.
@@ -22,7 +24,7 @@ Como **coordinador, solicitante o técnico**, quiero **consultar las incidencias
 
 **Incluye:** listado según permisos con filtros por estado y prioridad; detalle con historial; historial inmutable; tablero del coordinador con cantidades por estado y prioridad, críticas no cerradas y porcentaje de cierre.
 
-**Excluye:** edición o borrado del historial, búsqueda por texto, paginación, exportación, gráficos, métricas de tiempos y tablero para otros roles.
+**Excluye:** edición o borrado del historial, búsqueda por texto o por número de incidencia, filtros por fecha o por técnico, paginación, exportación, gráficos, métricas de tiempos y tablero para otros roles. Los filtros por fecha y técnico y la búsqueda por número quedan como mejora opcional propuesta por un integrante.
 
 ## Entradas
 
@@ -66,7 +68,7 @@ Quien puede ver el detalle de una incidencia ve su historial completo: el solici
 
 Las consultas no modifican datos.
 
-- Listado: código, ubicación, categoría, prioridad, estado, fecha y, según el rol, solicitante y técnico.
+- Listado: código, ubicación, categoría, prioridad, estado, solicitante, técnico (o «Sin asignar») y fecha de registro, para todas las incidencias que el usuario puede ver. Las columnas son las mismas para los tres roles; lo que cambia según el rol es qué incidencias aparecen.
 - Detalle: datos de la incidencia e historial.
 - Tablero: los cuatro bloques anteriores.
 
@@ -145,4 +147,4 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.5 | Jorge Luis González Arroyo (propuesto) | Pendiente | |
+| 2026-10-13 | 0.5 | Jorge Luis González Arroyo | Comentario recibido, sin decisión de aprobar o rechazar | Una imprecisión corregida y una exclusión precisada en la 0.6; tres observaciones ya cubiertas; una mejora opcional no implementada. Ver `docs/revision/comentarios-integrantes.md` |
