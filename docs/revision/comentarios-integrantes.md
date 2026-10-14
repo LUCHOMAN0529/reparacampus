@@ -164,19 +164,19 @@ Recibido el 2026-10-13. El integrante declara que usó Claude como apoyo.
 
 **1. Con tus palabras: ¿Qué hace esta parte del sistema?**
 
-> Es la puerta de entrada para cualquier usuario que tenga un inconveniente en las instalaciones. Su función principal es permitir que la persona reporte el problema llenando un formulario básico con la ubicación y una descripción, asegurando que la queja quede guardada en el sistema para que luego le puedan hacer seguimiento.
+Es la puerta de entrada para cualquier usuario que tenga un inconveniente en las instalaciones. Su función principal es permitir que la persona reporte el problema llenando un formulario básico con la ubicación y una descripción, asegurando que la queja quede guardada en el sistema para que luego le puedan hacer seguimiento.
 
 **2. ¿Hay algo que no se entienda o que te parezca mal definido? ¿Qué?**
 
-> Me da la impresión de que no queda del todo claro cómo se clasifican las categorías de los daños. A veces los usuarios no saben exactamente en qué categoría encasillar su problema, y la guía tampoco especifica muy bien qué pasa con los campos opcionales.
+Me da la impresión de que no queda del todo claro cómo se clasifican las categorías de los daños. A veces los usuarios no saben exactamente en qué categoría encasillar su problema, y la guía tampoco especifica muy bien qué pasa con los campos opcionales.
 
 **3. ¿Cambiarías o agregarías algo? ¿Qué y por qué?**
 
-> Le añadiría una sección obligatoria para subir fotos o capturas del daño de forma rápida. Una imagen ayuda muchísimo más que mil palabras para que el equipo de soporte entienda el problema de entrada sin tener que adivinar.
+Le añadiría una sección obligatoria para subir fotos o capturas del daño de forma rápida. Una imagen ayuda muchísimo más que mil palabras para que el equipo de soporte entienda el problema de entrada sin tener que adivinar.
 
 **4. ¿Usaste IA para revisarla? Si sí: ¿cuál, y con qué parte de su respuesta estás de acuerdo y con cuál no?**
 
-> Sí, le pedí una opinión a Claude sobre esta sección. Coincido totalmente en que el flujo del formulario es directo, pero no estuve de acuerdo cuando sugirió agregar validaciones de campos tan estrictas que harían que reportar una emergencia se vuelva un trámite tardado y molesto para el usuario.
+Sí, le pedí una opinión a Claude sobre esta sección. Coincido totalmente en que el flujo del formulario es directo, pero no estuve de acuerdo cuando sugirió agregar validaciones de campos tan estrictas que harían que reportar una emergencia se vuelva un trámite tardado y molesto para el usuario.
 
 ### Qué se hizo con cada observación
 
