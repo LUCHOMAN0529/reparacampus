@@ -11,7 +11,7 @@ Al final del 2026-10-13, poco antes del cierre de la entrega, el autor pidió a 
 | Integrante | Parte | Decisión | Nota |
 |---|---|---|---|
 | Rafael Eduardo May Recuero | S01 v0.6 | Aprobada | Indicó que aprueba por el tiempo disponible |
-| Jean Marco Oyola De Martino | S02 v0.6 | Aprobada | Respondió lo mismo que Rafael, según el autor |
+| Jean Marco Oyola De Martino | S02 v0.6 | Aprobada | Apruebo el trabajo realizado. |
 | José Leonardo Hernández Pedrosa | S03 v0.6 | Aprobada | Respondió lo mismo que Rafael, según el autor |
 | Cristian David Diaz España | S04 v0.5 | Aprobada | estoy de acuerdo con el trabajo hecho. |
 | Jorge Luis González Arroyo | S05 v0.6 | Aprobada | Respondió después de los demás |
