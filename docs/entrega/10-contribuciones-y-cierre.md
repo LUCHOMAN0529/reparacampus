@@ -7,13 +7,13 @@ Estado al 2026-10-08, tomado del historial de Git y de GitHub. Lo que no se ha h
 | Integrante | Tareas | Artefactos y commits | Revisión realizada | Resultado |
 |---|---|---|---|---|
 | Luis Carlo Daza Ospino | SPECS, diseño, implementación, pruebas, evidencias e integración, con asistencia de IA | `specs/`, `docs/`, `app/`, `tests/`; todos los commits del repositorio son de su autoría | No aplica: es el autor | {{PRUEBAS}} |
-| Rafael Eduardo May Recuero | Propuesta: revisión de S01, del alcance y del diseño | Ninguno registrado | Pendiente | Pendiente |
+| Rafael Eduardo May Recuero | Revisión de S01 (también propuesto para alcance y diseño) | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en Claude según declara | Sí: comentario sobre S01, sin decisión de aprobación. Alcance y diseño: pendiente | Dos aclaraciones incorporadas en S01 v0.6; una propuesta fuera de alcance |
 | Jean Marco Oyola De Martino | Revisión de S02 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S02, sin decisión de aprobación | Dos aclaraciones incorporadas en S02 v0.6; tres observaciones ya cubiertas; una mejora registrada |
 | José Leonardo Hernández Pedrosa | Revisión de S03 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S03, sin decisión de aprobación | Dos aclaraciones incorporadas en S03 v0.6; una observación ya cubierta; una mejora registrada |
 | Cristian David Diaz España | Revisión de S04 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S04, sin decisión de aprobación | Cinco observaciones, todas ya cubiertas por S04; sin cambios |
 | Jorge Luis González Arroyo | Revisión de S05 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S05, sin decisión de aprobación | Una imprecisión corregida en S05 v0.6; tres observaciones ya cubiertas; una mejora registrada |
 
-La asignación de revisores es una propuesta que el equipo no ha confirmado. Los comentarios recibidos se transcriben tal cual en `docs/revision/comentarios-integrantes.md`. El requisito de que cada integrante aporte una contribución verificable y revise al menos un cambio de otra persona **no está cumplido** a esta fecha.
+La asignación de revisores es una propuesta que el equipo no ha confirmado. Los comentarios recibidos se transcriben tal cual en `docs/revision/comentarios-integrantes.md`. Los cinco compañeros del autor respondieron por escrito la encuesta de revisión de su parte; sus respuestas están transcritas tal cual. Son comentarios posteriores a la integración, no revisiones previas, y ninguno expresó una decisión de aprobar o rechazar. Ningún integrante distinto del autor hizo commits, así que el requisito de una contribución verificable en el repositorio por cada integrante **no está cumplido**.
 
 ## Integración
 
@@ -26,7 +26,7 @@ El 2026-10-08 el autor integró en `main` las ocho ramas de trabajo, en orden de
 **Pendientes y desviaciones que se declaran.**
 
 - El código se escribió y se integró sin que otro integrante revisara las SPECS ni los cambios. El historial de Git muestra ese orden.
-- Todos los commits son de un solo integrante.
+- Todos los commits son de un solo integrante. Los demás aportaron comentarios escritos el 2026-10-13, después de la integración.
 - Las tres preguntas al cliente quedaron sin respuesta; se trabajó con supuestos declarados.
 - El recorrido manual en navegador con los cinco usuarios no lo ha hecho ninguna persona. Existe un recorrido automatizado por HTTP contra el servidor real, descrito en la sección de validación.
 - La concurrencia se probó con ocho registros simultáneos en un mismo proceso contra SQLite; no hay prueba de carga. Con más carga, un registro podría fallar por la espera del bloqueo, sin dejar datos parciales.

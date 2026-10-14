@@ -2,9 +2,9 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.5 (integrada en `main`; revisión de otro integrante pendiente) |
+| Versión | 0.6 (integrada en `main`; comentario de un integrante recibido) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Propuesto: Rafael Eduardo May Recuero. El equipo no ha confirmado la asignación; revisión pendiente |
+| Revisor | Rafael Eduardo May Recuero: comentario recibido el 2026-10-13, sin decisión explícita de aprobación |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF01 |
 
@@ -15,6 +15,8 @@
 **Cambios de la versión 0.4 (2026-10-08):** las pruebas P-S01-11 y P-S01-12 ya están automatizadas y se registran con su nombre real; se anota el alcance comprobado de AC-S01-10. No cambia ningún requisito ni criterio.
 
 **Cambios de la versión 0.5 (2026-10-08):** sin cambios de requisitos ni de criterios. La SPEC queda integrada en `main` junto con el código y las pruebas; las referencias a pruebas ya no dependen de una rama; el revisor figura como propuesto, porque el equipo no ha confirmado la asignación.
+
+**Cambios de la versión 0.6 (2026-10-13):** a partir del comentario de Rafael Eduardo May Recuero, se aclara que no hay campos opcionales y que el caso no define el alcance de cada categoría. No cambia ningún requisito, criterio ni el código. Ver [comentarios de los integrantes](../../docs/revision/comentarios-integrantes.md).
 
 ## Historia (H01)
 
@@ -37,6 +39,8 @@ Como **solicitante**, quiero **registrar una incidencia de infraestructura con s
 | `riesgo_personas` | booleano | Sí | El formulario envía el texto `true` (Sí) o `false` (No). Cualquier otro valor se rechaza: `True`, `1`, `on`, `si`, vacío o campo ausente. No hay valor por defecto. |
 
 El cliente no envía código, autor, fecha, estado ni prioridad. Si los envía, el servidor los ignora.
+
+No hay campos opcionales: los cinco son obligatorios. El caso fija las cuatro categorías, pero no define qué daños abarca cada una; el solicitante elige la que considere más cercana y el sistema no la corrige ni la reclasifica.
 
 ## Precondiciones y permisos
 
@@ -128,4 +132,4 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.5 | Rafael Eduardo May Recuero (propuesto) | Pendiente | |
+| 2026-10-13 | 0.5 | Rafael Eduardo May Recuero | Comentario recibido, sin decisión de aprobar o rechazar | Dos aclaraciones incorporadas en la 0.6; una propuesta fuera del alcance del enunciado (adjuntos); un desacuerdo con su asistente de IA que coincide con lo implementado. Ver `docs/revision/comentarios-integrantes.md` |

@@ -6,7 +6,7 @@ Los comentarios llegaron después de que el código estuviera escrito e integrad
 
 | Integrante | Parte | Recibido | Estado |
 |---|---|---|---|
-| Rafael Eduardo May Recuero | S01 Registrar | — | Sin respuesta |
+| Rafael Eduardo May Recuero | S01 Registrar | 2026-10-13, entregado al autor | Recibido |
 | Jean Marco Oyola De Martino | S02 Priorizar y asignar | 2026-10-13, entregado al autor | Recibido |
 | José Leonardo Hernández Pedrosa | S03 Atender | 2026-10-13, entregado al autor | Recibido |
 | Cristian David Diaz España | S04 Validar | 2026-10-13, entregado al autor | Recibido |
@@ -143,3 +143,34 @@ Recibido el 2026-10-13. El integrante declara que usó ChatGPT como apoyo.
 | Evitar asignaciones que después haya que modificar | No existe la reasignación: una asignación no se puede cambiar (AC-S02-06, `test_p_s02_03_asignacion_repetida`). | Ya cubierta. |
 
 El integrante no expresó una decisión de aprobar o rechazar la SPEC; la tabla «Decisión de revisión» de S02 registra el comentario, no una aprobación.
+
+## Rafael Eduardo May Recuero · S01 Registrar una incidencia
+
+Recibido el 2026-10-13. El integrante declara que usó Claude como apoyo.
+
+**1. Con tus palabras: ¿Qué hace esta parte del sistema?**
+
+> Es la puerta de entrada para cualquier usuario que tenga un inconveniente en las instalaciones. Su función principal es permitir que la persona reporte el problema llenando un formulario básico con la ubicación y una descripción, asegurando que la queja quede guardada en el sistema para que luego le puedan hacer seguimiento.
+
+**2. ¿Hay algo que no se entienda o que te parezca mal definido? ¿Qué?**
+
+> Me da la impresión de que no queda del todo claro cómo se clasifican las categorías de los daños. A veces los usuarios no saben exactamente en qué categoría encasillar su problema, y la guía tampoco especifica muy bien qué pasa con los campos opcionales.
+
+**3. ¿Cambiarías o agregarías algo? ¿Qué y por qué?**
+
+> Le añadiría una sección obligatoria para subir fotos o capturas del daño de forma rápida. Una imagen ayuda muchísimo más que mil palabras para que el equipo de soporte entienda el problema de entrada sin tener que adivinar.
+
+**4. ¿Usaste IA para revisarla? Si sí: ¿cuál, y con qué parte de su respuesta estás de acuerdo y con cuál no?**
+
+> Sí, le pedí una opinión a Claude sobre esta sección. Coincido totalmente en que el flujo del formulario es directo, pero no estuve de acuerdo cuando sugirió agregar validaciones de campos tan estrictas que harían que reportar una emergencia se vuelva un trámite tardado y molesto para el usuario.
+
+### Qué se hizo con cada observación
+
+| Observación | Contraste con el enunciado y el código | Acción |
+|---|---|---|
+| No queda claro cómo se clasifican las categorías | El enunciado fija las cuatro categorías (`ELECTRICIDAD`, `HIDRAULICA`, `MOBILIARIO`, `TIC`) pero no define qué daños abarca cada una. S01 tampoco lo decía. | **Aceptada como aclaración.** S01 v0.6 dice que el caso no define su alcance, que el solicitante elige la más cercana y que el sistema no la corrige. Una ayuda por categoría en el formulario queda como mejora opcional, no implementada. |
+| Qué pasa con los campos opcionales | No hay campos opcionales: RF01 hace obligatorios los cinco, y la tabla de entradas de S01 ya lo indicaba campo por campo. | **Aceptada como aclaración.** S01 v0.6 lo dice en una frase, además de la tabla. |
+| Agregar fotos obligatorias del daño | El enunciado lo excluye de forma expresa: «No se requieren adjuntos». S01 ya listaba los adjuntos en las exclusiones. | **No se aplica:** está fuera del alcance definido por el enunciado. Se registra como posible mejora para una versión posterior. |
+| Desacuerdo con validaciones «tan estrictas» (sobre la sugerencia de su asistente de IA) | Las validaciones del registro no son una elección del equipo: RF01 exige los cinco campos, los valores del catálogo y una descripción de 20 a 500 caracteres. El formulario no agrega validaciones más allá de esas. | Sin cambios. Se registra su desacuerdo, que coincide con lo implementado: no se añadieron validaciones adicionales. |
+
+El integrante no expresó una decisión de aprobar o rechazar la SPEC; la tabla «Decisión de revisión» de S01 registra el comentario, no una aprobación. También figuraba como revisor propuesto del alcance y del diseño; su comentario solo trata S01, así que esas dos revisiones siguen pendientes.
