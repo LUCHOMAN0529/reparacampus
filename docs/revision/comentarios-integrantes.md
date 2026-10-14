@@ -9,7 +9,7 @@ Los comentarios llegaron después de que el código estuviera escrito e integrad
 | Rafael Eduardo May Recuero | S01 Registrar | — | Sin respuesta |
 | Jean Marco Oyola De Martino | S02 Priorizar y asignar | — | Sin respuesta |
 | José Leonardo Hernández Pedrosa | S03 Atender | 2026-10-13, entregado al autor | Recibido |
-| Cristian David Diaz España | S04 Validar | — | Sin respuesta |
+| Cristian David Diaz España | S04 Validar | 2026-10-13, entregado al autor | Recibido |
 | Jorge Luis González Arroyo | S05 Consultar y tablero | 2026-10-13, entregado al autor | Recibido |
 
 ## José Leonardo Hernández Pedrosa · S03 Atender una incidencia
@@ -77,3 +77,36 @@ Recibido el 2026-10-13. El integrante firmó como «Jorge Gonzalez» y declara q
 
 Tampoco expresó una decisión de aprobar o rechazar la SPEC; la tabla «Decisión de revisión» de S05 registra el comentario, no una aprobación.
 
+## Cristian David Diaz España · S04 Confirmar, rechazar y reabrir
+
+Recibido el 2026-10-13. El integrante declara que usó ChatGPT como apoyo.
+
+**1. Con tus palabras: ¿qué hace esta parte del sistema?**
+
+> Esta parte permite gestionar la decisión final sobre una incidencia, confirmando si fue resuelta o rechazándola si la solución no fue satisfactoria. También permite reabrir una incidencia cuando el problema continúa o vuelve a presentarse.
+
+**2. ¿Hay algo que no se entienda o que te parezca mal definido? ¿Qué?**
+
+> Sería importante aclarar quién tiene permiso para confirmar, rechazar o reabrir una incidencia y qué condiciones deben cumplirse en cada caso. También debería definirse qué sucede con el estado de la incidencia y si es obligatorio justificar un rechazo o una reapertura.
+
+**3. ¿Cambiarías o agregarías algo? ¿Qué y por qué?**
+
+> Agregaría un campo para registrar el motivo del rechazo o de la reapertura, además de guardar la fecha y el usuario que realizó cada acción. Esto permitiría llevar un mejor seguimiento de las incidencias y mantener un historial de los cambios realizados.
+
+**4. ¿Usaste IA para revisarla? Si sí: ¿cuál, y con qué parte de su respuesta estás de acuerdo y con cuál no?**
+
+> Sí, utilicé ChatGPT como apoyo para revisar la funcionalidad e identificar posibles mejoras. Estoy de acuerdo con la recomendación de definir mejor los permisos, las condiciones de cada acción y el registro de los cambios. Sin embargo, estas sugerencias deben contrastarse con la documentación del proyecto antes de afirmar que son problemas reales del módulo.
+
+### Qué se hizo con cada observación
+
+Siguiendo su propia indicación de contrastar las sugerencias con la documentación, las cinco se compararon con S04 y con el código. Las cinco ya estaban definidas e implementadas, así que no hubo cambios.
+
+| Observación | Dónde está definido | Prueba aprobada | Acción |
+|---|---|---|---|
+| Quién puede confirmar, rechazar o reabrir | S04, «Precondiciones y permisos»: solo el solicitante dueño; el coordinador y el técnico reciben 403; otro solicitante, 404 (AC-S04-04) | `test_p_s04_05_solo_el_duenio_valida`, `test_solo_el_duenio_reabre` | Ya cubierta |
+| Qué condiciones deben cumplirse | Confirmar y rechazar exigen `PENDIENTE_VALIDACION`; reabrir exige `CERRADA` y un máximo de 48 horas desde el último cierre (AC-S04-05 a 07) | `test_validar_en_estado_incompatible`, `test_reabrir_exactamente_a_las_48_horas`, `test_reabrir_un_instante_despues_de_48_horas` | Ya cubierta |
+| Qué pasa con el estado | Confirmar pasa a `CERRADA`; rechazar y reabrir vuelven a `EN_ATENCION` con el mismo técnico (tabla de salidas de S04 y diagrama de estados) | `test_p_s04_01_flujo_de_cierre`, `test_rechazar_conserva_tecnico_y_solucion` | Ya cubierta |
+| Si es obligatorio justificar el rechazo o la reapertura | Sí: motivo obligatorio de 10 a 300 caracteres en ambos casos (AC-S04-03 y AC-S04-08) | `test_p_s04_04_limites_del_motivo_de_rechazo`, `test_motivo_de_reapertura_invalido`, `test_p_s04_15_rechazo_con_motivo_solo_de_espacios` | Ya cubierta |
+| Registrar motivo, fecha y usuario de cada acción | Cada rechazo y reapertura guarda un evento con motivo, actor y fecha del servidor; el historial no se puede editar (AC-S04-02, AC-S05-04 y 05) | `test_rechazar_conserva_tecnico_y_solucion`, `test_historial_completo`, `test_p_s05_04_el_historial_es_inmutable` | Ya cubierta |
+
+El integrante no expresó una decisión de aprobar o rechazar la SPEC; la tabla «Decisión de revisión» de S04 registra el comentario, no una aprobación.

@@ -10,7 +10,7 @@ Estado al 2026-10-08, tomado del historial de Git y de GitHub. Lo que no se ha h
 | Rafael Eduardo May Recuero | Propuesta: revisión de S01, del alcance y del diseño | Ninguno registrado | Pendiente | Pendiente |
 | Jean Marco Oyola De Martino | Propuesta: revisión de S02 | Ninguno registrado | Pendiente | Pendiente |
 | José Leonardo Hernández Pedrosa | Revisión de S03 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S03, sin decisión de aprobación | Dos aclaraciones incorporadas en S03 v0.6; una observación ya cubierta; una mejora registrada |
-| Cristian David Diaz España | Propuesta: revisión de S04 | Ninguno registrado | Pendiente | Pendiente |
+| Cristian David Diaz España | Revisión de S04 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S04, sin decisión de aprobación | Cinco observaciones, todas ya cubiertas por S04; sin cambios |
 | Jorge Luis González Arroyo | Revisión de S05 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S05, sin decisión de aprobación | Una imprecisión corregida en S05 v0.6; tres observaciones ya cubiertas; una mejora registrada |
 
 La asignación de revisores es una propuesta que el equipo no ha confirmado. Los comentarios recibidos se transcriben tal cual en `docs/revision/comentarios-integrantes.md`. El requisito de que cada integrante aporte una contribución verificable y revise al menos un cambio de otra persona **no está cumplido** a esta fecha.
