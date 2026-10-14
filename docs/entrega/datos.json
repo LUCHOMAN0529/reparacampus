@@ -14,5 +14,8 @@
   ],
   "TAG": "release-examen",
   "SHA": "b59faa1128708c5cc405d0b315c0226c610c5489",
-  "PRUEBAS": "176 pruebas aprobadas y 0 fallidas (python -m pytest, 2026-10-08, commit b59faa1)"
+  "PRUEBAS": "176 pruebas aprobadas y 0 fallidas (python -m pytest, 2026-10-08, commit b59faa1)",
+  "CODIGOS": {
+    "José Leonardo Hernández Pedrosa": "22511273118"
+  }
 }

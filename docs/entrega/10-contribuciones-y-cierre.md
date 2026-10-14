@@ -9,11 +9,11 @@ Estado al 2026-10-08, tomado del historial de Git y de GitHub. Lo que no se ha h
 | Luis Carlo Daza Ospino | SPECS, diseño, implementación, pruebas, evidencias e integración, con asistencia de IA | `specs/`, `docs/`, `app/`, `tests/`; todos los commits del repositorio son de su autoría | No aplica: es el autor | {{PRUEBAS}} |
 | Rafael Eduardo May Recuero | Propuesta: revisión de S01, del alcance y del diseño | Ninguno registrado | Pendiente | Pendiente |
 | Jean Marco Oyola De Martino | Propuesta: revisión de S02 | Ninguno registrado | Pendiente | Pendiente |
-| José Leonardo Hernández Pedrosa | Propuesta: revisión de S03 | Ninguno registrado | Pendiente | Pendiente |
+| José Leonardo Hernández Pedrosa | Revisión de S03 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S03, sin decisión de aprobación | Dos aclaraciones incorporadas en S03 v0.6; una observación ya cubierta; una mejora registrada |
 | Cristian David Diaz España | Propuesta: revisión de S04 | Ninguno registrado | Pendiente | Pendiente |
 | Jorge Luis González Arroyo | Propuesta: revisión de S05 | Ninguno registrado | Pendiente | Pendiente |
 
-La asignación de revisores es una propuesta que el equipo no ha confirmado. El requisito de que cada integrante aporte una contribución verificable y revise al menos un cambio de otra persona **no está cumplido** a esta fecha.
+La asignación de revisores es una propuesta que el equipo no ha confirmado. Los comentarios recibidos se transcriben tal cual en `docs/revision/comentarios-integrantes.md`. El requisito de que cada integrante aporte una contribución verificable y revise al menos un cambio de otra persona **no está cumplido** a esta fecha.
 
 ## Integración
 

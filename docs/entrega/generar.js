@@ -296,6 +296,7 @@ const SECCIONES = [
     titulo: "Contribuciones y cierre",
     archivos: [
       { ruta: "docs/entrega/10-contribuciones-y-cierre.md", base: 1, sinH1: true },
+      { ruta: "docs/revision/comentarios-integrantes.md", base: 2 },
       { ruta: "docs/decisiones.md", base: 2 },
     ],
   },
@@ -314,8 +315,7 @@ const portada = [
   centrado("Caso ReparaCampus", { bold: true, size: 32 }, 900),
   centrado(`Equipo: ${dato("EQUIPO")}`, { size: 26 }, 240),
   centrado("Integrantes", { bold: true, size: 24 }),
-  ...datos.INTEGRANTES.map((nombre) => centrado(datos.CODIGOS && datos.CODIGOS[nombre] ? `${nombre} · ${datos.CODIGOS[nombre]}` : nombre, { size: 24 }, 40)),
-  ...(datos.CODIGOS ? [] : [centrado("Códigos de los integrantes: [PENDIENTE: CODIGOS]", { size: 22 }, 40)]),
+  ...datos.INTEGRANTES.map((nombre) => centrado(`${nombre} · ${(datos.CODIGOS || {})[nombre] || "[PENDIENTE: CODIGO]"}`, { size: 24 }, 40)),
   new Paragraph({ spacing: { before: 700 }, children: [] }),
   centrado(`Grupo: ${dato("GRUPO")}`, { size: 24 }, 60),
   centrado(`Docente: ${dato("DOCENTE")}`, { size: 24 }, 60),

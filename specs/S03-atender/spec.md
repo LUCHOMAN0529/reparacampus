@@ -2,9 +2,9 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.5 (integrada en `main`; revisión de otro integrante pendiente) |
+| Versión | 0.6 (integrada en `main`; comentario de un integrante recibido) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Propuesto: José Leonardo Hernández Pedrosa. El equipo no ha confirmado la asignación; revisión pendiente |
+| Revisor | José Leonardo Hernández Pedrosa: comentario recibido el 2026-10-13, sin decisión explícita de aprobación |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF03 |
 
@@ -16,6 +16,8 @@
 
 **Cambios de la versión 0.5 (2026-10-08):** sin cambios de requisitos ni de criterios. La SPEC queda integrada en `main` junto con el código y las pruebas; las referencias a pruebas ya no dependen de una rama; el revisor figura como propuesto, porque el equipo no ha confirmado la asignación.
 
+**Cambios de la versión 0.6 (2026-10-13):** a partir del comentario de José Leonardo Hernández Pedrosa, se aclara qué ocurre si una incidencia no puede resolverse y quién la cierra. No cambia ningún requisito, criterio ni el código. Ver [comentarios de los integrantes](../../docs/revision/comentarios-integrantes.md).
+
 ## Historia (H03)
 
 Como **técnico**, quiero **iniciar la atención de las incidencias que tengo asignadas y registrar la solución que apliqué**, para **que el solicitante pueda comprobarla y quede constancia de mi trabajo**.
@@ -25,6 +27,10 @@ Como **técnico**, quiero **iniciar la atención de las incidencias que tengo as
 **Incluye:** inicio de atención (`ASIGNADA → EN_ATENCION`); registro de solución (`EN_ATENCION → PENDIENTE_VALIDACION`), también después de un rechazo o una reapertura; eventos en el historial.
 
 **Excluye:** cierre por parte del técnico, edición o borrado de una solución registrada, atención por un técnico distinto del asignado, adjuntos, registro de tiempos o materiales.
+
+**Si la incidencia no puede resolverse:** el caso no define un estado para eso y no se pueden agregar transiciones. La incidencia sigue en `EN_ATENCION` hasta que el técnico registre una solución; no hay cierre automático ni por parte del técnico.
+
+**Cuándo se cierra:** solo cuando el solicitante dueño confirma una solución en `PENDIENTE_VALIDACION`, según S04.
 
 ## Entradas
 
@@ -132,4 +138,4 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.5 | José Leonardo Hernández Pedrosa (propuesto) | Pendiente | |
+| 2026-10-13 | 0.5 | José Leonardo Hernández Pedrosa | Comentario recibido, sin decisión de aprobar o rechazar | Dos aclaraciones incorporadas en la 0.6; una observación ya cubierta; una mejora opcional no implementada. Ver `docs/revision/comentarios-integrantes.md` |

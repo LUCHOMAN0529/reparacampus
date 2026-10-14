@@ -63,3 +63,5 @@ El primero ejecuta la batería completa; el segundo, solo las tres pruebas de in
 - Las fechas se muestran en UTC.
 
 El README del repositorio conserva el procedimiento completo.
+
+Después del tag, `main` puede tener documentos actualizados (comentarios de los integrantes y aclaraciones de las SPECS), pero el código y las pruebas son idénticos a los del tag.
