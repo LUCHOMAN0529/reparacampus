@@ -48,7 +48,7 @@ Ninguna está tomada. El asistente no puede decidirlas, ni el autor en nombre de
 | B-3 | Responsables funcionales de los cuatro riesgos. | Propuesta del asistente, sin confirmar. | Equipo |
 | B-4 | Revisor de cada tarea. | «Por asignar» en las 32 tareas. | Equipo |
 | B-5 | Aporte verificable de cada integrante y revisión de al menos un cambio de otra persona. | Solo hay commits de un integrante. | Cada integrante |
-| B-6 | Nombre del equipo para la portada. | Sin dato. El grupo (5906 - T05) lo aportó el autor el 2026-10-13. | Equipo |
+| B-6 | Nombre del equipo para la portada. | El equipo no tenía nombre; el autor eligió «SimonDev» el 2026-10-13 para la entrega. El grupo es 5906 - T05. | Equipo |
 | B-7 | Aceptación final del trabajo y pendientes que se declaran. | Sin dato. | Equipo |
 | B-8 | Si se agrega el token CSRF. | No implementado; mejora opcional. | Equipo, a propuesta del autor |
 
