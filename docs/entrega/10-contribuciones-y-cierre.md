@@ -8,7 +8,7 @@ Estado al 2026-10-08, tomado del historial de Git y de GitHub. Lo que no se ha h
 |---|---|---|---|---|
 | Luis Carlo Daza Ospino | SPECS, diseño, implementación, pruebas, evidencias e integración, con asistencia de IA | `specs/`, `docs/`, `app/`, `tests/`; todos los commits del repositorio son de su autoría | No aplica: es el autor | {{PRUEBAS}} |
 | Rafael Eduardo May Recuero | Propuesta: revisión de S01, del alcance y del diseño | Ninguno registrado | Pendiente | Pendiente |
-| Jean Marco Oyola De Martino | Propuesta: revisión de S02 | Ninguno registrado | Pendiente | Pendiente |
+| Jean Marco Oyola De Martino | Revisión de S02 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S02, sin decisión de aprobación | Dos aclaraciones incorporadas en S02 v0.6; tres observaciones ya cubiertas; una mejora registrada |
 | José Leonardo Hernández Pedrosa | Revisión de S03 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S03, sin decisión de aprobación | Dos aclaraciones incorporadas en S03 v0.6; una observación ya cubierta; una mejora registrada |
 | Cristian David Diaz España | Revisión de S04 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S04, sin decisión de aprobación | Cinco observaciones, todas ya cubiertas por S04; sin cambios |
 | Jorge Luis González Arroyo | Revisión de S05 | Respuesta escrita a la encuesta de revisión (2026-10-13), apoyada en ChatGPT según declara | Sí: comentario sobre S05, sin decisión de aprobación | Una imprecisión corregida en S05 v0.6; tres observaciones ya cubiertas; una mejora registrada |

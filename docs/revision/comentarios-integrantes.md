@@ -7,7 +7,7 @@ Los comentarios llegaron después de que el código estuviera escrito e integrad
 | Integrante | Parte | Recibido | Estado |
 |---|---|---|---|
 | Rafael Eduardo May Recuero | S01 Registrar | — | Sin respuesta |
-| Jean Marco Oyola De Martino | S02 Priorizar y asignar | — | Sin respuesta |
+| Jean Marco Oyola De Martino | S02 Priorizar y asignar | 2026-10-13, entregado al autor | Recibido |
 | José Leonardo Hernández Pedrosa | S03 Atender | 2026-10-13, entregado al autor | Recibido |
 | Cristian David Diaz España | S04 Validar | 2026-10-13, entregado al autor | Recibido |
 | Jorge Luis González Arroyo | S05 Consultar y tablero | 2026-10-13, entregado al autor | Recibido |
@@ -110,3 +110,36 @@ Siguiendo su propia indicación de contrastar las sugerencias con la documentaci
 | Registrar motivo, fecha y usuario de cada acción | Cada rechazo y reapertura guarda un evento con motivo, actor y fecha del servidor; el historial no se puede editar (AC-S04-02, AC-S05-04 y 05) | `test_rechazar_conserva_tecnico_y_solucion`, `test_historial_completo`, `test_p_s05_04_el_historial_es_inmutable` | Ya cubierta |
 
 El integrante no expresó una decisión de aprobar o rechazar la SPEC; la tabla «Decisión de revisión» de S04 registra el comentario, no una aprobación.
+
+## Jean Marco Oyola De Martino · S02 Priorizar y asignar
+
+Recibido el 2026-10-13. El integrante declara que usó ChatGPT como apoyo.
+
+**1. Con tus palabras: ¿Qué hace esta parte del sistema?**
+
+> Esta parte permite que el coordinador revise las incidencias registradas, determine su prioridad y asigne un técnico para que se encargue de resolverlas. Así se organiza mejor el trabajo y se puede atender cada problema según su importancia.
+
+**2. ¿Hay algo que no se entienda o que te parezca mal definido? ¿Qué?**
+
+> Me parece que sería importante dejar más claros los criterios que se utilizan para definir la prioridad de una incidencia y cómo se decide qué técnico debe atenderla. También sería bueno especificar qué pasa si no hay técnicos disponibles para recibir una asignación.
+
+**3. ¿Cambiarías o agregarías algo? ¿Qué y por qué?**
+
+> Agregaría una explicación más clara de los niveles de prioridad y una validación que permita comprobar la disponibilidad del técnico antes de asignarle una incidencia. Esto ayudaría a distribuir mejor el trabajo y evitaría asignaciones que después tengan que modificarse.
+
+**4. ¿Usaste IA para revisarla? Si sí: ¿cuál, y con qué parte de su respuesta estás de acuerdo y con cuál no?**
+
+> Sí, utilicé ChatGPT para apoyarme en la revisión de esta parte del sistema. Coincido en que es necesario organizar las incidencias según su prioridad y asignarlas correctamente a los técnicos. Como punto a tener en cuenta, las recomendaciones de la IA deben revisarse y compararse con el código del proyecto para comprobar que realmente se ajusten a lo que está desarrollado.
+
+### Qué se hizo con cada observación
+
+| Observación | Contraste con el enunciado y el código | Acción |
+|---|---|---|
+| Que el coordinador «determine» la prioridad (respuesta 1) | Según RF02, el coordinador no elige la prioridad: la calcula el sistema a partir del riesgo y el impacto, y nadie puede cambiarla (AC-S02-09, `test_la_prioridad_no_se_cambia_al_asignar`). | Sin cambios. Se anota porque la respuesta describe el funcionamiento de otra forma. |
+| Criterios y niveles de prioridad | Definidos en la tabla de prioridad de S02: con riesgo, `CRITICA`; sin riesgo e impacto `ALTO`, `ALTA`; sin riesgo e impacto `BAJO`, `NORMAL` (AC-S02-01 a 03, `test_p_s02_01_prioridad_calculada`). | Ya cubierta. |
+| Cómo se decide qué técnico atiende | El enunciado no pone restricción de especialidad. En el código, el coordinador elige libremente entre los técnicos activos; el sistema no recomienda ni reparte. S02 lo daba a entender en las exclusiones, pero no lo decía. | **Aceptada como aclaración.** S02 v0.6 lo dice de forma explícita. |
+| Qué pasa si no hay técnicos disponibles | No estaba dicho. En el código, si no hay técnicos activos la lista de selección queda vacía, cualquier intento de asignar responde 400 y la incidencia sigue `REGISTRADA` (mismo comportamiento probado en AC-S02-07 con `test_p_s02_05_tecnico_invalido`). | **Aceptada como aclaración.** S02 v0.6 lo dice. No cambia el código. |
+| Validar la disponibilidad del técnico antes de asignar | El sistema ya valida que el técnico exista, tenga rol técnico y esté activo (AC-S02-07). Medir su carga de trabajo no lo pide el enunciado y S02 excluía el balanceo de carga. | Lo primero ya está cubierto. La validación por carga de trabajo queda **registrada como mejora opcional, no implementada**. |
+| Evitar asignaciones que después haya que modificar | No existe la reasignación: una asignación no se puede cambiar (AC-S02-06, `test_p_s02_03_asignacion_repetida`). | Ya cubierta. |
+
+El integrante no expresó una decisión de aprobar o rechazar la SPEC; la tabla «Decisión de revisión» de S02 registra el comentario, no una aprobación.

@@ -2,9 +2,9 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 0.5 (integrada en `main`; revisión de otro integrante pendiente) |
+| Versión | 0.6 (integrada en `main`; comentario de un integrante recibido) |
 | Autor | Luis Carlo Daza Ospino, con asistencia de IA (Claude) |
-| Revisor | Propuesto: Jean Marco Oyola De Martino. El equipo no ha confirmado la asignación; revisión pendiente |
+| Revisor | Jean Marco Oyola De Martino: comentario recibido el 2026-10-13, sin decisión explícita de aprobación |
 | Fecha | 2026-10-08 |
 | Requisito asociado | RF02 |
 
@@ -16,6 +16,8 @@
 
 **Cambios de la versión 0.5 (2026-10-08):** sin cambios de requisitos ni de criterios. La SPEC queda integrada en `main` junto con el código y las pruebas; las referencias a pruebas ya no dependen de una rama; el revisor figura como propuesto, porque el equipo no ha confirmado la asignación.
 
+**Cambios de la versión 0.6 (2026-10-13):** a partir del comentario de Jean Marco Oyola De Martino, se aclara cómo se elige el técnico y qué ocurre si no hay técnicos activos. No cambia ningún requisito, criterio ni el código. Ver [comentarios de los integrantes](../../docs/revision/comentarios-integrantes.md).
+
 ## Historia (H02)
 
 Como **coordinador de mantenimiento**, quiero **que el sistema calcule la prioridad de cada incidencia y me permita asignarla a un técnico activo**, para **atender primero lo que pone en riesgo a las personas y que cada reporte tenga un responsable**.
@@ -25,6 +27,10 @@ Como **coordinador de mantenimiento**, quiero **que el sistema calcule la priori
 **Incluye:** cálculo automático de la prioridad al registrar; asignación de una incidencia `REGISTRADA` a un técnico activo; paso a `ASIGNADA`; evento en el historial.
 
 **Excluye:** reasignación o desasignación, cambio manual de la prioridad, restricción por especialidad del técnico, balanceo de carga y notificaciones.
+
+**Cómo se elige el técnico:** el coordinador elige libremente entre los técnicos activos. El sistema no recomienda técnico ni reparte la carga; solo valida que el elegido exista, tenga rol técnico y esté activo.
+
+**Si no hay técnicos activos:** la lista de selección queda vacía, cualquier intento de asignar responde 400 (AC-S02-07) y la incidencia sigue `REGISTRADA` hasta que haya un técnico activo.
 
 ## Entradas
 
@@ -140,4 +146,4 @@ El resultado esperado se define aquí, antes de ejecutar, y no se calcula con la
 
 | Fecha | Versión revisada | Revisor | Decisión | Observaciones |
 |---|---|---|---|---|
-| Pendiente | 0.5 | Jean Marco Oyola De Martino (propuesto) | Pendiente | |
+| 2026-10-13 | 0.5 | Jean Marco Oyola De Martino | Comentario recibido, sin decisión de aprobar o rechazar | Dos aclaraciones incorporadas en la 0.6; tres observaciones ya cubiertas; una mejora opcional no implementada. Ver `docs/revision/comentarios-integrantes.md` |

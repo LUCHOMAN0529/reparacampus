@@ -43,7 +43,7 @@ Ninguna está tomada. El asistente no puede decidirlas, ni el autor en nombre de
 
 | N.º | Qué hay que decidir | Estado actual | Quién |
 |---|---|---|---|
-| B-1 | Revisión de cada SPEC con fecha, versión y decisión. | S03, S04 y S05: comentarios de José Leonardo, Cristian y Jorge Luis recibidos el 2026-10-13, sin decisión de aprobación. Pendiente en S01, S02, el alcance y el diseño. El pull request #2 se integró sin revisiones. | El revisor propuesto de cada una: Rafael (S01 y diseño), Jean Marco (S02), José Leonardo (S03), Cristian (S04), Jorge Luis (S05) |
+| B-1 | Revisión de cada SPEC con fecha, versión y decisión. | S02, S03, S04 y S05: comentarios de Jean Marco, José Leonardo, Cristian y Jorge Luis recibidos el 2026-10-13, sin decisión de aprobación. Pendiente en S01, el alcance y el diseño. El pull request #2 se integró sin revisiones. | El revisor propuesto de cada una: Rafael (S01 y diseño), Jean Marco (S02), José Leonardo (S03), Cristian (S04), Jorge Luis (S05) |
 | B-2 | Si la asignación de revisores es esa. | Es una propuesta que proviene de un borrador generado con IA; ningún integrante la ha aceptado. | Equipo |
 | B-3 | Responsables funcionales de los cuatro riesgos. | Propuesta del asistente, sin confirmar. | Equipo |
 | B-4 | Revisor de cada tarea. | «Por asignar» en las 32 tareas. | Equipo |
